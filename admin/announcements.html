@@ -645,13 +645,37 @@ document.getElementById("editModal")
 
 async function saveEdit(){
 
-const updated={
-title:document.getElementById("editTitle").value,
-text:document.getElementById("editText").value,
-promoCode:document.getElementById("editPromoCode").value,
-promoTimer:document.getElementById("editPromoTimer").value,
-promoButton:document.getElementById("editPromoButton").value,
-promoButtonUrl:document.getElementById("editPromoButtonUrl").value
+const updated = {
+
+enabled:true,
+
+title:
+document.getElementById("editTitle").value,
+
+text:
+document.getElementById("editText").value,
+
+expire:
+document.getElementById("editHours").value +
+" Saat " +
+document.getElementById("editMinutes").value +
+" Dakika",
+
+promoCode:
+document.getElementById("editPromoCode").value,
+
+promoTimer:
+document.getElementById("editPromoTimer").value,
+
+promoButton:
+document.getElementById("editPromoButton").value,
+
+promoButtonUrl:
+document.getElementById("editPromoButtonUrl").value,
+
+date:
+new Date().toLocaleString("tr-TR")
+
 };
 
 const res = await fetch(API_URL + "/" + editingId,{

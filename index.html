@@ -2682,6 +2682,84 @@ box-shadow:0 0 30px rgba(124,58,237,.4);
 }
 
 
+
+#announcement-bar{
+display:flex;
+justify-content:center;
+padding:20px 8%;
+margin-top:120px;
+}
+
+.announcement-modern{
+width:100%;
+max-width:1400px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:20px;
+flex-wrap:wrap;
+padding:22px 28px;
+border-radius:26px;
+background:linear-gradient(135deg,rgba(124,58,237,.22),rgba(37,99,235,.12));
+border:1px solid rgba(255,255,255,.08);
+backdrop-filter:blur(20px);
+box-shadow:0 0 50px rgba(124,58,237,.15);
+}
+
+.announcement-left{
+flex:1;
+min-width:280px;
+}
+
+.announcement-left h3{
+font-size:22px;
+margin-bottom:8px;
+}
+
+.announcement-left p{
+color:#d4d4d8;
+line-height:1.8;
+}
+
+.announcement-right{
+display:flex;
+align-items:center;
+gap:12px;
+flex-wrap:wrap;
+}
+
+.promo-chip{
+padding:12px 18px;
+border-radius:14px;
+font-weight:700;
+font-size:14px;
+}
+
+.promo-code{
+background:#5d6b46;
+border:1px dashed #c3d49c;
+}
+
+.promo-timer{
+background:#4f5c47;
+border:1px solid #727f65;
+}
+
+.promo-btn{
+padding:13px 20px;
+border-radius:14px;
+background:#f5ebc7;
+color:#111;
+font-weight:800;
+text-decoration:none;
+transition:.25s;
+}
+
+.promo-btn:hover{
+transform:translateY(-3px);
+box-shadow:0 10px 30px rgba(245,235,199,.18);
+}
+
 </style>
 </head>
 
@@ -2854,7 +2932,136 @@ Giriş Yap
 
 </header>
 
-  <div id="announcement-bar"></div>
+  
+<div id="announcement-bar"></div>
+
+<script>
+
+const ANNOUNCEMENT_API =
+"https://novaris-api.onrender.com/api/announcement";
+
+async function loadAnnouncement(){
+
+const bar =
+document.getElementById("announcement-bar");
+
+try{
+
+const res =
+await fetch(ANNOUNCEMENT_API);
+
+const data =
+await res.json();
+
+const a =
+Array.isArray(data)
+? data[data.length-1]
+: data;
+
+if(!a || !a.enabled) return;
+
+bar.innerHTML = `
+
+<div class="announcement-modern">
+
+<div class="announcement-left">
+
+<h3>📢 ${a.title || 'Novaris Duyurusu'}</h3>
+
+<p>
+${a.text || ''}
+</p>
+
+</div>
+
+<div class="announcement-right">
+
+${a.promoCode ? `
+<div class="promo-chip promo-code">
+${a.promoCode}
+</div>
+` : ''}
+
+${a.promoTimer ? `
+<div class="promo-chip promo-timer"
+data-countdown="${a.promoTimer}">
+⏱ ${a.promoTimer}
+</div>
+` : ''}
+
+${a.promoButton ? `
+<a
+href="${a.promoButtonUrl || '#'}"
+target="_blank"
+class="promo-btn">
+${a.promoButton}
+</a>
+` : ''}
+
+</div>
+
+</div>
+
+`;
+
+startCountdowns();
+
+}catch(err){
+
+console.log("Duyuru yüklenemedi");
+
+}
+
+}
+
+function startCountdowns(){
+
+document.querySelectorAll("[data-countdown]").forEach(el=>{
+
+let value = el.dataset.countdown;
+
+if(!value.includes(":")) return;
+
+let parts = value.split(":").map(Number);
+
+let total =
+(parts[0] * 3600) +
+(parts[1] * 60) +
+(parts[2]);
+
+setInterval(()=>{
+
+if(total <= 0){
+
+el.innerHTML = "⏱ Süre Doldu";
+return;
+
+}
+
+total--;
+
+let h =
+String(Math.floor(total / 3600)).padStart(2,"0");
+
+let m =
+String(Math.floor((total % 3600)/60)).padStart(2,"0");
+
+let s =
+String(total % 60).padStart(2,"0");
+
+el.innerHTML =
+`⏱ ${h}:${m}:${s}`;
+
+},1000);
+
+});
+
+}
+
+window.addEventListener("load",loadAnnouncement);
+
+</script>
+
 
 
 <section class="hero">

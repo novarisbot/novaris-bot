@@ -3437,7 +3437,8 @@ function type(){
 
 if(i < text.length){
 
-typing.innerHTML += text.charAt(i);
+
+typing.innerHTML = text.substring(0, i);
 i++;
 
 setTimeout(type, 18);

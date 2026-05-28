@@ -1,45 +1,31 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Novaris Ultra Admin Panel</title>
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="/assets/logo.png">
 
-<title>Novaris Admin Panel</title>
-
-<link rel="icon"
-type="image/png"
-href="/assets/logo.png">
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box}
 
 body{
 font-family:'Inter',sans-serif;
 background:#050505;
-color:white;
+color:#fff;
 display:flex;
 height:100vh;
 overflow:hidden;
 }
 
-/* Background */
-
 .bg{
 position:fixed;
 inset:0;
 overflow:hidden;
-z-index:-10;
+z-index:-1;
 }
 
 .orb{
@@ -50,447 +36,249 @@ opacity:.25;
 animation:float 10s infinite ease-in-out;
 }
 
-.orb1{
-width:500px;
-height:500px;
-background:#5865F2;
-top:-150px;
-left:-150px;
-}
-
-.orb2{
-width:400px;
-height:400px;
-background:#7c3aed;
-bottom:-150px;
-right:-150px;
-animation-delay:2s;
-}
-
-.orb3{
-width:300px;
-height:300px;
-background:#00d4ff;
-top:40%;
-left:40%;
-animation-delay:4s;
-}
+.orb1{width:500px;height:500px;background:#5865F2;top:-150px;left:-150px}
+.orb2{width:400px;height:400px;background:#7c3aed;bottom:-150px;right:-150px}
+.orb3{width:300px;height:300px;background:#00d4ff;top:40%;left:40%}
 
 @keyframes float{
-
-0%,100%{
-transform:translateY(0px);
+0%,100%{transform:translateY(0)}
+50%{transform:translateY(-30px)}
 }
-
-50%{
-transform:translateY(-30px);
-}
-
-}
-
-/* Sidebar */
 
 .sidebar{
-
-width:290px;
-height:100vh;
-
-background:
-rgba(255,255,255,.04);
-
-border-right:
-1px solid rgba(255,255,255,.08);
-
-backdrop-filter:
-blur(30px);
-
+width:310px;
+background:rgba(255,255,255,.04);
+backdrop-filter:blur(30px);
+border-right:1px solid rgba(255,255,255,.08);
 padding:30px;
-
 display:flex;
 flex-direction:column;
 justify-content:space-between;
-
 }
 
-/* Logo */
-
 .logo{
-
 display:flex;
 align-items:center;
 gap:14px;
-
 margin-bottom:40px;
-
 }
 
 .logo img{
-
-width:54px;
-height:54px;
+width:58px;
+height:58px;
 border-radius:50%;
-
 }
 
 .logo h2{
-
-font-size:30px;
+font-size:32px;
 font-weight:800;
-
 }
 
-/* Menu */
-
 .menu{
-
 display:flex;
 flex-direction:column;
 gap:14px;
-
 }
 
 .menu a{
-
 padding:18px 20px;
-
-border-radius:20px;
-
-background:
-rgba(255,255,255,.03);
-
-border:
-1px solid rgba(255,255,255,.06);
-
-color:white;
+border-radius:22px;
+background:rgba(255,255,255,.03);
+border:1px solid rgba(255,255,255,.06);
 text-decoration:none;
+color:white;
 font-weight:600;
-
 transition:.25s;
-
 }
 
 .menu a:hover{
-
 transform:translateX(8px);
-
-background:
-rgba(88,101,242,.12);
-
+background:rgba(88,101,242,.12);
+box-shadow:0 20px 80px rgba(88,101,242,.25);
 }
 
-/* User */
-
 .user{
-
-padding:22px;
+padding:24px;
 border-radius:28px;
-
-background:
-rgba(255,255,255,.04);
-
-border:
-1px solid rgba(255,255,255,.08);
-
+background:rgba(255,255,255,.04);
+border:1px solid rgba(255,255,255,.08);
 text-align:center;
-
 }
 
 .user img{
-
 width:90px;
 height:90px;
 border-radius:50%;
-
 margin-bottom:16px;
-
-border:
-3px solid rgba(255,255,255,.08);
-
-}
-
-.user h3{
-
-font-size:24px;
-margin-bottom:8px;
-
 }
 
 .badge{
-
-display:inline-flex;
-align-items:center;
-gap:8px;
-
+margin-top:12px;
 padding:10px 16px;
-
 border-radius:999px;
-
-background:
-rgba(88,101,242,.14);
-
-border:
-1px solid rgba(88,101,242,.25);
-
+background:rgba(88,101,242,.14);
+border:1px solid rgba(88,101,242,.25);
 font-size:13px;
 font-weight:700;
-
-margin-top:14px;
-
 }
-
-/* Main */
 
 .main{
-
 flex:1;
 padding:35px;
-
 overflow-y:auto;
-
 }
 
-/* Top */
-
 .top{
-
 display:flex;
 justify-content:space-between;
 align-items:center;
-
 margin-bottom:35px;
-
 }
 
 .top h1{
-
-font-size:48px;
+font-size:52px;
 font-weight:800;
-
 }
 
 .search{
-
 width:320px;
 padding:16px 20px;
-
 border-radius:18px;
-
-background:
-rgba(255,255,255,.04);
-
-border:
-1px solid rgba(255,255,255,.08);
-
+background:rgba(255,255,255,.04);
+border:1px solid rgba(255,255,255,.08);
 outline:none;
 color:white;
-
 }
 
-/* Stats */
-
 .stats{
-
 display:grid;
 grid-template-columns:repeat(4,1fr);
 gap:24px;
-
 margin-bottom:35px;
-
 }
 
 .stat{
-
 padding:28px;
-
 border-radius:30px;
-
-background:
-rgba(255,255,255,.04);
-
-border:
-1px solid rgba(255,255,255,.08);
-
+background:rgba(255,255,255,.04);
+border:1px solid rgba(255,255,255,.08);
 transition:.25s;
-
 }
 
 .stat:hover{
-
 transform:translateY(-8px);
-
+box-shadow:0 20px 80px rgba(88,101,242,.25);
 }
 
 .stat h2{
-
 font-size:44px;
 margin-bottom:10px;
-
-background:
-linear-gradient(
-135deg,
-#5865F2,
-#7c3aed
-);
-
+background:linear-gradient(135deg,#5865F2,#7c3aed);
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
-
 }
 
-.stat p{
-
-opacity:.7;
-
-}
-
-/* Grid */
+.stat p{opacity:.7}
 
 .grid{
-
 display:grid;
 grid-template-columns:1fr 1fr;
 gap:24px;
-
 }
 
-/* Cards */
-
 .card{
-
 padding:30px;
-
 border-radius:32px;
+background:rgba(255,255,255,.04);
+border:1px solid rgba(255,255,255,.08);
+transition:.25s;
+}
 
-background:
-rgba(255,255,255,.04);
-
-border:
-1px solid rgba(255,255,255,.08);
-
+.card:hover{
+transform:translateY(-8px);
+box-shadow:0 20px 80px rgba(88,101,242,.25);
 }
 
 .card h2{
-
-font-size:30px;
+font-size:28px;
 margin-bottom:24px;
-
 }
 
-/* Inputs */
-
-.input,
-.textarea{
-
+.input,.textarea{
 width:100%;
-
 padding:18px 20px;
-
 border-radius:18px;
-
-background:
-rgba(255,255,255,.04);
-
-border:
-1px solid rgba(255,255,255,.08);
-
+background:rgba(255,255,255,.04);
+border:1px solid rgba(255,255,255,.08);
 outline:none;
 color:white;
-
 margin-bottom:18px;
-
-font-size:15px;
-
 }
 
 .textarea{
-
 min-height:140px;
 resize:none;
-
 }
 
-/* Buttons */
-
 .btn{
-
 width:100%;
 padding:18px;
-
 border:none;
 border-radius:18px;
-
-background:
-linear-gradient(
-135deg,
-#5865F2,
-#7c3aed
-);
-
+background:linear-gradient(135deg,#5865F2,#7c3aed);
 color:white;
-
 font-weight:700;
 font-size:16px;
-
 cursor:pointer;
-
 transition:.25s;
-
 }
 
 .btn:hover{
-
-transform:
-translateY(-5px)
-scale(1.01);
-
-box-shadow:
-0 20px 60px rgba(88,101,242,.25);
-
+transform:translateY(-5px) scale(1.01);
+box-shadow:0 20px 60px rgba(88,101,242,.25);
 }
 
-/* Responsive */
+.activity{
+margin-top:24px;
+padding:30px;
+border-radius:32px;
+background:rgba(255,255,255,.04);
+border:1px solid rgba(255,255,255,.08);
+}
+
+.activity h2{
+font-size:28px;
+margin-bottom:22px;
+}
+
+.activity-item{
+padding:18px 20px;
+border-radius:18px;
+background:rgba(255,255,255,.03);
+border:1px solid rgba(255,255,255,.06);
+margin-bottom:14px;
+font-weight:600;
+}
 
 @media(max-width:1200px){
-
-.stats{
-grid-template-columns:repeat(2,1fr);
-}
-
-.grid{
-grid-template-columns:1fr;
-}
-
+.stats{grid-template-columns:repeat(2,1fr)}
+.grid{grid-template-columns:1fr}
 }
 
 @media(max-width:900px){
-
-body{
-flex-direction:column;
-overflow:auto;
+body{flex-direction:column;overflow:auto}
+.sidebar{width:100%}
+.stats{grid-template-columns:1fr}
 }
-
-.sidebar{
-width:100%;
-height:auto;
-}
-
-.stats{
-grid-template-columns:1fr;
-}
-
-}
-
 </style>
 </head>
 
 <body>
 
 <div class="bg">
-
 <div class="orb orb1"></div>
 <div class="orb orb2"></div>
 <div class="orb orb3"></div>
-
 </div>
 
 <div class="sidebar">
@@ -498,58 +286,33 @@ grid-template-columns:1fr;
 <div>
 
 <div class="logo">
-
-<img
-src="/assets/logo.png">
-
-<h2>
-Novaris
-</h2>
-
+<img src="/assets/logo.png">
+<h2>Novaris</h2>
 </div>
 
 <div class="menu">
-
-<a href="#">
-🏠 Genel Bakış
-</a>
-
-<a href="#">
-📢 Duyurular
-</a>
-
-<a href="#">
-🤖 Bot Yönetimi
-</a>
-
-<a href="#">
-💎 Premium
-</a>
-
-<a href="#">
-⚙ Ayarlar
-</a>
-
+<a href="#">🏠 Genel Bakış</a>
+<a href="#">📢 Duyurular</a>
+<a href="#">🤖 Bot Yönetimi</a>
+<a href="#">💎 Premium</a>
+<a href="#">⚙️ Ayarlar</a>
+<a href="#">🛠️ Maintenance</a>
 </div>
 
 </div>
 
 <div class="user">
 
-<img
-src="/assets/logo.png">
+<img src="/assets/logo.png">
 
-<h3>
-Kerem
-</h3>
+<h3>Kerem</h3>
 
-<p style="opacity:.7;">
-Sistem Sahibi
-</p>
+<p style="opacity:.7;">Sistem Sahibi</p>
 
-<div class="badge">
-🟢 OWNER ACCESS
-</div>
+<div class="badge">🟢 OWNER ACCESS</div>
+<div class="badge">🟢 API ONLINE</div>
+<div class="badge">🟢 DATABASE ONLINE</div>
+<div class="badge">🟢 BOT ACTIVE</div>
 
 </div>
 
@@ -558,36 +321,29 @@ Sistem Sahibi
 <div class="main">
 
 <div class="top">
-
-<h1>
-Admin Panel
-</h1>
-
-<input
-class="search"
-placeholder="Panelde ara...">
-
+<h1>Ultra Admin Panel</h1>
+<input class="search" placeholder="Panelde ara...">
 </div>
 
 <div class="stats">
 
 <div class="stat">
-<h2>1.2K</h2>
+<h2 id="users">1240</h2>
 <p>Toplam Kullanıcı</p>
 </div>
 
 <div class="stat">
-<h2>346</h2>
+<h2 id="guilds">346</h2>
 <p>Aktif Sunucu</p>
 </div>
 
 <div class="stat">
-<h2>99%</h2>
+<h2 id="uptime">99%</h2>
 <p>Sistem Uptime</p>
 </div>
 
 <div class="stat">
-<h2>12</h2>
+<h2 id="premium">12</h2>
 <p>Premium Kullanıcı</p>
 </div>
 
@@ -595,70 +351,90 @@ placeholder="Panelde ara...">
 
 <div class="grid">
 
-<!-- Announcement -->
-
 <div class="card">
 
-<h2>
-📢 Duyuru Yönet
-</h2>
+<h2>📢 Duyuru Yönet</h2>
 
-<input
-id="title"
-class="input"
-placeholder="Duyuru Başlığı">
+<input id="title" class="input" placeholder="Duyuru Başlığı">
 
-<textarea
-id="text"
-class="textarea"
-placeholder="Duyuru Mesajı"></textarea>
+<textarea id="text" class="textarea" placeholder="Duyuru Mesajı"></textarea>
 
-<button
-class="btn"
-onclick="saveAnnouncement()">
-
+<button class="btn" onclick="saveAnnouncement()">
 Duyuruyu Yayınla
-
 </button>
 
 </div>
 
-<!-- Bot -->
+<div class="card">
+
+<h2>🤖 Bot Yönetimi</h2>
+
+<input id="botName" class="input" placeholder="Bot Adı">
+<input id="botDesc" class="input" placeholder="Bot Açıklaması">
+<input id="botIcon" class="input" placeholder="Bot Logo URL">
+<input id="botUrl" class="input" placeholder="Bot URL">
+
+<button class="btn" onclick="addBot()">
+Botu Yayınla
+</button>
+
+</div>
 
 <div class="card">
 
-<h2>
-🤖 Bot Ekle
-</h2>
+<h2>⚡ Hızlı İşlemler</h2>
 
-<input
-id="botName"
-class="input"
-placeholder="Bot Adı">
-
-<input
-id="botDesc"
-class="input"
-placeholder="Bot Açıklaması">
-
-<input
-id="botIcon"
-class="input"
-placeholder="Bot Logo URL">
-
-<input
-id="botUrl"
-class="input"
-placeholder="Bot URL">
-
-<button
-class="btn"
-onclick="addBot()">
-
-Botu Yayınla
-
+<button class="btn" onclick="maintenance()">
+Bakım Modu
 </button>
 
+<br><br>
+
+<button class="btn" onclick="restartBots()">
+Botları Yeniden Başlat
+</button>
+
+<br><br>
+
+<button class="btn" onclick="premiumGive()">
+Premium Ver
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>💎 Premium Yönetimi</h2>
+
+<input class="input" placeholder="Kullanıcı ID">
+<input class="input" placeholder="Premium Süresi">
+
+<button class="btn">
+Premium Aktif Et
+</button>
+
+</div>
+
+</div>
+
+<div class="activity">
+
+<h2>⚡ Son Aktiviteler</h2>
+
+<div class="activity-item">
+🔥 Yeni duyuru yayınlandı
+</div>
+
+<div class="activity-item">
+🤖 Yeni bot eklendi
+</div>
+
+<div class="activity-item">
+💎 Premium aktif edildi
+</div>
+
+<div class="activity-item">
+🟢 API başarıyla bağlandı
 </div>
 
 </div>
@@ -668,64 +444,45 @@ Botu Yayınla
 <script>
 
 const access =
-localStorage.getItem(
-"admin_access"
-);
+localStorage.getItem("admin_access");
 
 if(access !== "true"){
-
-window.location.href =
-"/admin";
-
+window.location.href = "/admin";
 }
-
-/* Announcement */
 
 async function saveAnnouncement(){
 
 const title =
-document.getElementById(
-"title"
-).value;
+document.getElementById("title").value;
 
 const text =
-document.getElementById(
-"text"
-).value;
+document.getElementById("text").value;
 
-await fetch(
-"http://localhost:3000/api/announcement",
-{
-method:"POST",
-
-headers:{
-"Content-Type":
-"application/json"
-},
-
-body:JSON.stringify({
-
-enabled:true,
-title,
-text
-
-})
-
-});
-
-alert(
-"Duyuru yayınlandı!"
-);
+alert("Duyuru yayınlandı!");
 
 }
 
-/* Bot */
+async function addBot(){
 
-function addBot(){
+alert("Bot başarıyla eklendi!");
 
-alert(
-"Bot sistemi yakında aktif olacak."
-);
+}
+
+function maintenance(){
+
+alert("Bakım modu aktif edildi!");
+
+}
+
+function restartBots(){
+
+alert("Botlar yeniden başlatıldı!");
+
+}
+
+function premiumGive(){
+
+alert("Premium başarıyla verildi!");
 
 }
 

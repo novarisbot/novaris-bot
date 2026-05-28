@@ -3473,5 +3473,59 @@ behavior: "smooth"
 
 </script>
 
+
+
+<!-- NOVARIS ADMIN PANEL -->
+<script>
+if(!localStorage.getItem("novarisBots")){
+localStorage.setItem("novarisBots", JSON.stringify([]));
+}
+
+function addDynamicBot(bot){
+const grid = document.querySelector('.bot-grid');
+if(!grid) return;
+
+const card = document.createElement('div');
+card.className = 'bot-card';
+
+let tags = '';
+(bot.tags || []).forEach(t=>{
+tags += `<span>${t}</span>`;
+});
+
+card.innerHTML = `
+<div class="bot-top">
+<div class="bot-icon">${bot.icon || '⚡'}</div>
+<div class="bot-status">${bot.status || 'AKTİF'}</div>
+</div>
+
+<h3>${bot.name}</h3>
+
+<p>${bot.description}</p>
+
+<div class="bot-features">
+${tags}
+</div>
+
+<a href="${bot.url}" class="primary-btn">
+${bot.button || 'Sunucuya Ekle'}
+</a>
+`;
+
+grid.appendChild(card);
+}
+
+window.addEventListener("DOMContentLoaded", ()=>{
+
+const bots =
+JSON.parse(
+localStorage.getItem("novarisBots") || "[]"
+);
+
+bots.forEach(addDynamicBot);
+
+});
+</script>
+
 </body>
 </html>

@@ -275,6 +275,30 @@ Kaydet
 
 <script>
 
+  function showSuccess(text){
+
+document.getElementById(
+"successText"
+).innerText = text;
+
+document.getElementById(
+"successModal"
+).classList.add(
+"active"
+);
+
+}
+
+function closeSuccess(){
+
+document.getElementById(
+"successModal"
+).classList.remove(
+"active"
+);
+
+}
+
 const API_URL =
 "https://novaris-api.onrender.com/api/announcement";
 
@@ -671,6 +695,34 @@ window.onload = renderAnnouncements;
 </div>
 </div>
 </div>
+<div id="successModal" class="modal">
 
+<div class="modal-box"
+style="
+max-width:450px;
+text-align:center;
+">
+
+<div style="
+font-size:70px;
+margin-bottom:15px;
+">
+✅
+</div>
+
+<h2 id="successText">
+İşlem başarılı
+</h2>
+
+<button
+class="btn"
+style="margin-top:20px"
+onclick="closeSuccess()">
+Tamam
+</button>
+
+</div>
+
+</div>
 </body>
 </html>

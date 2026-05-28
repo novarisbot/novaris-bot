@@ -4280,35 +4280,35 @@ scale(1)`;
 fetch(
 "https://novaris-api.onrender.com/api/announcement"
 )
-.then(res=>res.json())
-.then(data=>{
+
+<script>
+
+fetch("https://novaris-api.onrender.com/api/announcement")
+.then(res => res.json())
+.then(data => {
+
+const bar = document.getElementById("announcement-bar");
 
 if(data.enabled){
 
-document.getElementById(
-"announcement-bar"
-).innerHTML = `
-
+bar.innerHTML = `
 <div class="announcement">
-
 <div class="announcement-content">
-
-📢 ${data.title}
-—
-${data.text}
-
+📢 ${data.title} — ${data.text}
 </div>
-
 </div>
-
 `;
+
+}else{
+
+bar.innerHTML = "";
 
 }
 
-});
+})
+.catch(err => console.log(err));
 
 </script>
-
 
 </body>
 </html>

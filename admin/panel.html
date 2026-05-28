@@ -614,6 +614,41 @@ document.getElementById("username").innerText = username;
 
 async function saveAnnouncement(){
 
+  
+async function deleteAnnouncement(){
+
+await fetch(
+"https://novaris-api.onrender.com/api/announcement",
+{
+method:"POST",
+
+headers:{
+"Content-Type":
+"application/json"
+},
+
+body:JSON.stringify({
+
+enabled:false,
+title:"",
+text:""
+
+})
+
+});
+
+addActivity(
+"🗑️ Duyuru silindi"
+);
+
+notify(
+"Duyuru kaldırıldı!"
+);
+
+}
+
+
+
 const title =
 document.getElementById(
 "announcementTitle"

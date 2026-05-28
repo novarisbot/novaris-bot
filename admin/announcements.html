@@ -82,9 +82,21 @@ document.getElementById("title").value;
 const list =
 document.getElementById("announcementList");
 
-list.innerHTML =
-'<div class="activity">📢 ' + title + '</div>'
-+ list.innerHTML;
+const announcements =
+JSON.parse(
+localStorage.getItem("novaris_announcements") || "[]"
+);
+
+announcements.unshift({
+title:title
+});
+
+localStorage.setItem(
+"novaris_announcements",
+JSON.stringify(announcements)
+);
+
+renderAnnouncements();
 
 }
 </script>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Novaris Login</title>
+
+<style>
+body{
+background:#050505;
+color:white;
+font-family:sans-serif;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+flex-direction:column;
+}
+
+.card{
+background:rgba(255,255,255,.05);
+padding:40px;
+border-radius:24px;
+border:1px solid rgba(255,255,255,.08);
+text-align:center;
+backdrop-filter:blur(20px);
+}
+
+img{
+width:110px;
+height:110px;
+border-radius:50%;
+margin-bottom:20px;
+}
+
+h1{
+margin:0;
+}
+
+p{
+opacity:.7;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<img id="avatar">
+
+<h1 id="username">Yükleniyor...</h1>
+
+<p>Discord hesabın başarıyla bağlandı.</p>
+
+</div>
+
+<script>
+
+const params =
+new URLSearchParams(window.location.hash.slice(1));
+
+const token = params.get("access_token");
+
+if(token){
+
+fetch("https://discord.com/api/users/@me",{
+headers:{
+authorization:`Bearer ${token}`
+}
+})
+.then(res=>res.json())
+.then(user=>{
+
+document.getElementById("username")
+.innerText = user.username;
+
+document.getElementById("avatar")
+.src =
+`https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
+
+});
+
+}
+
+</script>
+
+</body>
+</html>

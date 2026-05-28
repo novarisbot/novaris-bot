@@ -564,24 +564,23 @@ renderAnnouncements();
 
 let editingId = null;
 
-async function editAnnouncement(index){
+async function editAnnouncement(id){
 
 editingId = id;
 
-const res =
-await fetch(API_URL);
+const res = await fetch(API_URL);
 
-const data =
-await res.json();
+const data = await res.json();
 
 const announcements =
 Array.isArray(data)
 ? data
 : [data];
 
-announcements.reverse();
+const a =
+announcements.find(x => x.id === id);
 
-const a = announcements[index];
+if(!a) return;
 
 document.getElementById("editTitle").value =
 a.title || "";
@@ -633,7 +632,8 @@ body:JSON.stringify(updated)
 const data = await res.json();
 
 if(data.success){
-closeModal();
+closeDeleteModal();
+deletingId = null;
 renderAnnouncements();
 }
 }

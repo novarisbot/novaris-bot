@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Novaris Dashboard</title>
+<title>Novaris Login</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
@@ -173,9 +173,6 @@ conic-gradient(
 );
 
 animation:spin 4s linear infinite;
-
-filter:
-blur(.5px);
 }
 
 @keyframes spin{
@@ -340,7 +337,8 @@ Discord Başarıyla Bağlandı
 <div class="avatar-ring"></div>
 
 <img id="avatar"
-class="avatar">
+class="avatar"
+src="https://cdn.discordapp.com/embed/avatars/0.png">
 
 </div>
 
@@ -358,18 +356,6 @@ class="btn"
 onclick="goDashboard()">
 Dashboard'a Git
 </a>
-
-<script>
-
-function goDashboard(){
-
-window.location.href =
-"/dashboard.html";
-
-}
-
-</script>
-  
 
 <div class="loading">
 <span></span>
@@ -408,8 +394,7 @@ particles.appendChild(span);
 
 }
 
-
-/* discord user */
+/* discord auth */
 
 const params =
 new URLSearchParams(
@@ -460,7 +445,13 @@ document
 
 }
 
-</script>
+function goDashboard(){
 
+window.location.href =
+"/dashboard.html";
+  
+}
+
+</script>
 </body>
 </html>

@@ -350,23 +350,15 @@ grid-template-columns:1fr;
 }
 }
 
-
-.custom-modal-box{
-animation:modalPop .35s ease;
-}
-
-@keyframes modalPop{
-0%{
-transform:scale(.7) translateY(30px);
-opacity:0;
-}
-100%{
-transform:scale(1) translateY(0);
-opacity:1;
-}
-}
-
 </style>
+
+<style>
+body{
+-webkit-font-smoothing:antialiased;
+-moz-osx-font-smoothing:grayscale;
+}
+</style>
+
 </head>
 
 <body>
@@ -382,7 +374,7 @@ opacity:1;
 <div class="menu">
 
 <button class="tab-btn active" onclick="showSection('overview',this)">
-?? Genel Bak覺?
+??Genel Bak覺?
 </button>
 
 <button class="tab-btn" onclick="showSection('announcements',this)">
@@ -390,11 +382,11 @@ opacity:1;
 </button>
 
 <button class="tab-btn" onclick="showSection('bots',this)">
-?? Bot Y繹netimi
+??Bot Y繹netimi
 </button>
 
 <button class="tab-btn" onclick="showSection('settings',this)">
-?? Ayarlar
+??Ayarlar
 </button>
 
 </div>
@@ -454,7 +446,7 @@ Kontrol Merkezi
 <div>
 
 <div class="card">
-<h3>??H覺zl覺 襤?lemler</h3>
+<h3>?？覺zl覺 襤?lemler</h3>
 
 <button class="btn" onclick="showModal('Bak覺m Modu','Bak覺m modu aktif edildi!')">
 Bak覺m Modu
@@ -469,7 +461,7 @@ Bot Restart
 </div>
 
 <div class="card">
-<h3>??Son Aktiviteler</h3>
+<h3>?﹖on Aktiviteler</h3>
 
 <div id="activityFeed">
 
@@ -478,7 +470,7 @@ Bot Restart
 </div>
 
 <div class="activity-item">
-?? Yeni bot eklendi
+??Yeni bot eklendi
 </div>
 
 </div>
@@ -499,7 +491,7 @@ Bot Restart
 </div>
 
 <div class="card">
-<h3>?? Analizler</h3>
+<h3>??Analizler</h3>
 <canvas id="chart"></canvas>
 </div>
 
@@ -537,7 +529,7 @@ Duyuruyu Sil
 
 <div class="card">
 
-<h3>?? Bot Ekle</h3>
+<h3>??Bot Ekle</h3>
 
 <input class="input" id="botName" placeholder="Bot Ad覺">
 
@@ -545,7 +537,7 @@ Duyuruyu Sil
 
 <input class="input" id="botURL" placeholder="Bot URL">
 
-<input class="input" id="botLogo" placeholder="Emoji Logo (? ????)">
+<input class="input" id="botLogo" placeholder="Emoji Logo (? ?﹦)">
 
 <input class="input" id="botTags" placeholder="Tagler (Virg羹lle ay覺r)">
 
@@ -561,7 +553,7 @@ Botu Kaydet
 
 <div class="card">
 
-<h3>?? Botlar</h3>
+<h3>??Botlar</h3>
 
 <div id="bot-list"></div>
 
@@ -595,7 +587,7 @@ Ye?il Tema
 
 <div class="card">
 
-<h3>?? Di?er Ayarlar</h3>
+<h3>??Di?er Ayarlar</h3>
 
 <button class="btn" onclick="showModal('Ayarlar','Ayarlar kaydedildi!')">
 Ayarlar覺 Kaydet
@@ -612,7 +604,7 @@ Ayarlar覺 Kaydet
 <div class="custom-modal-box">
 
 <div class="modal-icon">
-??</div>
+??/div>
 
 <h2 id="modal-title">
 Ba?ar覺l覺
@@ -765,7 +757,7 @@ card.innerHTML = `
 <div class="bot-top">
 
 <div class="bot-logo">
-${logo || '??}
+${logo || '?﹙
 </div>
 
 <div class="bot-status">
@@ -796,30 +788,16 @@ ${buttonText || 'Sunucuya Ekle'}
 
 `;
 
-
-document.getElementById("bot-list").prepend(card);
-
-const existingBots = JSON.parse(localStorage.getItem("novaris_bots") || "[]");
-
-existingBots.unshift({
-name:name,
-description:description,
-url:url,
-logo:logo,
-tags:tags,
-button:buttonText,
-status:statusText
-});
-
-localStorage.setItem("novaris_bots", JSON.stringify(existingBots));
-
+document
+.getElementById("bot-list")
+.prepend(card);
 
 showModal(
 "Bot Eklendi",
 name + " ba?ar覺yla eklendi!"
 );
 
-addActivity("?? " + name + " sisteme eklendi");
+addActivity("??" + name + " sisteme eklendi");
 
 }
 

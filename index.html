@@ -3348,38 +3348,24 @@ Premium Discord Systems © 2026
 
 
 
+
 <script>
 
 window.addEventListener("load", () => {
 
 const loader = document.getElementById("loader-screen");
 
-
-<script>
-
-window.addEventListener("load", () => {
-
-const loader =
-document.getElementById("loader-screen");
-
 if(loader){
-
 setTimeout(() => {
-
 loader.classList.add("hide");
-
-},1200);
-
+}, 1200);
 }
-
-/* announcement */
 
 fetch("https://novaris-api.onrender.com/api/announcement")
 .then(res => res.json())
 .then(data => {
 
-const bar =
-document.getElementById("announcement-bar");
+const bar = document.getElementById("announcement-bar");
 
 if(!bar) return;
 
@@ -3401,144 +3387,91 @@ bar.innerHTML = '';
 })
 .catch(err => console.log(err));
 
-});
-
-/* scroll progress */
-
-window.addEventListener("scroll",()=>{
-
-const scrollTop =
-window.scrollY;
-
-const height =
-document.body.scrollHeight -
-window.innerHeight;
-
-const progress =
-(scrollTop / height) * 100;
-
-const progressBar =
-document.getElementById("scroll-progress");
-
-if(progressBar){
-
-progressBar.style.width =
-progress + "%";
-
-}
-
-});
-
-/* fake terminal */
-
-const typing =
-document.getElementById("typing-line");
+const typing = document.getElementById("typing-line");
 
 if(typing){
 
 typing.innerHTML = `
-
-> Novaris Sistemleri Başlatılıyor...
-<br>
-> Discord API Bağlantısı Kuruldu
-<br>
-> Premium Sistemler Yüklendi
-<br>
-> Booster Sistemi Aktif
-<br>
-> Kayıt Sistemi Hazır
-<br>
+> Novaris Sistemleri Başlatılıyor...<br>
+> Discord API Bağlantısı Kuruldu<br>
+> Premium Sistemler Yüklendi<br>
+> Booster Sistemi Aktif<br>
+> Kayıt Sistemi Hazır<br>
 > Tüm Sistemler Çalışıyor
-
 `;
 
 }
 
-/* reveal */
+});
 
-const reveals =
-document.querySelectorAll(".reveal");
+window.addEventListener("scroll", () => {
+
+const progressBar = document.getElementById("scroll-progress");
+
+if(progressBar){
+
+const scrollTop = window.scrollY;
+const height = document.body.scrollHeight - window.innerHeight;
+const progress = (scrollTop / height) * 100;
+
+progressBar.style.width = progress + "%";
+
+}
+
+});
+
+const reveals = document.querySelectorAll(".reveal");
 
 function revealScroll(){
 
-reveals.forEach(el=>{
+reveals.forEach(el => {
 
-const top =
-el.getBoundingClientRect().top;
+const top = el.getBoundingClientRect().top;
 
 if(top < window.innerHeight - 100){
-
 el.classList.add("active");
-
 }
 
 });
 
 }
 
-window.addEventListener(
-"scroll",
-revealScroll
-);
-
+window.addEventListener("scroll", revealScroll);
 revealScroll();
 
-/* cursor */
+const cursor = document.getElementById("cursor-core");
+const ring = document.getElementById("mouse-ring");
 
-const cursor =
-document.getElementById("cursor-core");
-
-const ring =
-document.getElementById("mouse-ring");
-
-document.addEventListener(
-"mousemove",
-(e)=>{
+document.addEventListener("mousemove", (e) => {
 
 if(cursor){
-
-cursor.style.left =
-e.clientX + "px";
-
-cursor.style.top =
-e.clientY + "px";
-
+cursor.style.left = e.clientX + "px";
+cursor.style.top = e.clientY + "px";
 }
 
 if(ring){
-
-ring.style.left =
-e.clientX + "px";
-
-ring.style.top =
-e.clientY + "px";
-
+ring.style.left = e.clientX + "px";
+ring.style.top = e.clientY + "px";
 }
 
 });
 
-/* scroll top */
-
-const scrollBtn =
-document.getElementById("scroll-top");
+const scrollBtn = document.getElementById("scroll-top");
 
 if(scrollBtn){
 
 scrollBtn.onclick = () => {
 
 window.scrollTo({
-top:0,
-behavior:"smooth"
+top: 0,
+behavior: "smooth"
 });
 
 };
 
 }
 
-});
-
 </script>
 
 </body>
 </html>
-

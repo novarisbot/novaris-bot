@@ -23,6 +23,52 @@ body{background:#07090f;color:white;display:flex;min-height:100vh;overflow:hidde
 .delete{background:#dc2626}
 ::-webkit-scrollbar{width:8px}
 ::-webkit-scrollbar-thumb{background:#7c3aed;border-radius:999px}
+
+.promo-box{
+display:flex;
+gap:10px;
+align-items:center;
+flex-wrap:wrap;
+}
+
+.promo-code{
+padding:12px 18px;
+border-radius:14px;
+background:#5d6b46;
+border:1px dashed #c3d49c;
+font-weight:700;
+font-size:14px;
+}
+
+.promo-timer{
+padding:12px 18px;
+border-radius:14px;
+background:#4f5c47;
+border:1px solid #727f65;
+font-weight:700;
+font-size:14px;
+}
+
+.promo-button{
+padding:12px 20px;
+border:none;
+border-radius:14px;
+background:#f5ebc7;
+color:#1a1a1a;
+font-weight:800;
+cursor:pointer;
+text-decoration:none;
+display:inline-flex;
+align-items:center;
+justify-content:center;
+transition:.25s;
+}
+
+.promo-button:hover{
+transform:translateY(-3px);
+box-shadow:0 10px 30px rgba(245,235,199,.2);
+}
+
 </style>
 
 </head>
@@ -77,6 +123,12 @@ id="promoButton"
 class="input"
 placeholder="Buton Yazısı (Örn: Premium Ol)">
 
+<input
+type="text"
+id="promoButtonUrl"
+class="input"
+placeholder="Buton URL (Örn: https://discord.gg/novaris)">
+
 
 <button class="btn" onclick="publishAnnouncement()">
 Duyuruyu Yayınla
@@ -93,6 +145,7 @@ Duyuruyu Yayınla
 </div>
 
 </div>
+
 
 
 
@@ -121,6 +174,9 @@ document.getElementById("promoTimer").value;
 const promoButton =
 document.getElementById("promoButton").value;
 
+const promoButtonUrl =
+document.getElementById("promoButtonUrl").value;
+
 if(!title || !text) return;
 
 await fetch(API_URL,{
@@ -139,6 +195,7 @@ expire:expire,
 promoCode:promoCode,
 promoTimer:promoTimer,
 promoButton:promoButton,
+promoButtonUrl:promoButtonUrl,
 date:new Date().toLocaleString("tr-TR")
 })
 
@@ -150,6 +207,7 @@ document.getElementById("expire").value="";
 document.getElementById("promoCode").value="";
 document.getElementById("promoTimer").value="";
 document.getElementById("promoButton").value="";
+document.getElementById("promoButtonUrl").value="";
 
 renderAnnouncements();
 
@@ -213,59 +271,36 @@ ${a.date || ''}
 
 <p style="
 opacity:.8;
-line-height:1.7;
-margin-bottom:14px;
+line-height:1.8;
+margin-bottom:16px;
 ">
 ${a.text || ''}
 </p>
 
 </div>
 
-<div style="
-display:flex;
-gap:10px;
-align-items:center;
-flex-wrap:wrap;
-">
+<div class="promo-box">
 
 ${a.promoCode ? `
-<div style="
-padding:12px 18px;
-border-radius:14px;
-background:#5d6b46;
-border:1px dashed #c3d49c;
-font-weight:700;
-font-size:14px;
-">
+<div class="promo-code">
 ${a.promoCode}
 </div>
 ` : ''}
 
 ${a.promoTimer ? `
-<div style="
-padding:12px 18px;
-border-radius:14px;
-background:#4f5c47;
-border:1px solid #727f65;
-font-weight:700;
-font-size:14px;
-">
+<div class="promo-timer"
+data-timer="${a.promoTimer}">
 ⏱ ${a.promoTimer}
 </div>
 ` : ''}
 
 ${a.promoButton ? `
-<button style="
-padding:12px 20px;
-border:none;
-border-radius:14px;
-background:#f5ebc7;
-color:#1a1a1a;
-font-weight:800;
-cursor:pointer;
-">
+<a
+href="${a.promoButtonUrl || '#' }"
+target="_blank"
+class="promo-button">
 ${a.promoButton}
-</button>
+</a>
 ` : ''}
 
 </div>
@@ -314,6 +349,8 @@ Sil
 
 });
 
+startCountdowns();
+
 }catch(err){
 
 list.innerHTML = `
@@ -326,9 +363,53 @@ list.innerHTML = `
 
 }
 
+function startCountdowns(){
+
+document.querySelectorAll("[data-timer]").forEach(el=>{
+
+let time = el.dataset.timer;
+
+if(!time.includes(":")) return;
+
+let parts = time.split(":").map(Number);
+
+let total =
+(parts[0] * 3600) +
+(parts[1] * 60) +
+(parts[2]);
+
+setInterval(()=>{
+
+if(total <= 0){
+
+el.innerHTML = "⏱ Süre Doldu";
+return;
+
+}
+
+total--;
+
+let h =
+String(Math.floor(total / 3600)).padStart(2,"0");
+
+let m =
+String(Math.floor((total % 3600)/60)).padStart(2,"0");
+
+let s =
+String(total % 60).padStart(2,"0");
+
+el.innerHTML =
+`⏱ ${h}:${m}:${s}`;
+
+},1000);
+
+});
+
+}
+
 async function deleteAnnouncement(index){
 
-alert("API sistemi olduğu için backend silme endpointi gerekiyor.");
+alert("Silme sistemi için backend endpoint gerekli.");
 
 }
 
@@ -365,11 +446,15 @@ a.promoTimer || "";
 document.getElementById("promoButton").value =
 a.promoButton || "";
 
+document.getElementById("promoButtonUrl").value =
+a.promoButtonUrl || "";
+
 }
 
 window.onload = renderAnnouncements;
 
 </script>
+
 
 
 

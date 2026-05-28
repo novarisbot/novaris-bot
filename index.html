@@ -3329,9 +3329,6 @@ Premium Discord Systems © 2026
 
 </footer>
 
-fetch(
-"https://novaris-api.onrender.com/api/announcement"
-)
 .then(res=>res.json())
 .then(data=>{
 
@@ -4285,6 +4282,41 @@ ${data.text}
 
 
 </script>
+
+<script>
+
+fetch(
+"https://novaris-api.onrender.com/api/announcement"
+)
+.then(res=>res.json())
+.then(data=>{
+
+if(data.enabled){
+
+document.getElementById(
+"announcement-bar"
+).innerHTML = `
+
+<div class="announcement">
+
+<div class="announcement-content">
+
+📢 ${data.title}
+—
+${data.text}
+
+</div>
+
+</div>
+
+`;
+
+}
+
+});
+
+</script>
+
 
 </body>
 </html>

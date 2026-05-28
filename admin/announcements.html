@@ -86,10 +86,21 @@ localStorage.getItem("novaris_announcements") || "[]"
 
 function saveAnnouncements(data){
 
-localStorage.setItem(
-"novaris_announcements",
-JSON.stringify(data)
-);
+fetch("https://novaris-api.onrender.com/api/announcement",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+enabled:true,
+title:title,
+text:text
+})
+
+});
 
 }
 
@@ -107,7 +118,7 @@ document.getElementById("expire").value;
 if(!title || !text) return;
 
 const announcements =
-getAnnouncements();
+
 
 announcements.unshift({
 title,
@@ -116,9 +127,9 @@ expire,
 date:new Date().toLocaleString("tr-TR")
 });
 
-saveAnnouncements(announcements);
 
-renderAnnouncements();
+
+
 
 document.getElementById("title").value="";
 document.getElementById("text").value="";

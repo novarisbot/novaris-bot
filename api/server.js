@@ -155,11 +155,14 @@ success:true
 
 });
 app.get("/test",(req,res)=>{
-  res.json({
-    version:"v2",
-    time:Date.now()
-  });
+
+res.json({
+version:"v2",
+time:Date.now()
 });
+
+});
+
 app.listen(
 3000,
 ()=>{

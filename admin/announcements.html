@@ -460,13 +460,13 @@ font-size:13px;
 
 <button
 class="btn edit"
-onclick="editAnnouncement(${index})">
+onclick="editAnnouncement(${a.id})">
 Düzenle
 </button>
 
 <button
 class="btn delete"
-onclick="deleteAnnouncement(${index})">
+onclick="deleteAnnouncement(${a.id})">
 Sil
 </button>
 
@@ -539,47 +539,34 @@ el.innerHTML =
 }
 
 
-async function deleteAnnouncement(index){
+let deletingId = null;
 
-const res =
-await fetch(API_URL);
-
-const data =
-await res.json();
-
-let announcements =
-Array.isArray(data)
-? data
-: [data];
-
-announcements.reverse();
-
-announcements.splice(index,1);
-
-localStorage.setItem(
-"novaris_deleted_announcements",
-JSON.stringify(announcements)
-);
-
-document.getElementById("announcementList").innerHTML="";
-
-announcements.reverse().forEach((a,index)=>{
-
-});
-
-renderAnnouncements();
-
-alert("Duyuru silindi.");
-
+function deleteAnnouncement(id){
+deletingId = id;
+document.getElementById("deleteModal").classList.add("active");
 }
 
+function closeDeleteModal(){
+document.getElementById("deleteModal").classList.remove("active");
+}
 
+async function confirmDelete(){
+if(!deletingId) return;
 
-let editingIndex = null;
+const res = await fetch(API_URL + "/" + deletingId,{method:"DELETE"});
+const data = await res.json();
+
+if(data.success){
+closeDeleteModal();
+renderAnnouncements();
+}
+}
+
+let editingId = null;
 
 async function editAnnouncement(index){
 
-editingIndex = index;
+editingId = id;
 
 const res =
 await fetch(API_URL);
@@ -628,12 +615,27 @@ document.getElementById("editModal")
 
 async function saveEdit(){
 
-alert("Frontend düzenleme sistemi hazırlandı.");
+const updated={
+title:document.getElementById("editTitle").value,
+text:document.getElementById("editText").value,
+promoCode:document.getElementById("editPromoCode").value,
+promoTimer:document.getElementById("editPromoTimer").value,
+promoButton:document.getElementById("editPromoButton").value,
+promoButtonUrl:document.getElementById("editPromoButtonUrl").value
+};
 
+const res = await fetch(API_URL + "/" + editingId,{
+method:"PUT",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify(updated)
+});
+
+const data = await res.json();
+
+if(data.success){
 closeModal();
-
 renderAnnouncements();
-
+}
 }
 
 window.onload = renderAnnouncements;
@@ -642,6 +644,18 @@ window.onload = renderAnnouncements;
 
 
 
+
+
+<div class="modal" id="deleteModal">
+<div class="modal-box" style="max-width:500px;">
+<div class="modal-title">Duyuruyu Sil</div>
+<p style="margin-bottom:20px;">Bu duyuruyu silmek istediğine emin misin?</p>
+<div style="display:flex;gap:10px;">
+<button class="btn delete" onclick="confirmDelete()">Evet, Sil</button>
+<button class="btn" onclick="closeDeleteModal()">İptal</button>
+</div>
+</div>
+</div>
 
 </body>
 </html>

@@ -98,6 +98,32 @@ JSON.stringify(announcements)
 
 renderAnnouncements();
 
+  function renderAnnouncements(){
+
+const list =
+document.getElementById("announcementList");
+
+const announcements =
+JSON.parse(
+localStorage.getItem("novaris_announcements") || "[]"
+);
+
+list.innerHTML = "";
+
+announcements.forEach(a=>{
+
+list.innerHTML += `
+<div class="activity">
+📢 ${a.title}
+</div>
+`;
+
+});
+
+}
+
+window.onload = renderAnnouncements;
+
 }
 </script>
 

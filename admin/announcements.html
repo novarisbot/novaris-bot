@@ -557,8 +557,15 @@ const res = await fetch(API_URL + "/" + deletingId,{method:"DELETE"});
 const data = await res.json();
 
 if(data.success){
-closeDeleteModal();
+
+closeModal();
+
+showSuccess(
+"✅ Duyuru başarıyla güncellendi."
+);
+
 renderAnnouncements();
+
 }
 }
 
@@ -632,9 +639,17 @@ body:JSON.stringify(updated)
 const data = await res.json();
 
 if(data.success){
+
 closeDeleteModal();
+
 deletingId = null;
+
+showSuccess(
+"🗑️ Duyuru başarıyla silindi."
+);
+
 renderAnnouncements();
+
 }
 }
 

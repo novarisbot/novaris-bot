@@ -354,9 +354,22 @@ Dashboard hazırlanıyor...
 </p>
 
 <a href="/dashboard.html"
-class="btn">
+class="btn"
+onclick="goDashboard()">
 Dashboard'a Git
 </a>
+
+<script>
+
+function goDashboard(){
+
+window.location.href =
+"/dashboard.html";
+
+}
+
+</script>
+  
 
 <div class="loading">
 <span></span>
@@ -406,6 +419,13 @@ const token =
 params.get("access_token");
 
 if(token){
+
+localStorage.setItem(
+"discord_token",
+token
+);
+
+}
 
 fetch(
 "https://discord.com/api/users/@me",

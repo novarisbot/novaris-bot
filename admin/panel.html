@@ -378,7 +378,7 @@ body{
 </button>
 
 <button class="tab-btn" onclick="showSection('announcements',this)">
-? Duyurular
+? Duyurular
 </button>
 
 <button class="tab-btn" onclick="showSection('bots',this)">
@@ -395,7 +395,7 @@ body{
 
 <div class="profile">
 <h2 id="username">Kerem</h2>
-<p>? OWNER ACCESS</p>
+<p>?? OWNER ACCESS</p>
 </div>
 
 </div>
@@ -410,7 +410,7 @@ Kontrol Merkezi
 
 <div class="top-right">
 <div class="box" id="clock">00:00:00</div>
-<div class="box">? API ONLINE</div>
+<div class="box">? API ONLINE</div>
 </div>
 
 </div>
@@ -446,7 +446,7 @@ Kontrol Merkezi
 <div>
 
 <div class="card">
-<h3>?？覺zl覺 襤?lemler</h3>
+<h3>??H覺zl覺 襤?lemler</h3>
 
 <button class="btn" onclick="showModal('Bak覺m Modu','Bak覺m modu aktif edildi!')">
 Bak覺m Modu
@@ -466,7 +466,7 @@ Bot Restart
 <div id="activityFeed">
 
 <div class="activity-item">
-? Yeni duyuru yay覺nland覺
+? Yeni duyuru yay覺nland覺
 </div>
 
 <div class="activity-item">
@@ -482,11 +482,11 @@ Bot Restart
 <div>
 
 <div class="card">
-<h3>? Sistem Durumu</h3>
+<h3>? Sistem Durumu</h3>
 
-<div class="status-item">? API ONLINE</div>
-<div class="status-item">? DATABASE CONNECTED</div>
-<div class="status-item">? BOT ACTIVE</div>
+<div class="status-item">? API ONLINE</div>
+<div class="status-item">? DATABASE CONNECTED</div>
+<div class="status-item">? BOT ACTIVE</div>
 
 </div>
 
@@ -505,7 +505,7 @@ Bot Restart
 
 <div class="card">
 
-<h3>? Duyuru Y繹netimi</h3>
+<h3>? Duyuru Y繹netimi</h3>
 
 <input class="input" id="announcementTitle" placeholder="Duyuru Ba?l覺?覺">
 
@@ -537,7 +537,7 @@ Duyuruyu Sil
 
 <input class="input" id="botURL" placeholder="Bot URL">
 
-<input class="input" id="botLogo" placeholder="Emoji Logo (? ?﹦)">
+<input class="input" id="botLogo" placeholder="Emoji Logo (?? ????)">
 
 <input class="input" id="botTags" placeholder="Tagler (Virg羹lle ay覺r)">
 
@@ -565,7 +565,7 @@ Botu Kaydet
 
 <div class="card">
 
-<h3>? Tema Ayarlar覺</h3>
+<h3>? Tema Ayarlar覺</h3>
 
 <div class="theme-grid">
 
@@ -587,7 +587,7 @@ Ye?il Tema
 
 <div class="card">
 
-<h3>??Di?er Ayarlar</h3>
+<h3>?? Di?er Ayarlar</h3>
 
 <button class="btn" onclick="showModal('Ayarlar','Ayarlar kaydedildi!')">
 Ayarlar覺 Kaydet
@@ -681,7 +681,7 @@ showModal(
 "Duyuru ba?ar覺yla yay覺nland覺!"
 );
 
-addActivity("? Yeni duyuru yay覺nland覺");
+addActivity("? Yeni duyuru yay覺nland覺");
 
 }
 
@@ -757,7 +757,7 @@ card.innerHTML = `
 <div class="bot-top">
 
 <div class="bot-logo">
-${logo || '?﹙
+${logo || '??}
 </div>
 
 <div class="bot-status">
@@ -798,6 +798,20 @@ name + " ba?ar覺yla eklendi!"
 );
 
 addActivity("??" + name + " sisteme eklendi");
+
+const existingBots = JSON.parse(localStorage.getItem("novaris_bots") || "[]");
+
+existingBots.unshift({
+name,
+description,
+url,
+logo,
+tags,
+buttonText,
+statusText
+});
+
+localStorage.setItem("novaris_bots", JSON.stringify(existingBots));
 
 }
 
@@ -853,6 +867,44 @@ showModal(
 );
 
 }
+
+
+// LOCAL STORAGE SAVE
+const savedBots = JSON.parse(localStorage.getItem("novaris_bots") || "[]");
+
+savedBots.forEach(bot=>{
+const tagsHTML = (bot.tags || []).map(tag=>`
+<div class="bot-tag">${tag}</div>
+`).join("");
+
+const card = document.createElement("div");
+card.className = "bot-card";
+
+card.innerHTML = `
+<div class="bot-top">
+<div class="bot-logo">${bot.logo || '??}</div>
+<div class="bot-status">${bot.statusText || 'AKT襤F'}</div>
+</div>
+
+<h1 style="margin-bottom:18px;">
+${bot.name}
+</h1>
+
+<p style="opacity:.75;line-height:1.8;">
+${bot.description}
+</p>
+
+<div class="bot-tags">
+${tagsHTML}
+</div>
+
+<button class="bot-btn" onclick="window.open('${bot.url}','_blank')">
+${bot.buttonText || 'Sunucuya Ekle'}
+</button>
+`;
+
+document.getElementById("bot-list").appendChild(card);
+});
 
 new Chart(
 document.getElementById('chart'),

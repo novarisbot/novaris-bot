@@ -591,7 +591,8 @@ document.getElementById("username").innerText = username;
 
 /* ANNOUNCEMENT */
 
-function saveAnnouncement(){
+
+async function saveAnnouncement(){
 
 const title =
 document.getElementById(
@@ -603,23 +604,37 @@ document.getElementById(
 "announcementText"
 ).value;
 
-localStorage.setItem(
-"announcement_title",
-title
-);
+await fetch(
+"https://novaris-api.onrender.com/api/announcement",
+{
+method:"POST",
 
-localStorage.setItem(
-"announcement_text",
+headers:{
+"Content-Type":
+"application/json"
+},
+
+body:JSON.stringify({
+
+enabled:true,
+title,
 text
-);
+
+})
+
+});
 
 addActivity(
 "📢 Yeni duyuru yayınlandı"
 );
 
-notify("Duyuru kaydedildi!");
+notify(
+"Duyuru başarıyla yayınlandı!"
+);
 
 }
+
+
 
 /* BOT */
 

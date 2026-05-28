@@ -2942,112 +2942,87 @@ Discord Sunucusu
 </div>
 
 
-<div class="bot-grid" id="dynamic-bots">
-
-</div>
+<div class="bot-grid" id="dynamic-bots"></div>
 
 <script>
-const staticBots = `
 
-<div class="bot-card">
+const defaultBots = [
 
-<div class="bot-top">
-<div class="bot-icon">🛡️</div>
-<div class="bot-status" style="background:#22c55e22;border:1px solid #22c55e55;color:#4ade80;">AKTİF</div>
-</div>
+{
+logo:"🛡️",
+status:"AKTİF",
+name:"Novaris Kayıt Botu",
+description:"Gelişmiş kayıt sistemi, otomatik rol yönetimi, kayıt log sistemi ve profesyonel yetkili altyapısı.",
+url:"https://discord.com/oauth2/authorize?client_id=1509403510813233203&permissions=8&scope=bot%20applications.commands",
+features:["Otomatik Rol","Kayıt Log","Yetkili Sistemi","Modern Altyapı"]
+},
 
-<h3>Novaris Kayıt Botu</h3>
+{
+logo:"🔒",
+status:"OFFLINE",
+name:"Novaris Özel Oda Botu",
+description:"Özel oda oluşturma, kanal kontrol sistemi, kilit sistemi ve kullanıcı yönetimi özellikleri.",
+url:"#",
+features:["Özel Oda","Kanal Kontrol","Oda Kilidi","Yetki Yönetimi"]
+},
 
-<p>
-Gelişmiş kayıt sistemi, otomatik rol yönetimi, kayıt log sistemi ve profesyonel yetkili altyapısı.
-</p>
+{
+logo:"💎",
+status:"OFFLINE",
+name:"Novaris Booster Botu",
+description:"Booster rol sistemi, özel booster yönetimi ve premium kullanıcı altyapısı.",
+url:"#",
+features:["Booster Rol","Premium Sistem","Hızlı Altyapı","Özel Yönetim"]
+}
 
-<div class="bot-features">
-<span>Otomatik Rol</span>
-<span>Kayıt Log</span>
-<span>Yetkili Sistemi</span>
-<span>Modern Altyapı</span>
-</div>
+];
 
-<a href="https://discord.com/oauth2/authorize?client_id=1509403510813233203&permissions=8&scope=bot%20applications.commands" class="primary-btn">
-Sunucuya Ekle
-</a>
-
-</div>
-
-<div class="bot-card">
-
-<div class="bot-top">
-<div class="bot-icon">🔒</div>
-<div class="bot-status" style="background:#ff000022;border:1px solid #ff000055;color:#ff4d6d;">OFFLINE</div>
-</div>
-
-<h3>Novaris Özel Oda Botu</h3>
-
-<p>
-Özel oda oluşturma, kanal kontrol sistemi, kilit sistemi ve kullanıcı yönetimi özellikleri.
-</p>
-
-<div class="bot-features">
-<span>Özel Oda</span>
-<span>Kanal Kontrol</span>
-<span>Oda Kilidi</span>
-<span>Yetki Yönetimi</span>
-</div>
-
-<a href="#" class="primary-btn">
-Yakında
-</a>
-
-</div>
-
-<div class="bot-card">
-
-<div class="bot-top">
-<div class="bot-icon">💎</div>
-<div class="bot-status" style="background:#ff000022;border:1px solid #ff000055;color:#ff4d6d;">OFFLINE</div>
-</div>
-
-<h3>Novaris Booster Botu</h3>
-
-<p>
-Booster rol sistemi, özel booster yönetimi ve premium kullanıcı altyapısı.
-</p>
-
-<div class="bot-features">
-<span>Booster Rol</span>
-<span>Premium Sistem</span>
-<span>Hızlı Altyapı</span>
-<span>Özel Yönetim</span>
-</div>
-
-<a href="#" class="primary-btn">
-Yakında
-</a>
-
-</div>
-`;
-
-const dynamicBots =
+const panelBots =
 JSON.parse(localStorage.getItem("novaris_bots") || "[]");
 
-const botArea =
+const allBots = [...defaultBots];
+
+panelBots.forEach(bot=>{
+
+const exists = allBots.some(x=>
+x.name.toLowerCase() === bot.name.toLowerCase()
+);
+
+if(!exists){
+
+allBots.push({
+logo:bot.logo || "🤖",
+status:bot.status || "AKTİF",
+name:bot.name,
+description:bot.description || "Novaris premium bot sistemi.",
+url:bot.url || "#",
+features:["Modern Sistem","Premium","Novaris"]
+});
+
+}
+
+});
+
+const area =
 document.getElementById("dynamic-bots");
 
-botArea.innerHTML = staticBots;
+area.innerHTML = "";
 
-dynamicBots.forEach(bot=>{
+allBots.forEach(bot=>{
 
 const offline =
 bot.status.toLowerCase().includes("off");
 
-botArea.innerHTML += `
+const features =
+bot.features.map(f=>`<span>${f}</span>`).join("");
+
+area.innerHTML += `
 
 <div class="bot-card">
 
 <div class="bot-top">
 
-<div class="bot-icon">${bot.logo || "🤖"}</div>
+<div class="bot-icon">${bot.logo}</div>
 
 <div class="bot-status"
 style="
@@ -3062,18 +3037,14 @@ ${bot.status}
 
 <h3>${bot.name}</h3>
 
-<p>
-${bot.description}
-</p>
+<p>${bot.description}</p>
 
 <div class="bot-features">
-<span>Modern Sistem</span>
-<span>Novaris</span>
-<span>Premium</span>
+${features}
 </div>
 
-<a href="${bot.url || '#'}" class="primary-btn">
-Sunucuya Ekle
+<a href="${bot.url}" class="primary-btn">
+${offline ? 'Yakında' : 'Sunucuya Ekle'}
 </a>
 
 </div>
@@ -3081,10 +3052,11 @@ Sunucuya Ekle
 `;
 
 });
+
 </script>
 
-
 </section>
+
 
 
 <section class="stats-section reveal">

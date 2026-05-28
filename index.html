@@ -4257,6 +4257,33 @@ scale(1)`;
 
 });
 
+fetch(
+"https://novaris-api.onrender.com/api/announcement"
+)
+.then(res=>res.json())
+.then(data=>{
+
+if(data.enabled){
+
+document.getElementById(
+"announcement"
+).innerHTML = `
+
+<div class="announcement-bar">
+
+📢 ${data.title}
+—
+${data.text}
+
+</div>
+
+`;
+
+}
+
+});
+
+
 </script>
 
 </body>

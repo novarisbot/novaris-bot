@@ -533,58 +533,31 @@ Duyuruyu Sil
 <input class="input" id="botDescription" placeholder="Bot Açıklaması">
 <input class="input" id="botURL" placeholder="Bot URL">
   
-<select class="input" id="botCategory">
 
-<option value="Moderasyon">
-Moderasyon
-</option>
 
-<option value="Kayıt">
-Kayıt
-</option>
 
-<option value="Guard">
-Guard
-</option>
 
-<option value="Eğlence">
-Eğlence
-</option>
 
-<option value="Müzik">
-Müzik
-</option>
-
-</select>
-
-<select class="input" id="botStatus">
-
-<option value="online">
-🟢 Online
-</option>
-
-<option value="offline">
-🔴 Offline
-</option>
-
-</select>
-
-<select class="input" id="botAction">
-
-<option value="invite">
-Sunucuya Ekle
-</option>
-
-<option value="soon">
-Yakında
-</option>
-
-</select>
 
 <input
 class="input"
 id="botLogo"
 placeholder="Bot Logo URL">
+
+<input
+class="input"
+id="botTags"
+placeholder="Tagler (Virgülle ayır)">
+
+<input
+class="input"
+id="botButtonText"
+placeholder="Buton Yazısı">
+
+<input
+class="input"
+id="botStatusText"
+placeholder="Durum Yazısı (AKTİF / OFFLINE)">
 
 
 
@@ -795,25 +768,39 @@ document.getElementById("botDescription").value;
 const url =
 document.getElementById("botURL").value;
 
-const category =
-document.getElementById("botCategory").value;
-
-const status =
-document.getElementById("botStatus").value;
-
-const action =
-document.getElementById("botAction").value;
-
 const logo =
 document.getElementById("botLogo").value;
 
-if(!name) return;
+const tags =
+document.getElementById("botTags")
+.value
+.split(",");
+
+const buttonText =
+document.getElementById("botButtonText").value;
+
+const statusText =
+document.getElementById("botStatusText").value;
 
 const card =
 document.createElement("div");
 
 card.className =
 "bot-card";
+
+let tagsHTML = "";
+
+tags.forEach(tag=>{
+
+tagsHTML += `
+
+<div class="bot-tag">
+${tag}
+</div>
+
+`;
+
+});
 
 card.innerHTML = `
 
@@ -823,13 +810,9 @@ card.innerHTML = `
 src="${logo || 'https://cdn-icons-png.flaticon.com/512/4712/4712109.png'}"
 class="bot-logo">
 
-<div class="bot-status ${status === 'online'
-? 'status-online'
-: 'status-offline'}">
+<div class="bot-status status-online">
 
-${status === 'online'
-? 'AKTİF'
-: 'OFFLINE'}
+${statusText || 'AKTİF'}
 
 </div>
 
@@ -841,27 +824,15 @@ ${status === 'online'
 
 <div class="bot-tags">
 
-<div class="bot-tag">
-${category}
-</div>
-
-<div class="bot-tag">
-Premium Sistem
-</div>
-
-<div class="bot-tag">
-Modern Altyapı
-</div>
+${tagsHTML}
 
 </div>
 
 <button
-class="bot-btn ${action === 'soon' ? 'soon' : ''}"
+class="bot-btn"
 onclick="window.open('${url}','_blank')">
 
-${action === 'invite'
-? 'Sunucuya Ekle'
-: 'Yakında'}
+${buttonText || 'Sunucuya Ekle'}
 
 </button>
 

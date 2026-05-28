@@ -2941,7 +2941,7 @@ Discord Sunucusu
 <h2>Novaris Bot Sistemleri</h2>
 </div>
 
-<div class="bot-grid">
+<div class="bot-grid" id="dynamic-bots">
 
 <div class="bot-card">
 
@@ -3468,6 +3468,71 @@ behavior: "smooth"
 });
 
 };
+
+}
+
+
+// PANELDEN BOTLARI CEK
+const dynamicBotsContainer =
+document.getElementById("dynamic-bots");
+
+const savedBots =
+JSON.parse(localStorage.getItem("novaris_bots") || "[]");
+
+if(dynamicBotsContainer){
+
+savedBots.forEach(bot => {
+
+const tagsHTML =
+(bot.tags || [])
+.map(tag => `<span>${tag}</span>`)
+.join("");
+
+const isOffline =
+(bot.statusText || "")
+.toUpperCase()
+.includes("OFFLINE");
+
+const card = document.createElement("div");
+
+card.className = "bot-card";
+
+card.innerHTML = `
+<div class="bot-top">
+
+<div class="bot-icon">
+${bot.logo || "🤖"}
+</div>
+
+<div class="bot-status"
+style="
+background:${isOffline ? "rgba(255,59,92,.12)" : "#22c55e22"};
+border:1px solid ${isOffline ? "rgba(255,59,92,.35)" : "#22c55e55"};
+color:${isOffline ? "#ff4d6d" : "#4ade80"};
+">
+${bot.statusText || "AKTİF"}
+</div>
+
+</div>
+
+<h3>${bot.name}</h3>
+
+<p>${bot.description}</p>
+
+<div class="bot-features">
+${tagsHTML}
+</div>
+
+<a href="${bot.url || "#"}"
+class="primary-btn"
+target="_blank">
+${bot.buttonText || "Sunucuya Ekle"}
+</a>
+`;
+
+dynamicBotsContainer.appendChild(card);
+
+});
 
 }
 

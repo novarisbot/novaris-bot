@@ -18,53 +18,55 @@ box-sizing:border-box;
 
 body{
 font-family:'Inter',sans-serif;
-background:#050505;
-color:white;
+background:#030303;
 overflow:hidden;
-display:flex;
 height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+color:white;
 }
 
-/* Background */
+/* Animated Background */
 
 .bg{
-position:fixed;
+position:absolute;
 inset:0;
 overflow:hidden;
-z-index:-10;
 }
 
 .orb{
 position:absolute;
 border-radius:50%;
-filter:blur(140px);
-opacity:.25;
+filter:blur(120px);
+opacity:.45;
 animation:float 10s infinite ease-in-out;
 }
 
 .orb1{
-width:500px;
-height:500px;
+width:420px;
+height:420px;
 background:#5865F2;
-top:-150px;
-left:-150px;
+top:-120px;
+left:-120px;
 }
 
 .orb2{
-width:400px;
-height:400px;
+width:350px;
+height:350px;
 background:#7c3aed;
-bottom:-150px;
-right:-150px;
+bottom:-100px;
+right:-100px;
 animation-delay:2s;
 }
 
 .orb3{
-width:300px;
-height:300px;
+width:250px;
+height:250px;
 background:#00d4ff;
-top:40%;
-left:40%;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
 animation-delay:4s;
 }
 
@@ -77,126 +79,129 @@ transform:translateY(-30px);
 }
 }
 
-/* Sidebar */
+/* Particles */
 
-.sidebar{
-width:290px;
-height:100vh;
+.particles{
+position:absolute;
+inset:0;
+overflow:hidden;
+}
+
+.particles span{
+position:absolute;
+display:block;
+width:4px;
+height:4px;
+background:white;
+border-radius:50%;
+opacity:.15;
+animation:particle 8s linear infinite;
+}
+
+@keyframes particle{
+0%{
+transform:translateY(100vh) scale(0);
+}
+100%{
+transform:translateY(-100vh) scale(1);
+}
+}
+
+/* Card */
+
+.card{
+position:relative;
+width:420px;
+padding:45px;
+border-radius:34px;
 
 background:
-rgba(255,255,255,.04);
+rgba(255,255,255,.06);
 
-border-right:
+border:
 1px solid rgba(255,255,255,.08);
 
 backdrop-filter:
-blur(30px);
-
-padding:30px;
-
-display:flex;
-flex-direction:column;
-justify-content:space-between;
-}
-
-/* Logo */
-
-.logo{
-display:flex;
-align-items:center;
-gap:14px;
-margin-bottom:45px;
-}
-
-.logo img{
-width:52px;
-height:52px;
-border-radius:50%;
-object-fit:cover;
-}
-
-.logo h2{
-font-size:26px;
-font-weight:800;
-}
-
-/* Nav */
-
-.nav{
-display:flex;
-flex-direction:column;
-gap:14px;
-}
-
-.nav a{
-display:flex;
-align-items:center;
-gap:14px;
-
-padding:18px 20px;
-
-border-radius:18px;
-
-text-decoration:none;
-color:white;
-font-weight:600;
-
-background:
-rgba(255,255,255,.03);
-
-border:
-1px solid rgba(255,255,255,.05);
-
-transition:.25s;
-}
-
-.nav a:hover{
-transform:
-translateX(6px)
-scale(1.02);
-
-background:
-rgba(88,101,242,.14);
+blur(35px);
 
 box-shadow:
-0 10px 40px rgba(88,101,242,.15);
-}
-
-/* User Card */
-
-.user-card{
-padding:20px;
-border-radius:24px;
-
-background:
-rgba(255,255,255,.04);
-
-border:
-1px solid rgba(255,255,255,.08);
+0 20px 80px rgba(0,0,0,.45),
+0 0 80px rgba(88,101,242,.18);
 
 text-align:center;
+
+animation:
+cardEnter 1s ease;
 }
 
-.user-card img{
-width:80px;
-height:80px;
+@keyframes cardEnter{
+from{
+opacity:0;
+transform:
+translateY(40px)
+scale(.9);
+}
+to{
+opacity:1;
+transform:
+translateY(0)
+scale(1);
+}
+}
+
+/* Avatar */
+
+.avatar-wrapper{
+position:relative;
+width:130px;
+height:130px;
+margin:auto;
+margin-bottom:24px;
+}
+
+.avatar-ring{
+position:absolute;
+inset:-6px;
 border-radius:50%;
-margin-bottom:16px;
+
+background:
+conic-gradient(
+#5865F2,
+#7c3aed,
+#00d4ff,
+#5865F2
+);
+
+animation:spin 4s linear infinite;
+
+filter:
+blur(.5px);
+}
+
+@keyframes spin{
+100%{
+transform:rotate(360deg);
+}
+}
+
+.avatar{
+position:relative;
+width:100%;
+height:100%;
+border-radius:50%;
 object-fit:cover;
+border:5px solid #0b0b0b;
+z-index:2;
 }
 
-.user-card h3{
-font-size:22px;
-margin-bottom:8px;
-}
+/* Text */
 
-.badge{
+.status{
 display:inline-flex;
 align-items:center;
 gap:8px;
 
-padding:8px 14px;
-
+padding:8px 16px;
 border-radius:999px;
 
 background:
@@ -205,260 +210,109 @@ rgba(88,101,242,.14);
 border:
 1px solid rgba(88,101,242,.25);
 
-font-size:13px;
-font-weight:700;
-margin-top:14px;
-}
+font-size:14px;
+font-weight:600;
 
-/* Main */
-
-.main{
-flex:1;
-padding:35px;
-overflow-y:auto;
-}
-
-/* Topbar */
-
-.topbar{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:35px;
-}
-
-.topbar h1{
-font-size:42px;
-font-weight:800;
-}
-
-.search{
-width:320px;
-padding:16px 20px;
-
-border-radius:18px;
-
-background:
-rgba(255,255,255,.04);
-
-border:
-1px solid rgba(255,255,255,.08);
-
-outline:none;
-color:white;
-}
-
-/* Stats */
-
-.stats{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:24px;
-margin-bottom:35px;
-}
-
-.stat-card{
-padding:28px;
-border-radius:28px;
-
-background:
-rgba(255,255,255,.04);
-
-border:
-1px solid rgba(255,255,255,.08);
-
-backdrop-filter:
-blur(20px);
-
-transition:.25s;
-}
-
-.stat-card:hover{
-transform:
-translateY(-10px)
-scale(1.02);
-
-box-shadow:
-0 20px 60px rgba(88,101,242,.18);
-}
-
-.stat-card h2{
-font-size:42px;
-margin-bottom:12px;
-
-background:
-linear-gradient(135deg,#5865F2,#7c3aed);
-
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-}
-
-.stat-card p{
-opacity:.7;
-}
-
-/* Servers */
-
-.section-title{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:25px;
-}
-
-.section-title h2{
-font-size:30px;
-}
-
-.servers{
-display:grid;
-grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
-gap:24px;
-}
-
-/* Server Card */
-
-.server-card{
-position:relative;
-
-padding:28px;
-border-radius:30px;
-
-background:
-rgba(255,255,255,.04);
-
-border:
-1px solid rgba(255,255,255,.08);
-
-overflow:hidden;
-
-transition:.25s;
-}
-
-.server-card:hover{
-transform:
-translateY(-12px)
-rotateX(5deg)
-rotateY(-5deg);
-
-box-shadow:
-0 25px 70px rgba(88,101,242,.18);
-}
-
-.server-glow{
-position:absolute;
-width:240px;
-height:240px;
-background:
-radial-gradient(circle,
-rgba(88,101,242,.25),
-transparent 70%);
-
-top:-120px;
-right:-120px;
-
-pointer-events:none;
-}
-
-.server-top{
-display:flex;
-align-items:center;
-gap:18px;
 margin-bottom:20px;
 }
 
-.server-icon{
-width:72px;
-height:72px;
-border-radius:24px;
+.dot{
+width:10px;
+height:10px;
+border-radius:50%;
+background:#57F287;
 
-background:
-linear-gradient(135deg,#5865F2,#7c3aed);
+box-shadow:
+0 0 20px #57F287;
+}
 
-display:flex;
-align-items:center;
-justify-content:center;
-
-font-size:28px;
+h1{
+font-size:38px;
 font-weight:800;
+margin-bottom:12px;
 }
 
-.server-card h3{
-font-size:24px;
-margin-bottom:8px;
-}
-
-.server-card p{
+p{
 opacity:.7;
-line-height:1.7;
-margin-bottom:22px;
+font-size:16px;
+line-height:1.6;
+margin-bottom:32px;
 }
 
-.manage-btn{
-display:flex;
-justify-content:center;
-align-items:center;
+/* Button */
 
-padding:16px;
+.btn{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+
+width:100%;
+padding:18px;
 
 border-radius:18px;
 
 background:
-linear-gradient(135deg,#5865F2,#7c3aed);
+linear-gradient(
+135deg,
+#5865F2,
+#7c3aed
+);
 
 color:white;
 font-weight:700;
+font-size:16px;
 text-decoration:none;
 
-transition:.25s;
-}
-
-.manage-btn:hover{
-transform:
-translateY(-4px)
-scale(1.03);
+transition:.3s;
 
 box-shadow:
-0 15px 50px rgba(88,101,242,.25);
+0 15px 40px rgba(88,101,242,.35);
 }
 
-/* Scroll */
+.btn:hover{
+transform:
+translateY(-5px)
+scale(1.02);
 
-::-webkit-scrollbar{
+box-shadow:
+0 25px 60px rgba(88,101,242,.45);
+}
+
+/* Loading */
+
+.loading{
+margin-top:22px;
+display:flex;
+justify-content:center;
+gap:8px;
+}
+
+.loading span{
 width:10px;
+height:10px;
+border-radius:50%;
+background:white;
+
+animation:bounce 1.2s infinite;
 }
 
-::-webkit-scrollbar-thumb{
-background:#5865F2;
-border-radius:999px;
+.loading span:nth-child(2){
+animation-delay:.2s;
 }
 
-/* Responsive */
-
-@media(max-width:1200px){
-
-.stats{
-grid-template-columns:repeat(2,1fr);
+.loading span:nth-child(3){
+animation-delay:.4s;
 }
 
+@keyframes bounce{
+0%,80%,100%{
+transform:scale(0);
+opacity:.4;
 }
-
-@media(max-width:900px){
-
-body{
-flex-direction:column;
-overflow:auto;
+40%{
+transform:scale(1);
+opacity:1;
 }
-
-.sidebar{
-width:100%;
-height:auto;
-}
-
-.stats{
-grid-template-columns:1fr;
-}
-
 }
 
 </style>
@@ -472,145 +326,94 @@ grid-template-columns:1fr;
 <div class="orb orb3"></div>
 </div>
 
-<!-- Sidebar -->
+<div class="particles" id="particles"></div>
 
-<div class="sidebar">
+<div class="card">
 
-<div>
-
-<div class="logo">
-
-<img src="https://i.imgur.com/rycsHTs.png">
-
-<h2>Novaris</h2>
-
+<div class="status">
+<div class="dot"></div>
+Discord Başarıyla Bağlandı
 </div>
 
-<div class="nav">
+<div class="avatar-wrapper">
 
-<a href="#">
-🏠 Genel Bakış
-</a>
-
-<a href="#">
-🖥 Sunucular
-</a>
-
-<a href="#">
-🤖 Botlar
-</a>
-
-<a href="#">
-💎 Premium
-</a>
-
-<a href="#">
-⚙ Ayarlar
-</a>
-
-</div>
-
-</div>
-
-<div class="user-card">
+<div class="avatar-ring"></div>
 
 <img id="avatar"
-src="https://cdn.discordapp.com/embed/avatars/0.png">
-
-<h3 id="username">
-Kullanıcı
-</h3>
-
-<p style="opacity:.7;">
-Discord hesabı bağlı
-</p>
-
-<div class="badge">
-🟢 PREMIUM ACTIVE
-</div>
+class="avatar">
 
 </div>
 
-</div>
-
-<!-- Main -->
-
-<div class="main">
-
-<div class="topbar">
-
-<h1>
-Dashboard
+<h1 id="username">
+Yükleniyor...
 </h1>
 
-<input
-class="search"
-placeholder="Sunucu ara...">
+<p>
+Discord hesabın başarıyla bağlandı.
+Dashboard hazırlanıyor...
+</p>
 
+<a href="/dashboard.html"
+class="btn"
+onclick="goDashboard()">
+Dashboard'a Git
+</a>
+
+<script>
+
+function goDashboard(){
+
+window.location.href =
+"/dashboard.html";
+
+}
+
+</script>
+  
+
+<div class="loading">
+<span></span>
+<span></span>
+<span></span>
 </div>
-
-<!-- Stats -->
-
-<div class="stats">
-
-<div class="stat-card">
-<h2 id="guildCount">0</h2>
-<p>Aktif Sunucu</p>
-</div>
-
-<div class="stat-card">
-<h2>3</h2>
-<p>Aktif Bot</p>
-</div>
-
-<div class="stat-card">
-<h2>99%</h2>
-<p>Uptime</p>
-</div>
-
-<div class="stat-card">
-<h2>Premium</h2>
-<p>Aktif Plan</p>
-</div>
-
-</div>
-
-<!-- Servers -->
-
-<div class="section-title">
-
-<h2>
-Sunucular
-</h2>
-
-</div>
-
-<div class="servers" id="servers">
-
-</div></div>
 
 </div>
 
 <script>
 
-/* Discord User */
+/* particles */
 
-const params =
-new URLSearchParams(
-window.location.hash.slice(1)
-);
+const particles =
+document.getElementById("particles");
 
-const token =
-params.get("access_token");
+for(let i=0;i<45;i++){
 
-if(token){
+const span =
+document.createElement("span");
 
-localStorage.setItem(
-"discord_token",
-token
-);
+span.style.left =
+Math.random()*100+"%";
+
+span.style.animationDuration =
+(5 + Math.random()*6)+"s";
+
+span.style.opacity =
+Math.random()*.25;
+
+span.style.width =
+span.style.height =
+(2 + Math.random()*4)+"px";
+
+particles.appendChild(span);
 
 }
+
+/* discord user */
+
+const savedToken =
+localStorage.getItem(
+"discord_token"
+);
 
 const savedToken =
 localStorage.getItem(
@@ -619,12 +422,19 @@ localStorage.getItem(
 
 if(savedToken){
 
+localStorage.setItem(
+"discord_token",
+token
+);
+
+}
+
 fetch(
 "https://discord.com/api/users/@me",
 {
 headers:{
 authorization:
-`Bearer ${savedToken}`
+Bearer ${savedToken}
 }
 })
 .then(res=>res.json())
@@ -644,146 +454,7 @@ document
 
 }
 
-
-
-/* Discord Guilds */
-
-if(savedToken){
-
-fetch(
-"https://discord.com/api/users/@me/guilds",
-{
-headers:{
-authorization:
-`Bearer ${savedToken}`
-}
-})
-.then(res=>res.json())
-.then(guilds=>{
-
-document
-.getElementById("guildCount")
-.innerText =
-guilds.length;
-
-const servers =
-document.getElementById("servers");
-
-servers.innerHTML = "";
-
-guilds.forEach(guild=>{
-
-const hasAdmin =
-(guild.permissions & 0x8) === 0x8;
-
-if(!hasAdmin) return;
-
-const card =
-document.createElement("div");
-
-card.className =
-"server-card";
-
-const icon =
-guild.icon
-? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`
-: "https://cdn.discordapp.com/embed/avatars/0.png";
-
-card.innerHTML = `
-
-<div class="server-glow"></div>
-
-<div class="server-top">
-
-<img
-src="${icon}"
-style="
-width:72px;
-height:72px;
-border-radius:24px;
-object-fit:cover;
-">
-
-<div>
-<h3>${guild.name}</h3>
-<p>Discord Sunucusu</p>
-</div>
-
-</div>
-
-<p>
-Sunucu yönetim paneline erişebilirsin.
-</p>
-
-<a href="guild.html?id=${guild.id}"
-class="manage-btn">
-Yönet
-</a>
-
-`;
-
-servers.appendChild(card);
-
-});
-
-});
-
-}
-
-
-/* Tilt Effect */
-
-document.querySelectorAll(
-'.server-card,.stat-card'
-).forEach(card=>{
-
-card.addEventListener(
-'mousemove',
-e=>{
-
-const rect =
-card.getBoundingClientRect();
-
-const x =
-e.clientX - rect.left;
-
-const y =
-e.clientY - rect.top;
-
-const rotateY =
-((x / rect.width)-0.5)*14;
-
-const rotateX =
-((y / rect.height)-0.5)*-14;
-
-card.style.transform =
-`
-perspective(1400px)
-rotateX(${rotateX}deg)
-rotateY(${rotateY}deg)
-translateY(-12px)
-`;
-
-});
-
-card.addEventListener(
-'mouseleave',
-()=>{
-
-card.style.transform =
-`
-perspective(1400px)
-rotateX(0deg)
-rotateY(0deg)
-translateY(0px)
-`;
-
-});
-
-});
-
 </script>
 
 </body>
 </html>
-

@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport"
 content="width=device-width,initial-scale=1.0">
 
 <title>Novaris Admin Login</title>
+
+<link rel="icon"
+type="image/png"
+href="https://i.imgur.com/rycsHTs.png">
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
 rel="stylesheet">
@@ -73,17 +79,21 @@ animation-delay:4s;
 }
 
 @keyframes float{
+
 0%,100%{
 transform:translateY(0px);
 }
+
 50%{
 transform:translateY(-30px);
 }
+
 }
 
 /* Card */
 
 .card{
+
 width:430px;
 padding:40px;
 border-radius:34px;
@@ -102,11 +112,13 @@ box-shadow:
 0 0 80px rgba(88,101,242,.15);
 
 text-align:center;
+
 }
 
 /* Logo */
 
 .logo{
+
 width:100px;
 height:100px;
 border-radius:50%;
@@ -115,23 +127,29 @@ margin-bottom:22px;
 
 border:
 3px solid rgba(255,255,255,.08);
+
 }
 
 h1{
+
 font-size:42px;
 font-weight:800;
 margin-bottom:14px;
+
 }
 
 p{
+
 opacity:.7;
 line-height:1.7;
 margin-bottom:28px;
+
 }
 
 /* Input */
 
 .input{
+
 width:100%;
 padding:18px 20px;
 
@@ -149,11 +167,13 @@ color:white;
 font-size:15px;
 
 margin-bottom:18px;
+
 }
 
 /* Button */
 
 .btn{
+
 width:100%;
 padding:18px;
 
@@ -174,24 +194,29 @@ font-size:16px;
 cursor:pointer;
 
 transition:.25s;
+
 }
 
 .btn:hover{
+
 transform:
 translateY(-5px)
 scale(1.02);
 
 box-shadow:
 0 20px 60px rgba(88,101,242,.25);
+
 }
 
 /* Error */
 
 #error{
+
 margin-top:18px;
 color:#ff4d6d;
 font-weight:600;
 display:none;
+
 }
 
 </style>
@@ -243,8 +268,26 @@ Hatalı şifre.
 
 <script>
 
+/* Eğer giriş yapılmışsa direkt panel */
+
+const access =
+localStorage.getItem(
+"admin_access"
+);
+
+if(access === "true"){
+
+window.location.href =
+"/admin/panel.html";
+
+}
+
+/* Şifre */
+
 const ADMIN_PASSWORD =
 "Kerem1026";
+
+/* Login */
 
 function login(){
 
@@ -260,12 +303,8 @@ localStorage.setItem(
 "true"
 );
 
-  console.log(
-"admin giriş başarılı"
-);
-
 window.location.href =
-"/admin/admin.html";
+"/admin/panel.html";
 
 }else{
 
@@ -279,17 +318,7 @@ document
 }
 
 }
-const access =
-localStorage.getItem(
-"admin_access"
-);
 
-if(access !== "true"){
-
-window.location.href =
-"/admin";
-
-}
 </script>
 
 </body>

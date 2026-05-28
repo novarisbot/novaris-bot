@@ -3330,7 +3330,9 @@ Premium Discord Systems © 2026
 </footer>
 
 <script>
-fetch("/data/announcement.json")
+fetch(
+"http://localhost:3000/api/announcement"
+)
 .then(res=>res.json())
 .then(data=>{
 

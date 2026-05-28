@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -16,18 +15,14 @@ body{background:#07090f;color:white;display:flex;min-height:100vh;overflow:hidde
 .menu a:hover,.menu a.active{background:linear-gradient(135deg,#7c3aed,#2563eb);color:white}
 .main{flex:1;padding:35px;overflow:auto}
 .card{background:#11131c;border:1px solid rgba(255,255,255,.06);border-radius:28px;padding:25px;margin-bottom:24px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
-.stat{padding:28px;border-radius:24px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.05)}
-.stat h2{font-size:42px;margin-bottom:8px}
-.input,textarea,select{width:100%;padding:16px;border-radius:16px;background:#191d29;border:none;outline:none;color:white;margin-top:14px;margin-bottom:14px}
+.input,textarea{width:100%;padding:16px;border-radius:16px;background:#191d29;border:none;outline:none;color:white;margin-top:14px;margin-bottom:14px}
 .btn{padding:15px 20px;border:none;border-radius:16px;background:linear-gradient(135deg,#7c3aed,#2563eb);color:white;font-weight:700;cursor:pointer}
-.bot-card{display:flex;justify-content:space-between;align-items:center;padding:20px;border-radius:20px;background:rgba(255,255,255,.03);margin-top:14px;border:1px solid rgba(255,255,255,.05)}
-.online{color:#4ade80;font-weight:700}
-.offline{color:#ff4d6d;font-weight:700}
-.activity{padding:16px;border-radius:16px;background:rgba(255,255,255,.03);margin-top:12px}
+.activity{padding:18px;border-radius:18px;background:rgba(255,255,255,.03);margin-top:16px;border:1px solid rgba(255,255,255,.05)}
 .actions{display:flex;gap:10px}
 .edit{background:#f59e0b}
 .delete{background:#dc2626}
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-thumb{background:#7c3aed;border-radius:999px}
 </style>
 
 </head>
@@ -37,8 +32,8 @@ body{background:#07090f;color:white;display:flex;min-height:100vh;overflow:hidde
 <div class="logo">NOVARIS</div>
 
 <div class="menu">
-<a class="active" href="panel.html">🏠 Genel Bakış</a>
-<a href="announcements.html">📢 Duyurular</a>
+<a href="panel.html">🏠 Genel Bakış</a>
+<a class="active" href="announcements.html">📢 Duyurular</a>
 <a href="bots.html">🤖 Bot Yönetimi</a>
 <a href="settings.html">⚙️ Ayarlar</a>
 <a href="system.html">🟢 Sistem Durumu</a>
@@ -57,6 +52,12 @@ body{background:#07090f;color:white;display:flex;min-height:100vh;overflow:hidde
 
 <textarea id="text" class="input" placeholder="Duyuru Mesajı"></textarea>
 
+<input
+type="text"
+id="expire"
+class="input"
+placeholder="Zamanlayıcı (Örn: 24 Saat / 1 Hafta / Süresiz)">
+
 <button class="btn" onclick="publishAnnouncement()">
 Duyuruyu Yayınla
 </button>
@@ -74,48 +75,173 @@ Duyuruyu Yayınla
 </div>
 
 <script>
+
+function getAnnouncements(){
+
+return JSON.parse(
+localStorage.getItem("novaris_announcements") || "[]"
+);
+
+}
+
+function saveAnnouncements(data){
+
+localStorage.setItem(
+"novaris_announcements",
+JSON.stringify(data)
+);
+
+}
+
 function publishAnnouncement(){
 
 const title =
 document.getElementById("title").value;
 
-const list =
-document.getElementById("announcementList");
+const text =
+document.getElementById("text").value;
+
+const expire =
+document.getElementById("expire").value;
+
+if(!title || !text) return;
 
 const announcements =
-JSON.parse(
-localStorage.getItem("novaris_announcements") || "[]"
-);
+getAnnouncements();
 
 announcements.unshift({
-title:title
+title,
+text,
+expire,
+date:new Date().toLocaleString("tr-TR")
 });
 
-localStorage.setItem(
-"novaris_announcements",
-JSON.stringify(announcements)
-);
+saveAnnouncements(announcements);
 
 renderAnnouncements();
 
-  function renderAnnouncements(){
+document.getElementById("title").value="";
+document.getElementById("text").value="";
+document.getElementById("expire").value="";
+
+}
+
+function deleteAnnouncement(index){
+
+const announcements =
+getAnnouncements();
+
+announcements.splice(index,1);
+
+saveAnnouncements(announcements);
+
+renderAnnouncements();
+
+}
+
+function editAnnouncement(index){
+
+const announcements =
+getAnnouncements();
+
+const a = announcements[index];
+
+document.getElementById("title").value =
+a.title;
+
+document.getElementById("text").value =
+a.text;
+
+document.getElementById("expire").value =
+a.expire;
+
+announcements.splice(index,1);
+
+saveAnnouncements(announcements);
+
+renderAnnouncements();
+
+}
+
+function renderAnnouncements(){
 
 const list =
 document.getElementById("announcementList");
 
 const announcements =
-JSON.parse(
-localStorage.getItem("novaris_announcements") || "[]"
-);
+getAnnouncements();
 
 list.innerHTML = "";
 
-announcements.forEach(a=>{
+announcements.forEach((a,index)=>{
 
 list.innerHTML += `
+
 <div class="activity">
-📢 ${a.title}
+
+<div style="
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:14px;
+">
+
+<h3>📢 ${a.title}</h3>
+
+<div style="
+font-size:13px;
+opacity:.7;
+">
+${a.date}
 </div>
+
+</div>
+
+<p style="
+opacity:.8;
+line-height:1.7;
+margin-bottom:14px;
+">
+${a.text}
+</p>
+
+<div style="
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:15px;
+flex-wrap:wrap;
+">
+
+<div style="
+padding:8px 12px;
+border-radius:12px;
+background:rgba(124,58,237,.15);
+font-size:13px;
+">
+⏰ Süre: ${a.expire || "Süresiz"}
+</div>
+
+<div class="actions">
+
+<button
+class="btn edit"
+onclick="editAnnouncement(${index})">
+Düzenle
+</button>
+
+<button
+class="btn delete"
+onclick="deleteAnnouncement(${index})">
+Sil
+</button>
+
+</div>
+
+</div>
+
+</div>
+
 `;
 
 });
@@ -124,7 +250,6 @@ list.innerHTML += `
 
 window.onload = renderAnnouncements;
 
-}
 </script>
 
 </body>

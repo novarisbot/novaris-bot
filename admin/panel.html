@@ -318,6 +318,89 @@ font-weight:700;
 cursor:pointer;
 }
 
+
+
+.bot-card{
+padding:28px;
+border-radius:30px;
+background:linear-gradient(145deg,rgba(255,255,255,.05),rgba(255,255,255,.02));
+border:1px solid rgba(255,255,255,.08);
+margin-bottom:20px;
+transition:.3s;
+}
+
+.bot-card:hover{
+transform:translateY(-8px);
+box-shadow:0 0 40px rgba(88,101,242,.18);
+}
+
+.bot-top{
+display:flex;
+justify-content:space-between;
+align-items:flex-start;
+margin-bottom:24px;
+}
+
+.bot-logo{
+width:80px;
+height:80px;
+border-radius:24px;
+object-fit:cover;
+background:linear-gradient(135deg,#5865f2,#7c3aed);
+padding:6px;
+}
+
+.bot-status{
+padding:12px 18px;
+border-radius:999px;
+font-weight:700;
+font-size:14px;
+}
+
+.status-online{
+background:rgba(0,255,136,.12);
+color:#00ff88;
+box-shadow:0 0 20px rgba(0,255,136,.25);
+}
+
+.status-offline{
+background:rgba(255,59,92,.12);
+color:#ff4d6d;
+box-shadow:0 0 20px rgba(255,59,92,.25);
+}
+
+.bot-tags{
+display:flex;
+gap:12px;
+flex-wrap:wrap;
+margin-bottom:28px;
+}
+
+.bot-tag{
+padding:12px 18px;
+border-radius:999px;
+background:rgba(88,101,242,.12);
+border:1px solid rgba(88,101,242,.25);
+font-size:14px;
+font-weight:700;
+}
+
+.bot-btn{
+padding:18px 28px;
+border-radius:22px;
+border:none;
+background:linear-gradient(135deg,#7c3aed,#60a5fa);
+color:white;
+font-size:16px;
+font-weight:800;
+cursor:pointer;
+transition:.25s;
+}
+
+.bot-btn.soon{
+background:linear-gradient(135deg,#ff3b5c,#ff7b54);
+}
+
 @media(max-width:1100px){
 .grid{
 grid-template-columns:repeat(2,1fr);
@@ -385,6 +468,8 @@ grid-template-columns:1fr;
 Kontrol Merkezi
 </div>
 
+
+  
 <div class="top-right">
 <div class="box" id="clock">00:00:00</div>
 <div class="box">🟢 API ONLINE</div>
@@ -447,10 +532,77 @@ Duyuruyu Sil
 <input class="input" id="botName" placeholder="Bot Adı">
 <input class="input" id="botDescription" placeholder="Bot Açıklaması">
 <input class="input" id="botURL" placeholder="Bot URL">
+  
+<select class="input" id="botCategory">
+
+<option value="Moderasyon">
+Moderasyon
+</option>
+
+<option value="Kayıt">
+Kayıt
+</option>
+
+<option value="Guard">
+Guard
+</option>
+
+<option value="Eğlence">
+Eğlence
+</option>
+
+<option value="Müzik">
+Müzik
+</option>
+
+</select>
+
+<select class="input" id="botStatus">
+
+<option value="online">
+🟢 Online
+</option>
+
+<option value="offline">
+🔴 Offline
+</option>
+
+</select>
+
+<select class="input" id="botAction">
+
+<option value="invite">
+Sunucuya Ekle
+</option>
+
+<option value="soon">
+Yakında
+</option>
+
+</select>
+
+<input
+class="input"
+id="botLogo"
+placeholder="Bot Logo URL">
+
+
 
 <button class="btn" onclick="addBot()">
 Botu Kaydet
 </button>
+
+</div>
+
+<div class="card">
+
+<h3>
+🤖 Botlar
+</h3>
+
+<div id="bot-list">
+
+</div>
 
 </div>
 
@@ -634,16 +786,96 @@ showModal(
 
 function addBot(){
 
-const bot =
+const name =
 document.getElementById("botName").value;
 
-if(!bot) return;
+const description =
+document.getElementById("botDescription").value;
 
-addActivity("🤖 " + bot + " sisteme eklendi");
+const url =
+document.getElementById("botURL").value;
+
+const category =
+document.getElementById("botCategory").value;
+
+const status =
+document.getElementById("botStatus").value;
+
+const action =
+document.getElementById("botAction").value;
+
+const logo =
+document.getElementById("botLogo").value;
+
+if(!name) return;
+
+const card =
+document.createElement("div");
+
+card.className =
+"bot-card";
+
+card.innerHTML = `
+
+<div class="bot-top">
+
+<img
+src="${logo || 'https://cdn-icons-png.flaticon.com/512/4712/4712109.png'}"
+class="bot-logo">
+
+<div class="bot-status ${status === 'online'
+? 'status-online'
+: 'status-offline'}">
+
+${status === 'online'
+? 'AKTİF'
+: 'OFFLINE'}
+
+</div>
+
+</div>
+
+<h2>${name}</h2>
+
+<p>${description}</p>
+
+<div class="bot-tags">
+
+<div class="bot-tag">
+${category}
+</div>
+
+<div class="bot-tag">
+Premium Sistem
+</div>
+
+<div class="bot-tag">
+Modern Altyapı
+</div>
+
+</div>
+
+<button
+class="bot-btn ${action === 'soon' ? 'soon' : ''}"
+onclick="window.open('${url}','_blank')">
+
+${action === 'invite'
+? 'Sunucuya Ekle'
+: 'Yakında'}
+
+</button>
+
+`;
+
+document
+.getElementById("bot-list")
+.prepend(card);
+
+addActivity("🤖 " + name + " sisteme eklendi");
 
 showModal(
-"Bot Kaydedildi",
-"Bot başarıyla kaydedildi!"
+"Bot Eklendi",
+name + " başarıyla eklendi!"
 );
 
 }

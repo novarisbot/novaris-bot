@@ -3329,7 +3329,35 @@ Premium Discord Systems © 2026
 </footer>
 
 <script>
+fetch("/data/announcement.json")
+.then(res=>res.json())
+.then(data=>{
 
+if(data.enabled){
+
+document
+.getElementById(
+"announcement-bar"
+)
+.innerHTML = `
+
+<div class="announcement">
+
+<div class="announcement-content">
+
+🔥 ${data.title}
+—
+${data.text}
+
+</div>
+
+</div>
+
+`;
+
+}
+
+});
 
 
 

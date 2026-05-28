@@ -2760,6 +2760,26 @@ transform:translateY(-3px);
 box-shadow:0 10px 30px rgba(245,235,199,.18);
 }
 
+
+@media(max-width:900px){
+
+.announcement-modern{
+padding:18px;
+}
+
+.announcement-right{
+width:100%;
+justify-content:flex-start;
+}
+
+.promo-btn{
+width:100%;
+justify-content:center;
+display:flex;
+}
+
+}
+
 </style>
 </head>
 
@@ -2768,7 +2788,7 @@ box-shadow:0 10px 30px rgba(245,235,199,.18);
 <div class="live-feed" id="live-feed"></div>
 
 <div class="ai-helper-msg">
-👋 Novaris AI aktif. Premium sistemler hazır.
+👋 Novaris aktif.
 </div>
 
 <div class="ai-helper">
@@ -2806,7 +2826,10 @@ box-shadow:0 10px 30px rgba(245,235,199,.18);
 <div class="mouse-ring" id="mouse-ring"></div>
 
 <div class="live-notification" id="live-notification">
-<div class="live-avatar">N</div>
+<div class="live-avatar" style="overflow:hidden;padding:0;">
+<img src="https://i.imgur.com/rycsHTs.png"
+style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
+</div>
 <div>
 <b>Yeni Kullanıcı</b><br>
 Bir kullanıcı Booster Botunu ekledi.
@@ -2978,7 +3001,7 @@ ${a.text || ''}
 
 ${a.promoCode ? `
 <div class="promo-chip promo-code">
-${a.promoCode}
+🎟 ${a.promoCode}
 </div>
 ` : ''}
 

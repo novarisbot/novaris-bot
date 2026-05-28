@@ -2941,13 +2941,19 @@ Discord Sunucusu
 <h2>Novaris Bot Sistemleri</h2>
 </div>
 
+
 <div class="bot-grid" id="dynamic-bots">
+
+</div>
+
+<script>
+const staticBots = `
 
 <div class="bot-card">
 
 <div class="bot-top">
 <div class="bot-icon">🛡️</div>
-<div class="bot-status">AKTİF</div>
+<div class="bot-status" style="background:#22c55e22;border:1px solid #22c55e55;color:#4ade80;">AKTİF</div>
 </div>
 
 <h3>Novaris Kayıt Botu</h3>
@@ -2973,7 +2979,7 @@ Sunucuya Ekle
 
 <div class="bot-top">
 <div class="bot-icon">🔒</div>
-<div class="bot-status">OFFLINE</div>
+<div class="bot-status" style="background:#ff000022;border:1px solid #ff000055;color:#ff4d6d;">OFFLINE</div>
 </div>
 
 <h3>Novaris Özel Oda Botu</h3>
@@ -2999,7 +3005,7 @@ Yakında
 
 <div class="bot-top">
 <div class="bot-icon">💎</div>
-<div class="bot-status">OFFLINE</div>
+<div class="bot-status" style="background:#ff000022;border:1px solid #ff000055;color:#ff4d6d;">OFFLINE</div>
 </div>
 
 <h3>Novaris Booster Botu</h3>
@@ -3020,8 +3026,63 @@ Yakında
 </a>
 
 </div>
+`;
+
+const dynamicBots =
+JSON.parse(localStorage.getItem("novaris_bots") || "[]");
+
+const botArea =
+document.getElementById("dynamic-bots");
+
+botArea.innerHTML = staticBots;
+
+dynamicBots.forEach(bot=>{
+
+const offline =
+bot.status.toLowerCase().includes("off");
+
+botArea.innerHTML += `
+
+<div class="bot-card">
+
+<div class="bot-top">
+
+<div class="bot-icon">${bot.logo || "🤖"}</div>
+
+<div class="bot-status"
+style="
+background:${offline ? '#ff000022' : '#22c55e22'};
+border:1px solid ${offline ? '#ff000055' : '#22c55e55'};
+color:${offline ? '#ff4d6d' : '#4ade80'};
+">
+${bot.status}
+</div>
 
 </div>
+
+<h3>${bot.name}</h3>
+
+<p>
+${bot.description}
+</p>
+
+<div class="bot-features">
+<span>Modern Sistem</span>
+<span>Novaris</span>
+<span>Premium</span>
+</div>
+
+<a href="${bot.url || '#'}" class="primary-btn">
+Sunucuya Ekle
+</a>
+
+</div>
+
+`;
+
+});
+</script>
+
 
 </section>
 

@@ -2941,7 +2941,7 @@ Discord Sunucusu
 <h2>Novaris Bot Sistemleri</h2>
 </div>
 
-<div class="bot-grid">
+<div class="bot-grid" id="dynamic-bots-container">
 
 <div class="bot-card">
 
@@ -3357,7 +3357,7 @@ const loader = document.getElementById("loader-screen");
 
 if(loader){
 setTimeout(() => {
-loader.classList.add("hide");
+loader.classList.add("hide"); document.body.style.overflow="auto";
 }, 1200);
 }
 
@@ -3468,6 +3468,70 @@ behavior: "smooth"
 });
 
 };
+
+}
+
+
+// PANEL BOT SYNC
+try{
+const savedBots = JSON.parse(localStorage.getItem("novaris_bots") || "[]");
+const container = document.getElementById("dynamic-bots-container");
+
+if(container && savedBots.length){
+
+container.innerHTML = "";
+
+savedBots.forEach(bot=>{
+
+const tags = (bot.tags || []).map(tag=>`
+<span>${tag}</span>
+`).join("");
+
+container.innerHTML += `
+<div class="bot-card">
+<div class="bot-top">
+<div class="bot-icon">${bot.logo || "🤖"}</div>
+<div class="bot-status">${bot.status || "AKTİF"}</div>
+</div>
+
+<h3>${bot.name}</h3>
+
+<p>${bot.description}</p>
+
+<div class="bot-features">
+${tags}
+</div>
+
+<a href="${bot.url}" class="primary-btn" target="_blank">
+${bot.button || "Sunucuya Ekle"}
+</a>
+</div>
+`;
+
+});
+
+}
+}catch(e){
+console.log(e);
+}
+
+// STAR SYSTEM
+const starsContainer = document.getElementById("stars-bg");
+
+if(starsContainer){
+
+for(let i=0;i<120;i++){
+
+const star = document.createElement("div");
+star.className = "star";
+
+star.style.left = Math.random()*100 + "%";
+star.style.top = Math.random()*100 + "%";
+star.style.animationDuration = (2 + Math.random()*5) + "s";
+
+starsContainer.appendChild(star);
+
+}
 
 }
 

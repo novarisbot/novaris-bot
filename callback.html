@@ -410,15 +410,17 @@ particles.appendChild(span);
 
 /* discord user */
 
-const params =
-new URLSearchParams(
-window.location.hash.slice(1)
+const savedToken =
+localStorage.getItem(
+"discord_token"
 );
 
-const token =
-params.get("access_token");
+const savedToken =
+localStorage.getItem(
+"discord_token"
+);
 
-if(token){
+if(savedToken){
 
 localStorage.setItem(
 "discord_token",
@@ -432,7 +434,7 @@ fetch(
 {
 headers:{
 authorization:
-`Bearer ${token}`
+Bearer ${savedToken}
 }
 })
 .then(res=>res.json())

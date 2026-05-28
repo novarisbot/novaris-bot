@@ -109,11 +109,49 @@ Bot Ekle
 
 <script>
 
-function saveAnnouncement(){
+async function saveAnnouncement(){
+
+const title =
+document.getElementById(
+"title"
+).value;
+
+const text =
+document.getElementById(
+"text"
+).value;
+
+const res =
+await fetch(
+"http://localhost:3000/api/announcement",
+{
+method:"POST",
+
+headers:{
+"Content-Type":
+"application/json"
+},
+
+body:JSON.stringify({
+
+enabled:true,
+title,
+text
+
+})
+
+});
+
+const data =
+await res.json();
+
+if(data.success){
 
 alert(
-"Backend bağlanınca duyuru sistemi aktif olacak."
+"Duyuru kaydedildi!"
 );
+
+}
 
 }
 

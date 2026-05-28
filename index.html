@@ -2690,7 +2690,7 @@ box-shadow:0 0 30px rgba(124,58,237,.4);
 <div class="live-feed" id="live-feed"></div>
 
 <div class="ai-helper-msg">
-👋 Novaris aktif. Premium sistemler hazır.
+👋 Novaris AI aktif. Premium sistemler hazır.
 </div>
 
 <div class="ai-helper">
@@ -2941,7 +2941,7 @@ Discord Sunucusu
 <h2>Novaris Bot Sistemleri</h2>
 </div>
 
-<div class="bot-grid" id="dynamic-bots-container">
+<div class="bot-grid">
 
 <div class="bot-card">
 
@@ -3357,7 +3357,7 @@ const loader = document.getElementById("loader-screen");
 
 if(loader){
 setTimeout(() => {
-loader.classList.add("hide"); document.body.style.overflow="auto";
+loader.classList.add("hide");
 }, 1200);
 }
 
@@ -3471,124 +3471,6 @@ behavior: "smooth"
 
 }
 
-
-// PANEL BOT SYNC
-try{
-const savedBots = JSON.parse(localStorage.getItem("novaris_bots") || "[]");
-const container = document.getElementById("dynamic-bots-container");
-
-if(container && savedBots.length){
-
-container.innerHTML = "";
-
-savedBots.forEach(bot=>{
-
-const tags = (bot.tags || []).map(tag=>`
-<span>${tag}</span>
-`).join("");
-
-container.innerHTML += `
-<div class="bot-card">
-<div class="bot-top">
-<div class="bot-icon">${bot.logo || "🤖"}</div>
-<div class="bot-status">${bot.status || "AKTİF"}</div>
-</div>
-
-<h3>${bot.name}</h3>
-
-<p>${bot.description}</p>
-
-<div class="bot-features">
-${tags}
-</div>
-
-<a href="${bot.url}" class="primary-btn" target="_blank">
-${bot.button || "Sunucuya Ekle"}
-</a>
-</div>
-`;
-
-});
-
-}
-}catch(e){
-console.log(e);
-}
-
-// STAR SYSTEM
-const starsContainer = document.getElementById("stars-bg");
-
-if(starsContainer){
-
-for(let i=0;i<120;i++){
-
-const star = document.createElement("div");
-star.className = "star";
-
-star.style.left = Math.random()*100 + "%";
-star.style.top = Math.random()*100 + "%";
-star.style.animationDuration = (2 + Math.random()*5) + "s";
-
-starsContainer.appendChild(star);
-
-}
-
-}
-
-</script>
-
-
-
-<!-- NOVARIS ADMIN PANEL -->
-<script>
-if(!localStorage.getItem("novarisBots")){
-localStorage.setItem("novarisBots", JSON.stringify([]));
-}
-
-function addDynamicBot(bot){
-const grid = document.querySelector('.bot-grid');
-if(!grid) return;
-
-const card = document.createElement('div');
-card.className = 'bot-card';
-
-let tags = '';
-(bot.tags || []).forEach(t=>{
-tags += `<span>${t}</span>`;
-});
-
-card.innerHTML = `
-<div class="bot-top">
-<div class="bot-icon">${bot.icon || '⚡'}</div>
-<div class="bot-status">${bot.status || 'AKTİF'}</div>
-</div>
-
-<h3>${bot.name}</h3>
-
-<p>${bot.description}</p>
-
-<div class="bot-features">
-${tags}
-</div>
-
-<a href="${bot.url}" class="primary-btn">
-${bot.button || 'Sunucuya Ekle'}
-</a>
-`;
-
-grid.appendChild(card);
-}
-
-window.addEventListener("DOMContentLoaded", ()=>{
-
-const bots =
-JSON.parse(
-localStorage.getItem("novarisBots") || "[]"
-);
-
-bots.forEach(addDynamicBot);
-
-});
 </script>
 
 </body>

@@ -106,7 +106,17 @@ Bot Ekle
 </div>
 
 </div>
+const access =
+localStorage.getItem(
+"admin_access"
+);
 
+if(access !== "true"){
+
+window.location.href =
+"/admin-login.html";
+
+}
 <script>
 
 async function saveAnnouncement(){

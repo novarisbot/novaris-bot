@@ -3386,6 +3386,25 @@ bar.innerHTML = "";
 .catch(err => console.log("Announcement Error:", err));
 
 });
+ 
+const cursor = document.getElementById("cursor-core");
+const ring = document.getElementById("mouse-ring");
+
+document.addEventListener("mousemove",(e)=>{
+
+if(cursor){
+cursor.style.left = e.clientX + "px";
+cursor.style.top = e.clientY + "px";
+}
+
+if(ring){
+ring.style.left = e.clientX + "px";
+ring.style.top = e.clientY + "px";
+}
+
+});
+
+
 </script>
 
 </body>

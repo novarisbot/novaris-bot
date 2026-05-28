@@ -3,9 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Novaris Ultimate Admin Panel</title>
+<title>Novaris Control Center</title>
 
-<link rel="icon" type="image/png" href="/assets/logo.png">
+<link rel="icon" href="/assets/logo.png">
+
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -20,489 +21,343 @@ box-sizing:border-box;
 
 body{
 font-family:'Inter',sans-serif;
-background:#050505;
+background:#07070a;
 color:white;
-display:flex;
 height:100vh;
 overflow:hidden;
-transition:.3s;
+display:flex;
 }
 
-/* THEMES */
-
-body.purple{
-background:#050505;
-}
-
-body.cyberpunk{
-background:#090909;
-}
-
-body.cyberpunk .card,
-body.cyberpunk .sidebar{
-border:1px solid rgba(0,255,170,.15);
-box-shadow:0 0 30px rgba(0,255,170,.08);
-}
-
-/* BG */
-
-.bg{
+body::before{
+content:'';
 position:fixed;
 inset:0;
-overflow:hidden;
+background:
+radial-gradient(circle at top left,#5865f240,transparent 35%),
+radial-gradient(circle at bottom right,#7c3aed40,transparent 35%);
 z-index:-2;
 }
 
-.orb{
-position:absolute;
-border-radius:50%;
-filter:blur(140px);
-opacity:.25;
-animation:float 10s infinite ease-in-out;
-}
-
-.orb1{
-width:500px;
-height:500px;
-background:#5865F2;
-top:-150px;
-left:-150px;
-}
-
-.orb2{
-width:400px;
-height:400px;
-background:#7c3aed;
-bottom:-150px;
-right:-150px;
-animation-delay:2s;
-}
-
-.orb3{
-width:300px;
-height:300px;
-background:#00d4ff;
-top:40%;
-left:40%;
-animation-delay:4s;
-}
-
-@keyframes float{
-0%,100%{transform:translateY(0)}
-50%{transform:translateY(-30px)}
-}
-
-/* NOISE */
-
-.noise{
+body::after{
+content:'';
 position:fixed;
 inset:0;
-background-image:url("https://grainy-gradients.vercel.app/noise.svg");
-opacity:.05;
+background-image:url('https://grainy-gradients.vercel.app/noise.svg');
+opacity:.04;
 pointer-events:none;
 z-index:-1;
 }
 
-/* SIDEBAR */
-
 .sidebar{
-width:310px;
+width:290px;
 background:rgba(255,255,255,.04);
 border-right:1px solid rgba(255,255,255,.08);
-backdrop-filter:blur(30px);
-padding:30px;
+backdrop-filter:blur(20px);
+padding:24px;
 display:flex;
 flex-direction:column;
 justify-content:space-between;
 }
 
-.logo{
+.brand{
 display:flex;
 align-items:center;
 gap:14px;
 margin-bottom:40px;
 }
 
-.logo img{
-width:58px;
-height:58px;
+.brand img{
+width:54px;
+height:54px;
 border-radius:50%;
 }
 
-.logo h2{
-font-size:34px;
+.brand h1{
+font-size:28px;
 font-weight:800;
 }
 
 .menu{
 display:flex;
 flex-direction:column;
-gap:14px;
+gap:12px;
 }
 
-.menu a{
-padding:18px 20px;
-border-radius:22px;
+.menu button{
 background:rgba(255,255,255,.03);
 border:1px solid rgba(255,255,255,.06);
-text-decoration:none;
+border-radius:18px;
+padding:16px;
 color:white;
 font-weight:600;
+cursor:pointer;
 transition:.25s;
-position:relative;
-overflow:hidden;
+text-align:left;
 }
 
-.menu a::before{
-content:'';
-position:absolute;
-inset:0;
-background:linear-gradient(90deg,rgba(88,101,242,.18),transparent);
-opacity:0;
-transition:.25s;
+.menu button.active,
+.menu button:hover{
+background:linear-gradient(90deg,rgba(88,101,242,.25),transparent);
+border-left:4px solid #5865f2;
+transform:translateX(6px);
 }
 
-.menu a:hover::before,
-.menu a.active::before{
-opacity:1;
-}
-
-.menu a.active{
-border-left:4px solid #5865F2;
-box-shadow:0 0 40px rgba(88,101,242,.25);
-}
-
-.menu a:hover{
-transform:translateX(8px);
-}
-
-/* USER */
-
-.user{
-padding:24px;
-border-radius:28px;
-background:rgba(255,255,255,.04);
+.profile{
+padding:20px;
+border-radius:24px;
+background:rgba(255,255,255,.03);
 border:1px solid rgba(255,255,255,.08);
 text-align:center;
-position:relative;
-overflow:hidden;
+}
+
+.profile img{
+width:80px;
+height:80px;
+border-radius:50%;
+margin-bottom:12px;
 }
 
 .online{
-width:18px;
-height:18px;
+width:14px;
+height:14px;
 background:#00ff88;
 border-radius:50%;
-position:absolute;
-right:34px;
-top:34px;
-box-shadow:0 0 20px #00ff88;
-animation:pulse 2s infinite;
+display:inline-block;
+box-shadow:0 0 16px #00ff88;
+margin-right:6px;
 }
-
-@keyframes pulse{
-0%{transform:scale(1)}
-50%{transform:scale(1.2)}
-100%{transform:scale(1)}
-}
-
-.user img{
-width:90px;
-height:90px;
-border-radius:50%;
-margin-bottom:16px;
-border:3px solid rgba(255,255,255,.08);
-}
-
-.badge{
-margin-top:12px;
-padding:10px 16px;
-border-radius:999px;
-background:rgba(88,101,242,.14);
-border:1px solid rgba(88,101,242,.25);
-font-size:13px;
-font-weight:700;
-}
-
-/* MAIN */
 
 .main{
 flex:1;
-padding:35px;
 overflow-y:auto;
+padding:30px;
 }
 
-/* TOPBAR */
-
-.top{
+.topbar{
 display:flex;
 justify-content:space-between;
 align-items:center;
-margin-bottom:35px;
+margin-bottom:28px;
 }
 
-.top h1{
-font-size:54px;
+.title{
+font-size:42px;
 font-weight:800;
 }
 
 .top-right{
 display:flex;
 align-items:center;
-gap:18px;
+gap:14px;
 }
 
-.status{
-padding:12px 18px;
-border-radius:16px;
+.box{
 background:rgba(255,255,255,.04);
 border:1px solid rgba(255,255,255,.08);
-font-weight:600;
-}
-
-.notify{
-width:54px;
-height:54px;
+padding:14px 18px;
 border-radius:18px;
-background:rgba(255,255,255,.04);
-border:1px solid rgba(255,255,255,.08);
-display:flex;
-justify-content:center;
-align-items:center;
-font-size:20px;
 }
 
-.search{
-width:280px;
-padding:16px 20px;
-border-radius:18px;
-background:rgba(255,255,255,.04);
-border:1px solid rgba(255,255,255,.08);
-outline:none;
-color:white;
-}
-
-/* STATS */
-
-.stats{
+.grid{
 display:grid;
 grid-template-columns:repeat(4,1fr);
-gap:24px;
-margin-bottom:35px;
+gap:18px;
+margin-bottom:24px;
 }
 
 .stat{
-padding:28px;
-border-radius:30px;
 background:rgba(255,255,255,.04);
 border:1px solid rgba(255,255,255,.08);
+border-radius:28px;
+padding:24px;
 transition:.25s;
-position:relative;
-overflow:hidden;
-}
-
-.stat::after{
-content:'';
-position:absolute;
-top:-120%;
-left:-20%;
-width:140%;
-height:200%;
-background:linear-gradient(transparent,rgba(255,255,255,.08),transparent);
-transform:rotate(25deg);
-animation:shine 6s infinite;
-}
-
-@keyframes shine{
-0%{top:-120%}
-100%{top:120%}
 }
 
 .stat:hover{
-transform:translateY(-8px);
-box-shadow:0 20px 80px rgba(88,101,242,.25);
+transform:translateY(-6px);
+box-shadow:0 0 40px rgba(88,101,242,.18);
 }
 
 .stat h2{
-font-size:44px;
-margin-bottom:10px;
-background:linear-gradient(135deg,#5865F2,#7c3aed);
+font-size:38px;
+margin-bottom:8px;
+background:linear-gradient(135deg,#5865f2,#7c3aed);
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
 }
 
-.stat p{
-opacity:.7;
-}
-
-/* GRID */
-
-.grid{
+.layout{
 display:grid;
-grid-template-columns:1fr 1fr;
-gap:24px;
+grid-template-columns:2fr 1fr;
+gap:22px;
 }
-
-/* CARDS */
 
 .card{
-padding:30px;
-border-radius:32px;
 background:rgba(255,255,255,.04);
 border:1px solid rgba(255,255,255,.08);
-backdrop-filter:blur(30px);
-transition:.25s;
+border-radius:30px;
+padding:26px;
+margin-bottom:22px;
 }
 
-.card:hover{
-transform:translateY(-8px);
-box-shadow:0 20px 80px rgba(88,101,242,.25);
+.card h3{
+font-size:24px;
+margin-bottom:20px;
 }
 
-.card h2{
-font-size:28px;
-margin-bottom:24px;
-}
-
-.input,.textarea,.select{
+.input,
+textarea,
+select{
 width:100%;
-padding:18px 20px;
-border-radius:18px;
-background:rgba(255,255,255,.04);
+padding:16px;
+background:rgba(255,255,255,.03);
 border:1px solid rgba(255,255,255,.08);
+border-radius:16px;
 outline:none;
 color:white;
-margin-bottom:18px;
+margin-bottom:14px;
+font-family:inherit;
 }
 
-.textarea{
-min-height:140px;
+textarea{
+min-height:120px;
 resize:none;
 }
 
 .btn{
 width:100%;
-padding:18px;
+padding:16px;
 border:none;
-border-radius:18px;
-background:linear-gradient(135deg,#5865F2,#7c3aed);
+border-radius:16px;
+background:linear-gradient(135deg,#5865f2,#7c3aed);
 color:white;
 font-weight:700;
-font-size:16px;
 cursor:pointer;
 transition:.25s;
 }
 
 .btn:hover{
-transform:translateY(-5px);
-box-shadow:0 20px 60px rgba(88,101,242,.25);
+transform:translateY(-4px);
+box-shadow:0 0 30px rgba(88,101,242,.25);
 }
-
-/* ACTIVITY */
 
 .activity{
-margin-top:24px;
-padding:30px;
-border-radius:32px;
-background:rgba(255,255,255,.04);
-border:1px solid rgba(255,255,255,.08);
-}
-
-.activity h2{
-margin-bottom:22px;
+display:flex;
+flex-direction:column;
+gap:12px;
 }
 
 .activity-item{
-padding:18px 20px;
-border-radius:18px;
+padding:16px;
+border-radius:16px;
 background:rgba(255,255,255,.03);
 border:1px solid rgba(255,255,255,.06);
-margin-bottom:14px;
-font-weight:600;
 }
 
-/* LOADER */
-
-.skeleton{
-height:14px;
-border-radius:12px;
-background:linear-gradient(90deg,#1b1b1b,#2d2d2d,#1b1b1b);
-background-size:200% 100%;
-animation:loading 2s infinite linear;
+.status-list{
+display:flex;
+flex-direction:column;
+gap:12px;
 }
 
-@keyframes loading{
-0%{background-position:200% 0}
-100%{background-position:-200% 0}
+.status-item{
+padding:14px;
+border-radius:16px;
+background:rgba(255,255,255,.03);
+border:1px solid rgba(255,255,255,.06);
+}
+
+.theme-switch{
+display:flex;
+gap:10px;
+}
+
+.theme-btn{
+flex:1;
+padding:12px;
+border-radius:14px;
+border:none;
+cursor:pointer;
+font-weight:700;
+}
+
+.theme-purple{
+background:#5865f2;
+color:white;
+}
+
+.theme-cyber{
+background:#00ffaa;
+color:black;
+}
+
+.hidden{
+display:none;
 }
 
 @media(max-width:1200px){
-.stats{grid-template-columns:repeat(2,1fr)}
-.grid{grid-template-columns:1fr}
+.grid{
+grid-template-columns:repeat(2,1fr);
 }
 
-@media(max-width:900px){
+.layout{
+grid-template-columns:1fr;
+}
+}
+
+@media(max-width:800px){
+
 body{
 flex-direction:column;
 overflow:auto;
 }
+
 .sidebar{
 width:100%;
 }
-.stats{
+
+.grid{
 grid-template-columns:1fr;
 }
+
 }
 
 </style>
 </head>
 
-<body class="purple">
-
-<div class="bg">
-<div class="orb orb1"></div>
-<div class="orb orb2"></div>
-<div class="orb orb3"></div>
-</div>
-
-<div class="noise"></div>
+<body>
 
 <div class="sidebar">
 
 <div>
 
-<div class="logo">
+<div class="brand">
 <img src="/assets/logo.png">
-<h2>Novaris</h2>
+<h1>Novaris</h1>
 </div>
 
 <div class="menu">
 
-<a class="active" href="#">🏠 Genel Bakış</a>
-<a href="#">📢 Duyurular</a>
-<a href="#">🤖 Bot Yönetimi</a>
-<a href="#">💎 Premium</a>
-<a href="#">⚙️ Ayarlar</a>
-<a href="#">🛠️ Maintenance</a>
+<button class="active">🏠 Genel Bakış</button>
+<button>📢 Duyurular</button>
+<button>🤖 Bot Yönetimi</button>
+<button>💎 Premium</button>
+<button>⚙️ Ayarlar</button>
 
 </div>
 
 </div>
 
-<div class="user">
-
-<div class="online"></div>
+<div class="profile">
 
 <img id="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png">
 
-<h3 id="username">Kerem</h3>
+<h2 id="username">Kerem</h2>
 
-<p style="opacity:.7;">Sistem Sahibi</p>
-
-<div class="badge">🟢 OWNER ACCESS</div>
-<div class="badge">🟢 API ONLINE</div>
-<div class="badge">🟢 DATABASE CONNECTED</div>
-<div class="badge">🟢 BOT ACTIVE</div>
+<p style="opacity:.7;margin-top:8px;">
+<span class="online"></span>
+OWNER ACCESS
+</p>
 
 </div>
 
@@ -510,34 +365,34 @@ grid-template-columns:1fr;
 
 <div class="main">
 
-<div class="top">
+<div class="topbar">
 
-<h1>Ultimate Panel</h1>
+<div class="title">
+Control Center
+</div>
 
 <div class="top-right">
 
-<div class="status" id="clock">
+<div class="box" id="clock">
 00:00:00
 </div>
 
-<div class="status">
+<div class="box">
 🟢 12ms
 </div>
 
-<div class="notify">
-🔔
-</div>
-
-<input class="search" placeholder="Panelde ara...">
-
+<div class="box">
+🔔 3
 </div>
 
 </div>
 
-<div class="stats">
+</div>
+
+<div class="grid">
 
 <div class="stat">
-<h2 id="users">1.2K</h2>
+<h2 id="users">1240</h2>
 <p>Toplam Kullanıcı</p>
 </div>
 
@@ -558,15 +413,17 @@ grid-template-columns:1fr;
 
 </div>
 
-<div class="grid">
+<div class="layout">
+
+<div>
 
 <div class="card">
 
-<h2>📢 Duyuru Yönet</h2>
+<h3>📢 Duyuru Yönetimi</h3>
 
-<input id="title" class="input" placeholder="Duyuru Başlığı">
+<input class="input" id="announcementTitle" placeholder="Duyuru Başlığı">
 
-<textarea id="text" class="textarea" placeholder="Duyuru Mesajı"></textarea>
+<textarea id="announcementText" placeholder="Duyuru Mesajı"></textarea>
 
 <button class="btn" onclick="saveAnnouncement()">
 Duyuruyu Yayınla
@@ -576,36 +433,49 @@ Duyuruyu Yayınla
 
 <div class="card">
 
-<h2>🤖 Bot Yönetimi</h2>
+<h3>🤖 Bot Yönetimi</h3>
 
-<input class="input" placeholder="Bot Adı">
-<input class="input" placeholder="Bot Açıklaması">
-<input class="input" placeholder="Bot Logo URL">
-<input class="input" placeholder="Bot URL">
+<input class="input" id="botName" placeholder="Bot Adı">
 
-<button class="btn" onclick="showAlert('Bot başarıyla eklendi!')">
-Botu Yayınla
+<input class="input" id="botDescription" placeholder="Bot Açıklaması">
+
+<input class="input" id="botURL" placeholder="Bot URL">
+
+<button class="btn" onclick="addBot()">
+Botu Kaydet
 </button>
 
 </div>
 
 <div class="card">
 
-<h2>⚡ Hızlı İşlemler</h2>
+<h3>📊 Analytics</h3>
 
-<button class="btn" onclick="showAlert('Bakım modu aktif edildi!')">
+<canvas id="chart"></canvas>
+
+</div>
+
+</div>
+
+<div>
+
+<div class="card">
+
+<h3>⚡ Hızlı İşlemler</h3>
+
+<button class="btn" onclick="notify('Bakım modu aktif edildi!')">
 Bakım Modu
 </button>
 
 <br><br>
 
-<button class="btn" onclick="showAlert('Botlar yeniden başlatıldı!')">
+<button class="btn" onclick="notify('Tüm botlar yeniden başlatıldı!')">
 Bot Restart
 </button>
 
 <br><br>
 
-<button class="btn" onclick="showAlert('Premium verildi!')">
+<button class="btn" onclick="notify('Premium başarıyla verildi!')">
 Premium Ver
 </button>
 
@@ -613,24 +483,31 @@ Premium Ver
 
 <div class="card">
 
-<h2>🎨 Tema Sistemi</h2>
+<h3>🟢 Sistem Durumu</h3>
 
-<select class="select" onchange="changeTheme(this.value)">
-<option value="purple">Purple Neon</option>
-<option value="cyberpunk">Cyberpunk</option>
-</select>
+<div class="status-list">
 
-<div style="margin-top:20px">
-<canvas id="analyticsChart"></canvas>
+<div class="status-item">
+🟢 API ONLINE
+</div>
+
+<div class="status-item">
+🟢 DATABASE CONNECTED
+</div>
+
+<div class="status-item">
+🟢 BOT ACTIVE
 </div>
 
 </div>
 
 </div>
 
-<div class="activity">
+<div class="card">
 
-<h2>⚡ Son Aktiviteler</h2>
+<h3>⚡ Son Aktiviteler</h3>
+
+<div class="activity" id="activityFeed">
 
 <div class="activity-item">
 🔥 Kerem yeni duyuru yayınladı
@@ -644,8 +521,28 @@ Premium Ver
 🤖 Yeni bot sisteme eklendi
 </div>
 
-<div class="activity-item">
-🟢 Database başarıyla bağlandı
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>🎨 Tema Sistemi</h3>
+
+<div class="theme-switch">
+
+<button class="theme-btn theme-purple" onclick="setTheme('purple')">
+Purple
+</button>
+
+<button class="theme-btn theme-cyber" onclick="setTheme('cyber')">
+Cyber
+</button>
+
+</div>
+
+</div>
+
 </div>
 
 </div>
@@ -653,6 +550,8 @@ Premium Ver
 </div>
 
 <script>
+
+/* LOGIN */
 
 const access =
 localStorage.getItem("admin_access");
@@ -674,34 +573,20 @@ now.toLocaleTimeString();
 
 },1000);
 
-/* DISCORD PROFILE */
+/* PROFILE */
 
-const savedAvatar =
+const avatar =
 localStorage.getItem("discord_avatar");
 
-const savedUsername =
+const username =
 localStorage.getItem("discord_username");
 
-if(savedAvatar){
-
-document.getElementById(
-"avatar"
-).src = savedAvatar;
-
+if(avatar){
+document.getElementById("avatar").src = avatar;
 }
 
-if(savedUsername){
-
-document.getElementById(
-"username"
-).innerText = savedUsername;
-
-}
-
-/* ALERT */
-
-function showAlert(text){
-alert(text);
+if(username){
+document.getElementById("username").innerText = username;
 }
 
 /* ANNOUNCEMENT */
@@ -709,10 +594,14 @@ alert(text);
 function saveAnnouncement(){
 
 const title =
-document.getElementById("title").value;
+document.getElementById(
+"announcementTitle"
+).value;
 
 const text =
-document.getElementById("text").value;
+document.getElementById(
+"announcementText"
+).value;
 
 localStorage.setItem(
 "announcement_title",
@@ -724,39 +613,93 @@ localStorage.setItem(
 text
 );
 
-alert("Duyuru yayınlandı!");
+addActivity(
+"📢 Yeni duyuru yayınlandı"
+);
+
+notify("Duyuru kaydedildi!");
 
 }
 
-/* THEMES */
+/* BOT */
 
-function changeTheme(theme){
+function addBot(){
 
-document.body.className = theme;
+const bot =
+document.getElementById(
+"botName"
+).value;
+
+if(!bot) return;
+
+addActivity(
+"🤖 " + bot + " sisteme eklendi"
+);
+
+notify("Bot başarıyla kaydedildi!");
+
+}
+
+/* ACTIVITY */
+
+function addActivity(text){
+
+const item =
+document.createElement("div");
+
+item.className =
+"activity-item";
+
+item.innerText = text;
+
+document.getElementById(
+"activityFeed"
+).prepend(item);
+
+}
+
+/* ALERT */
+
+function notify(text){
+alert(text);
+}
+
+/* THEME */
+
+function setTheme(theme){
+
+if(theme === "cyber"){
+
+document.body.style.background =
+"#020b08";
+
+}else{
+
+document.body.style.background =
+"#07070a";
+
+}
 
 localStorage.setItem(
-"theme",
+"panel_theme",
 theme
 );
 
 }
 
 const savedTheme =
-localStorage.getItem("theme");
+localStorage.getItem(
+"panel_theme"
+);
 
 if(savedTheme){
-
-document.body.className =
-savedTheme;
-
+setTheme(savedTheme);
 }
 
 /* CHART */
 
 new Chart(
-document.getElementById(
-'analyticsChart'
-),
+document.getElementById('chart'),
 {
 type:'line',
 data:{
@@ -771,7 +714,7 @@ labels:[
 ],
 datasets:[{
 label:'Kullanıcı Artışı',
-data:[12,19,14,25,32,28,40],
+data:[12,19,25,22,31,40,44],
 borderWidth:3,
 tension:.4
 }]

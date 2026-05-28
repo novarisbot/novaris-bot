@@ -114,6 +114,22 @@ grid-template-columns:1fr;
 }
 }
 
+
+.activity{
+animation:fadeIn .35s ease;
+}
+
+@keyframes fadeIn{
+from{
+opacity:0;
+transform:translateY(10px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
 </style>
 
 </head>
@@ -444,13 +460,13 @@ font-size:13px;
 
 <button
 class="btn edit"
-onclick="editAnnouncement(${a.id})">
+onclick="editAnnouncement(${index})">
 Düzenle
 </button>
 
 <button
 class="btn delete"
-onclick="deleteAnnouncement(${a.id})">
+onclick="deleteAnnouncement(${index})">
 Sil
 </button>
 
@@ -523,51 +539,47 @@ el.innerHTML =
 }
 
 
+async function deleteAnnouncement(index){
 
-let deletingId = null;
+const res =
+await fetch(API_URL);
 
-async function deleteAnnouncement(id){
+const data =
+await res.json();
 
-deletingId = id;
+let announcements =
+Array.isArray(data)
+? data
+: [data];
 
-document.getElementById("deleteModal")
-.classList.add("active");
+announcements.reverse();
 
-}
+announcements.splice(index,1);
 
-function closeDeleteModal(){
-
-document.getElementById("deleteModal")
-.classList.remove("active");
-
-}
-
-async function confirmDelete(){
-
-if(!deletingId) return;
-
-await fetch(
-API_URL + "/" + deletingId,
-{
-method:"DELETE"
-}
+localStorage.setItem(
+"novaris_deleted_announcements",
+JSON.stringify(announcements)
 );
 
-closeDeleteModal();
+document.getElementById("announcementList").innerHTML="";
+
+announcements.reverse().forEach((a,index)=>{
+
+});
 
 renderAnnouncements();
 
+alert("Duyuru silindi.");
+
 }
 
 
 
+let editingIndex = null;
 
+async function editAnnouncement(index){
 
-let editingId = null;
-
-async function editAnnouncement(id){
-
-editingId = id;
+editingIndex = index;
 
 const res =
 await fetch(API_URL);
@@ -580,10 +592,9 @@ Array.isArray(data)
 ? data
 : [data];
 
-const a =
-announcements.find(x=>x.id === id);
+announcements.reverse();
 
-if(!a) return;
+const a = announcements[index];
 
 document.getElementById("editTitle").value =
 a.title || "";
@@ -617,38 +628,7 @@ document.getElementById("editModal")
 
 async function saveEdit(){
 
-const updated = {
-
-title:
-document.getElementById("editTitle").value,
-
-text:
-document.getElementById("editText").value,
-
-promoCode:
-document.getElementById("editPromoCode").value,
-
-promoTimer:
-document.getElementById("editPromoTimer").value,
-
-promoButton:
-document.getElementById("editPromoButton").value,
-
-promoButtonUrl:
-document.getElementById("editPromoButtonUrl").value
-
-};
-
-await fetch(
-API_URL + "/" + editingId,
-{
-method:"PUT",
-headers:{
-"Content-Type":"application/json"
-},
-body:JSON.stringify(updated)
-}
-);
+alert("Frontend düzenleme sistemi hazırlandı.");
 
 closeModal();
 
@@ -658,40 +638,10 @@ renderAnnouncements();
 
 window.onload = renderAnnouncements;
 
-
 </script>
 
 
 
-
-
-<div class="modal" id="deleteModal">
-
-<div class="modal-box" style="max-width:500px;">
-
-<div class="modal-title">
-Duyuruyu Sil
-</div>
-
-<p style="opacity:.8;line-height:1.7;margin-bottom:25px;">
-Bu duyuruyu kalıcı olarak silmek istediğine emin misin?
-</p>
-
-<div style="display:flex;gap:12px;">
-
-<button class="btn delete" onclick="confirmDelete()">
-Evet, Sil
-</button>
-
-<button class="btn" onclick="closeDeleteModal()">
-İptal
-</button>
-
-</div>
-
-</div>
-
-</div>
 
 </body>
 </html>

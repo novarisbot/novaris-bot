@@ -3376,6 +3376,39 @@ bar.innerHTML = "";
 })
 .catch(err => console.log("Announcement Error:", err));
 
+fetch("https://novaris-api.onrender.com/api/announcement")
+.then(res => res.json())
+.then(data => {
+
+const bar =
+document.getElementById(
+"announcement-bar"
+);
+
+if(!bar) return;
+
+if(data.enabled){
+
+bar.innerHTML = `
+
+<div class="announcement">
+<div class="announcement-content">
+📢 ${data.title} — ${data.text}
+</div>
+</div>
+
+`;
+
+}else{
+
+bar.innerHTML = "";
+
+}
+
+})
+.catch(err => console.log(err));
+
+
 </script>
 
 </body>

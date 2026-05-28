@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Novaris Dashboard</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:'Inter',sans-serif;
+background:#050505;
+color:white;
+overflow:hidden;
+display:flex;
+height:100vh;
+}
+
+/* Background */
+
+.bg{
+position:fixed;
+inset:0;
+overflow:hidden;
+z-index:-10;
+}
+
+.orb{
+position:absolute;
+border-radius:50%;
+filter:blur(140px);
+opacity:.25;
+animation:float 10s infinite ease-in-out;
+}
+
+.orb1{
+width:500px;
+height:500px;
+background:#5865F2;
+top:-150px;
+left:-150px;
+}
+
+.orb2{
+width:400px;
+height:400px;
+background:#7c3aed;
+bottom:-150px;
+right:-150px;
+animation-delay:2s;
+}
+
+.orb3{
+width:300px;
+height:300px;
+background:#00d4ff;
+top:40%;
+left:40%;
+animation-delay:4s;
+}
+
+@keyframes float{
+0%,100%{
+transform:translateY(0px);
+}
+50%{
+transform:translateY(-30px);
+}
+}
+
+/* Sidebar */
+
+.sidebar{
+width:290px;
+height:100vh;
+
+background:
+rgba(255,255,255,.04);
+
+border-right:
+1px solid rgba(255,255,255,.08);
+
+backdrop-filter:
+blur(30px);
+
+padding:30px;
+
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+}
+
+/* Logo */
+
+.logo{
+display:flex;
+align-items:center;
+gap:14px;
+margin-bottom:45px;
+}
+
+.logo img{
+width:52px;
+height:52px;
+border-radius:50%;
+object-fit:cover;
+}
+
+.logo h2{
+font-size:26px;
+font-weight:800;
+}
+
+/* Nav */
+
+.nav{
+display:flex;
+flex-direction:column;
+gap:14px;
+}
+
+.nav a{
+display:flex;
+align-items:center;
+gap:14px;
+
+padding:18px 20px;
+
+border-radius:18px;
+
+text-decoration:none;
+color:white;
+font-weight:600;
+
+background:
+rgba(255,255,255,.03);
+
+border:
+1px solid rgba(255,255,255,.05);
+
+transition:.25s;
+}
+
+.nav a:hover{
+transform:
+translateX(6px)
+scale(1.02);
+
+background:
+rgba(88,101,242,.14);
+
+box-shadow:
+0 10px 40px rgba(88,101,242,.15);
+}
+
+/* User Card */
+
+.user-card{
+padding:20px;
+border-radius:24px;
+
+background:
+rgba(255,255,255,.04);
+
+border:
+1px solid rgba(255,255,255,.08);
+
+text-align:center;
+}
+
+.user-card img{
+width:80px;
+height:80px;
+border-radius:50%;
+margin-bottom:16px;
+object-fit:cover;
+}
+
+.user-card h3{
+font-size:22px;
+margin-bottom:8px;
+}
+
+.badge{
+display:inline-flex;
+align-items:center;
+gap:8px;
+
+padding:8px 14px;
+
+border-radius:999px;
+
+background:
+rgba(88,101,242,.14);
+
+border:
+1px solid rgba(88,101,242,.25);
+
+font-size:13px;
+font-weight:700;
+margin-top:14px;
+}
+
+/* Main */
+
+.main{
+flex:1;
+padding:35px;
+overflow-y:auto;
+}
+
+/* Topbar */
+
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:35px;
+}
+
+.topbar h1{
+font-size:42px;
+font-weight:800;
+}
+
+.search{
+width:320px;
+padding:16px 20px;
+
+border-radius:18px;
+
+background:
+rgba(255,255,255,.04);
+
+border:
+1px solid rgba(255,255,255,.08);
+
+outline:none;
+color:white;
+}
+
+/* Stats */
+
+.stats{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:24px;
+margin-bottom:35px;
+}
+
+.stat-card{
+padding:28px;
+border-radius:28px;
+
+background:
+rgba(255,255,255,.04);
+
+border:
+1px solid rgba(255,255,255,.08);
+
+backdrop-filter:
+blur(20px);
+
+transition:.25s;
+}
+
+.stat-card:hover{
+transform:
+translateY(-10px)
+scale(1.02);
+
+box-shadow:
+0 20px 60px rgba(88,101,242,.18);
+}
+
+.stat-card h2{
+font-size:42px;
+margin-bottom:12px;
+
+background:
+linear-gradient(135deg,#5865F2,#7c3aed);
+
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.stat-card p{
+opacity:.7;
+}
+
+/* Servers */
+
+.section-title{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:25px;
+}
+
+.section-title h2{
+font-size:30px;
+}
+
+.servers{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+gap:24px;
+}
+
+/* Server Card */
+
+.server-card{
+position:relative;
+
+padding:28px;
+border-radius:30px;
+
+background:
+rgba(255,255,255,.04);
+
+border:
+1px solid rgba(255,255,255,.08);
+
+overflow:hidden;
+
+transition:.25s;
+}
+
+.server-card:hover{
+transform:
+translateY(-12px)
+rotateX(5deg)
+rotateY(-5deg);
+
+box-shadow:
+0 25px 70px rgba(88,101,242,.18);
+}
+
+.server-glow{
+position:absolute;
+width:240px;
+height:240px;
+background:
+radial-gradient(circle,
+rgba(88,101,242,.25),
+transparent 70%);
+
+top:-120px;
+right:-120px;
+
+pointer-events:none;
+}
+
+.server-top{
+display:flex;
+align-items:center;
+gap:18px;
+margin-bottom:20px;
+}
+
+.server-icon{
+width:72px;
+height:72px;
+border-radius:24px;
+
+background:
+linear-gradient(135deg,#5865F2,#7c3aed);
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+font-size:28px;
+font-weight:800;
+}
+
+.server-card h3{
+font-size:24px;
+margin-bottom:8px;
+}
+
+.server-card p{
+opacity:.7;
+line-height:1.7;
+margin-bottom:22px;
+}
+
+.manage-btn{
+display:flex;
+justify-content:center;
+align-items:center;
+
+padding:16px;
+
+border-radius:18px;
+
+background:
+linear-gradient(135deg,#5865F2,#7c3aed);
+
+color:white;
+font-weight:700;
+text-decoration:none;
+
+transition:.25s;
+}
+
+.manage-btn:hover{
+transform:
+translateY(-4px)
+scale(1.03);
+
+box-shadow:
+0 15px 50px rgba(88,101,242,.25);
+}
+
+/* Scroll */
+
+::-webkit-scrollbar{
+width:10px;
+}
+
+::-webkit-scrollbar-thumb{
+background:#5865F2;
+border-radius:999px;
+}
+
+/* Responsive */
+
+@media(max-width:1200px){
+
+.stats{
+grid-template-columns:repeat(2,1fr);
+}
+
+}
+
+@media(max-width:900px){
+
+body{
+flex-direction:column;
+overflow:auto;
+}
+
+.sidebar{
+width:100%;
+height:auto;
+}
+
+.stats{
+grid-template-columns:1fr;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="bg">
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="orb orb3"></div>
+</div>
+
+<!-- Sidebar -->
+
+<div class="sidebar">
+
+<div>
+
+<div class="logo">
+
+<img src="https://i.imgur.com/rycsHTs.png">
+
+<h2>Novaris</h2>
+
+</div>
+
+<div class="nav">
+
+<a href="#">
+🏠 Genel Bakış
+</a>
+
+<a href="#">
+🖥 Sunucular
+</a>
+
+<a href="#">
+🤖 Botlar
+</a>
+
+<a href="#">
+💎 Premium
+</a>
+
+<a href="#">
+⚙ Ayarlar
+</a>
+
+</div>
+
+</div>
+
+<div class="user-card">
+
+<img id="avatar"
+src="https://cdn.discordapp.com/embed/avatars/0.png">
+
+<h3 id="username">
+Kullanıcı
+</h3>
+
+<p style="opacity:.7;">
+Discord hesabı bağlı
+</p>
+
+<div class="badge">
+🟢 PREMIUM ACTIVE
+</div>
+
+</div>
+
+</div>
+
+<!-- Main -->
+
+<div class="main">
+
+<div class="topbar">
+
+<h1>
+Dashboard
+</h1>
+
+<input
+class="search"
+placeholder="Sunucu ara...">
+
+</div>
+
+<!-- Stats -->
+
+<div class="stats">
+
+<div class="stat-card">
+<h2>12</h2>
+<p>Aktif Sunucu</p>
+</div>
+
+<div class="stat-card">
+<h2>3</h2>
+<p>Aktif Bot</p>
+</div>
+
+<div class="stat-card">
+<h2>99%</h2>
+<p>Uptime</p>
+</div>
+
+<div class="stat-card">
+<h2>Premium</h2>
+<p>Aktif Plan</p>
+</div>
+
+</div>
+
+<!-- Servers -->
+
+<div class="section-title">
+
+<h2>
+Sunucular
+</h2>
+
+</div>
+
+<div class="servers">
+
+<div class="server-card">
+
+<div class="server-glow"></div>
+
+<div class="server-top">
+
+<div class="server-icon">
+N
+</div>
+
+<div>
+<h3>Nevizade</h3>
+<p>Premium Community</p>
+</div>
+
+</div>
+
+<p>
+Kayıt sistemi, booster sistemi ve özel oda sistemi aktif.
+</p>
+
+<a href="#"
+class="manage-btn">
+Yönet
+</a>
+
+</div>
+
+<div class="server-card">
+
+<div class="server-glow"></div>
+
+<div class="server-top">
+
+<div class="server-icon">
+B
+</div>
+
+<div>
+<h3>Booster Hub</h3>
+<p>Booster Management</p>
+</div>
+
+</div>
+
+<p>
+Gelişmiş booster sistemi ve premium ayarlar aktif.
+</p>
+
+<a href="#"
+class="manage-btn">
+Yönet
+</a>
+
+</div>
+
+<div class="server-card">
+
+<div class="server-glow"></div>
+
+<div class="server-top">
+
+<div class="server-icon">
+R
+</div>
+
+<div>
+<h3>Room System</h3>
+<p>Private Rooms</p>
+</div>
+
+</div>
+
+<p>
+Özel oda sistemi ve gelişmiş yetki yönetimi aktif.
+</p>
+
+<a href="#"
+class="manage-btn">
+Yönet
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+/* Discord User */
+
+const params =
+new URLSearchParams(
+window.location.hash.slice(1)
+);
+
+const token =
+params.get("access_token");
+
+if(token){
+
+localStorage.setItem(
+"discord_token",
+token
+);
+
+}
+
+const savedToken =
+localStorage.getItem(
+"discord_token"
+);
+
+if(savedToken){
+
+fetch(
+"https://discord.com/api/users/@me",
+{
+headers:{
+authorization:
+`Bearer ${savedToken}`
+}
+})
+.then(res=>res.json())
+.then(user=>{
+
+document
+.getElementById("username")
+.innerText =
+user.global_name || user.username;
+
+document
+.getElementById("avatar")
+.src =
+`https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
+
+});
+
+}
+
+/* Tilt Effect */
+
+document.querySelectorAll(
+'.server-card,.stat-card'
+).forEach(card=>{
+
+card.addEventListener(
+'mousemove',
+e=>{
+
+const rect =
+card.getBoundingClientRect();
+
+const x =
+e.clientX - rect.left;
+
+const y =
+e.clientY - rect.top;
+
+const rotateY =
+((x / rect.width)-0.5)*14;
+
+const rotateX =
+((y / rect.height)-0.5)*-14;
+
+card.style.transform =
+`
+perspective(1400px)
+rotateX(${rotateX}deg)
+rotateY(${rotateY}deg)
+translateY(-12px)
+`;
+
+});
+
+card.addEventListener(
+'mouseleave',
+()=>{
+
+card.style.transform =
+`
+perspective(1400px)
+rotateX(0deg)
+rotateY(0deg)
+translateY(0px)
+`;
+
+});
+
+});
+
+</script>
+
+</body>
+</html>
+

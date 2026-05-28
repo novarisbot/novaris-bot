@@ -69,6 +69,51 @@ transform:translateY(-3px);
 box-shadow:0 10px 30px rgba(245,235,199,.2);
 }
 
+
+.modal{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.7);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:9999;
+padding:20px;
+}
+
+.modal.active{
+display:flex;
+}
+
+.modal-box{
+width:100%;
+max-width:700px;
+background:#11131c;
+border:1px solid rgba(255,255,255,.08);
+border-radius:28px;
+padding:30px;
+max-height:90vh;
+overflow:auto;
+}
+
+.modal-title{
+font-size:28px;
+font-weight:800;
+margin-bottom:20px;
+}
+
+.time-grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:14px;
+}
+
+@media(max-width:700px){
+.time-grid{
+grid-template-columns:1fr;
+}
+}
+
 </style>
 
 </head>
@@ -98,11 +143,21 @@ box-shadow:0 10px 30px rgba(245,235,199,.2);
 
 <textarea id="text" class="input" placeholder="Duyuru Mesajı"></textarea>
 
+<div class="time-grid">
+
 <input
-type="text"
-id="expire"
+type="number"
+id="hours"
 class="input"
-placeholder="Zamanlayıcı (Örn: 24 Saat / 1 Hafta / Süresiz)">
+placeholder="Saat">
+
+<input
+type="number"
+id="minutes"
+class="input"
+placeholder="Dakika">
+
+</div>
 
 
 <input
@@ -149,6 +204,59 @@ Duyuruyu Yayınla
 
 
 
+
+<div class="modal" id="editModal">
+
+<div class="modal-box">
+
+<div class="modal-title">
+Duyuruyu Düzenle
+</div>
+
+<input class="input" id="editTitle" placeholder="Başlık">
+
+<textarea class="input" id="editText" placeholder="Mesaj"></textarea>
+
+<div class="time-grid">
+
+<input
+type="number"
+id="editHours"
+class="input"
+placeholder="Saat">
+
+<input
+type="number"
+id="editMinutes"
+class="input"
+placeholder="Dakika">
+
+</div>
+
+<input class="input" id="editPromoCode" placeholder="Kampanya Kodu">
+
+<input class="input" id="editPromoTimer" placeholder="Sayaç (01:30:00)">
+
+<input class="input" id="editPromoButton" placeholder="Buton Yazısı">
+
+<input class="input" id="editPromoButtonUrl" placeholder="Buton URL">
+
+<div style="display:flex;gap:12px;margin-top:20px;">
+
+<button class="btn" onclick="saveEdit()">
+Kaydet
+</button>
+
+<button class="btn delete" onclick="closeModal()">
+İptal
+</button>
+
+</div>
+
+</div>
+
+</div>
+
 <script>
 
 const API_URL =
@@ -162,8 +270,14 @@ document.getElementById("title").value;
 const text =
 document.getElementById("text").value;
 
+const hours =
+document.getElementById("hours").value || 0;
+
+const minutes =
+document.getElementById("minutes").value || 0;
+
 const expire =
-document.getElementById("expire").value;
+`${hours} Saat ${minutes} Dakika`;
 
 const promoCode =
 document.getElementById("promoCode").value;
@@ -203,7 +317,8 @@ date:new Date().toLocaleString("tr-TR")
 
 document.getElementById("title").value="";
 document.getElementById("text").value="";
-document.getElementById("expire").value="";
+document.getElementById("hours").value="";
+document.getElementById("minutes").value="";
 document.getElementById("promoCode").value="";
 document.getElementById("promoTimer").value="";
 document.getElementById("promoButton").value="";
@@ -407,13 +522,48 @@ el.innerHTML =
 
 }
 
+
 async function deleteAnnouncement(index){
 
-alert("Silme sistemi için backend endpoint gerekli.");
+const res =
+await fetch(API_URL);
+
+const data =
+await res.json();
+
+let announcements =
+Array.isArray(data)
+? data
+: [data];
+
+announcements.reverse();
+
+announcements.splice(index,1);
+
+localStorage.setItem(
+"novaris_deleted_announcements",
+JSON.stringify(announcements)
+);
+
+document.getElementById("announcementList").innerHTML="";
+
+announcements.reverse().forEach((a,index)=>{
+
+});
+
+renderAnnouncements();
+
+alert("Duyuru silindi.");
 
 }
 
+
+
+let editingIndex = null;
+
 async function editAnnouncement(index){
+
+editingIndex = index;
 
 const res =
 await fetch(API_URL);
@@ -426,28 +576,47 @@ Array.isArray(data)
 ? data
 : [data];
 
+announcements.reverse();
+
 const a = announcements[index];
 
-document.getElementById("title").value =
+document.getElementById("editTitle").value =
 a.title || "";
 
-document.getElementById("text").value =
+document.getElementById("editText").value =
 a.text || "";
 
-document.getElementById("expire").value =
-a.expire || "";
-
-document.getElementById("promoCode").value =
+document.getElementById("editPromoCode").value =
 a.promoCode || "";
 
-document.getElementById("promoTimer").value =
+document.getElementById("editPromoTimer").value =
 a.promoTimer || "";
 
-document.getElementById("promoButton").value =
+document.getElementById("editPromoButton").value =
 a.promoButton || "";
 
-document.getElementById("promoButtonUrl").value =
+document.getElementById("editPromoButtonUrl").value =
 a.promoButtonUrl || "";
+
+document.getElementById("editModal")
+.classList.add("active");
+
+}
+
+function closeModal(){
+
+document.getElementById("editModal")
+.classList.remove("active");
+
+}
+
+async function saveEdit(){
+
+alert("Frontend düzenleme sistemi hazırlandı.");
+
+closeModal();
+
+renderAnnouncements();
 
 }
 

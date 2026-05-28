@@ -20,9 +20,9 @@ body{
 font-family:'Inter',sans-serif;
 background:#050505;
 color:white;
-overflow:hidden;
-display:flex;
 height:100vh;
+display:flex;
+overflow:hidden;
 }
 
 /* Background */
@@ -91,8 +91,6 @@ flex-direction:column;
 justify-content:space-between;
 }
 
-/* Logo */
-
 .logo{
 display:flex;
 align-items:center;
@@ -111,8 +109,6 @@ object-fit:cover;
 font-size:26px;
 font-weight:800;
 }
-
-/* Nav */
 
 .nav{
 display:flex;
@@ -135,9 +131,8 @@ transition:.25s;
 }
 
 .nav a:hover{
-transform:translateX(6px) scale(1.02);
+transform:translateX(6px);
 background:rgba(88,101,242,.14);
-box-shadow:0 10px 40px rgba(88,101,242,.15);
 }
 
 /* User Card */
@@ -151,11 +146,11 @@ text-align:center;
 }
 
 .user-card img{
-width:80px;
-height:80px;
+width:85px;
+height:85px;
 border-radius:50%;
-margin-bottom:16px;
 object-fit:cover;
+margin-bottom:16px;
 border:3px solid rgba(255,255,255,.08);
 }
 
@@ -185,8 +180,6 @@ padding:35px;
 overflow-y:auto;
 }
 
-/* Topbar */
-
 .topbar{
 display:flex;
 justify-content:space-between;
@@ -195,7 +188,7 @@ margin-bottom:35px;
 }
 
 .topbar h1{
-font-size:42px;
+font-size:48px;
 font-weight:800;
 }
 
@@ -223,13 +216,7 @@ padding:28px;
 border-radius:28px;
 background:rgba(255,255,255,.04);
 border:1px solid rgba(255,255,255,.08);
-backdrop-filter:blur(20px);
 transition:.25s;
-}
-
-.stat-card:hover{
-transform:translateY(-10px) scale(1.02);
-box-shadow:0 20px 60px rgba(88,101,242,.18);
 }
 
 .stat-card h2{
@@ -247,14 +234,11 @@ opacity:.7;
 /* Servers */
 
 .section-title{
-display:flex;
-justify-content:space-between;
-align-items:center;
 margin-bottom:25px;
 }
 
 .section-title h2{
-font-size:30px;
+font-size:32px;
 }
 
 .servers{
@@ -263,31 +247,16 @@ grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
 gap:24px;
 }
 
-/* Server Card */
-
 .server-card{
-position:relative;
 padding:28px;
 border-radius:30px;
 background:rgba(255,255,255,.04);
 border:1px solid rgba(255,255,255,.08);
-overflow:hidden;
 transition:.25s;
 }
 
 .server-card:hover{
-transform:translateY(-12px);
-box-shadow:0 25px 70px rgba(88,101,242,.18);
-}
-
-.server-glow{
-position:absolute;
-width:240px;
-height:240px;
-background:radial-gradient(circle, rgba(88,101,242,.25), transparent 70%);
-top:-120px;
-right:-120px;
-pointer-events:none;
+transform:translateY(-10px);
 }
 
 .server-top{
@@ -318,20 +287,14 @@ background:linear-gradient(135deg,#5865F2,#7c3aed);
 color:white;
 font-weight:700;
 text-decoration:none;
-transition:.25s;
 }
-
-.manage-btn:hover{
-transform:translateY(-4px) scale(1.03);
-box-shadow:0 15px 50px rgba(88,101,242,.25);
-}
-
-/* Responsive */
 
 @media(max-width:1200px){
+
 .stats{
 grid-template-columns:repeat(2,1fr);
 }
+
 }
 
 @media(max-width:900px){
@@ -409,7 +372,9 @@ Discord hesabı bağlı
 
 <h1>Dashboard</h1>
 
-<input class="search" placeholder="Sunucu ara...">
+<input
+class="search"
+placeholder="Sunucu ara...">
 
 </div>
 
@@ -441,7 +406,9 @@ Discord hesabı bağlı
 <h2>Sunucular</h2>
 </div>
 
-<div class="servers" id="servers"></div>
+<div class="servers" id="servers">
+
+</div>
 
 </div>
 
@@ -452,7 +419,14 @@ localStorage.getItem(
 "discord_token"
 );
 
-if(savedToken){
+if(!savedToken){
+
+window.location.href =
+"/";
+
+}
+
+/* User */
 
 fetch(
 "https://discord.com/api/users/@me",
@@ -476,6 +450,8 @@ document
 `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
 
 });
+
+/* Guilds */
 
 fetch(
 "https://discord.com/api/users/@me/guilds",
@@ -518,8 +494,6 @@ guild.icon
 
 card.innerHTML = `
 
-<div class="server-glow"></div>
-
 <div class="server-top">
 
 <img
@@ -554,8 +528,6 @@ servers.appendChild(card);
 });
 
 });
-
-}
 
 </script>
 

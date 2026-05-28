@@ -3329,6 +3329,49 @@ Premium Discord Systems © 2026
 
 </footer>
 
+fetch(
+"https://novaris-api.onrender.com/api/announcement"
+)
+.then(res=>res.json())
+.then(data=>{
+
+if(data.enabled){
+
+document.getElementById(
+"announcement"
+).innerHTML = `
+
+<div style="
+width:100%;
+padding:16px 22px;
+background:linear-gradient(
+90deg,
+#5865F2,
+#7c3aed
+);
+font-weight:700;
+font-size:15px;
+display:flex;
+justify-content:center;
+align-items:center;
+gap:10px;
+box-shadow:
+0 0 40px rgba(88,101,242,.25);
+">
+
+📢 ${data.title}
+—
+${data.text}
+
+</div>
+
+`;
+
+}
+
+});
+
+
 <script>
 fetch(
 "http://localhost:3000/api/announcement"

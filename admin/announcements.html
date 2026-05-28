@@ -582,11 +582,11 @@ const data = await res.json();
 
 if(data.success){
 
-closeModal();
+closeDeleteModal();
 
-showSuccess(
-"✅ Duyuru başarıyla güncellendi."
-);
+deletingId = null;
+
+showToast("🗑️ Duyuru başarıyla silindi.","success");
 
 renderAnnouncements();
 
@@ -664,13 +664,9 @@ const data = await res.json();
 
 if(data.success){
 
-closeDeleteModal();
+closeModal();
 
-deletingId = null;
-
-showSuccess(
-"🗑️ Duyuru başarıyla silindi."
-);
+showToast("✅ Duyuru başarıyla güncellendi.","success");
 
 renderAnnouncements();
 
@@ -724,5 +720,42 @@ Tamam
 </div>
 
 </div>
+
+<style>
+.toast{
+position:fixed;
+top:20px;
+right:20px;
+background:#11131c;
+border:1px solid rgba(255,255,255,.08);
+padding:16px 20px;
+border-radius:16px;
+z-index:10000;
+backdrop-filter:blur(15px);
+transform:translateX(400px);
+transition:.35s;
+font-weight:700;
+}
+.toast.show{transform:translateX(0);}
+</style>
+
+<div id="toast" class="toast"></div>
+
+<script>
+function showToast(text){
+const t=document.getElementById("toast");
+t.innerText=text;
+t.classList.add("show");
+setTimeout(()=>t.classList.remove("show"),3000);
+}
+
+document.addEventListener("keydown",e=>{
+if(e.key==="Escape"){
+document.getElementById("editModal")?.classList.remove("active");
+document.getElementById("deleteModal")?.classList.remove("active");
+}
+});
+</script>
+
 </body>
 </html>

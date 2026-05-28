@@ -74,37 +74,13 @@ Duyuruyu Yayınla
 
 </div>
 
+
 <script>
 
-function getAnnouncements(){
+const API_URL =
+"https://novaris-api.onrender.com/api/announcement";
 
-return JSON.parse(
-localStorage.getItem("novaris_announcements") || "[]"
-);
-
-}
-
-function saveAnnouncements(data){
-
-fetch("https://novaris-api.onrender.com/api/announcement",{
-
-method:"POST",
-
-headers:{
-"Content-Type":"application/json"
-},
-
-body:JSON.stringify({
-enabled:true,
-title:title,
-text:text
-})
-
-});
-
-}
-
-function publishAnnouncement(){
+async function publishAnnouncement(){
 
 const title =
 document.getElementById("title").value;
@@ -117,74 +93,53 @@ document.getElementById("expire").value;
 
 if(!title || !text) return;
 
-const announcements =
+await fetch(API_URL,{
 
+method:"POST",
 
-announcements.unshift({
-title,
-text,
-expire,
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+enabled:true,
+title:title,
+text:text,
+expire:expire,
 date:new Date().toLocaleString("tr-TR")
+})
+
 });
-
-
-
-
 
 document.getElementById("title").value="";
 document.getElementById("text").value="";
 document.getElementById("expire").value="";
 
-}
-
-function deleteAnnouncement(index){
-
-const announcements =
-getAnnouncements();
-
-announcements.splice(index,1);
-
-saveAnnouncements(announcements);
-
 renderAnnouncements();
 
 }
 
-function editAnnouncement(index){
-
-const announcements =
-getAnnouncements();
-
-const a = announcements[index];
-
-document.getElementById("title").value =
-a.title;
-
-document.getElementById("text").value =
-a.text;
-
-document.getElementById("expire").value =
-a.expire;
-
-announcements.splice(index,1);
-
-saveAnnouncements(announcements);
-
-renderAnnouncements();
-
-}
-
-function renderAnnouncements(){
+async function renderAnnouncements(){
 
 const list =
 document.getElementById("announcementList");
 
-const announcements =
-getAnnouncements();
-
 list.innerHTML = "";
 
-announcements.forEach((a,index)=>{
+try{
+
+const res =
+await fetch(API_URL);
+
+const data =
+await res.json();
+
+const announcements =
+Array.isArray(data)
+? data
+: [data];
+
+announcements.reverse().forEach((a,index)=>{
 
 list.innerHTML += `
 
@@ -195,15 +150,17 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 margin-bottom:14px;
+gap:10px;
+flex-wrap:wrap;
 ">
 
-<h3>📢 ${a.title}</h3>
+<h3>📢 ${a.title || 'Duyuru'}</h3>
 
 <div style="
 font-size:13px;
 opacity:.7;
 ">
-${a.date}
+${a.date || ''}
 </div>
 
 </div>
@@ -213,7 +170,7 @@ opacity:.8;
 line-height:1.7;
 margin-bottom:14px;
 ">
-${a.text}
+${a.text || ''}
 </p>
 
 <div style="
@@ -257,11 +214,72 @@ Sil
 
 });
 
+}catch(err){
+
+list.innerHTML = `
+<div class="activity">
+❌ Duyurular yüklenemedi.
+</div>
+`;
+
+}
+
+}
+
+async function deleteAnnouncement(index){
+
+const res =
+await fetch(API_URL);
+
+const data =
+await res.json();
+
+const announcements =
+Array.isArray(data)
+? data
+: [data];
+
+announcements.splice(index,1);
+
+localStorage.setItem(
+"novaris_announcements_backup",
+JSON.stringify(announcements)
+);
+
+renderAnnouncements();
+
+}
+
+async function editAnnouncement(index){
+
+const res =
+await fetch(API_URL);
+
+const data =
+await res.json();
+
+const announcements =
+Array.isArray(data)
+? data
+: [data];
+
+const a = announcements[index];
+
+document.getElementById("title").value =
+a.title || "";
+
+document.getElementById("text").value =
+a.text || "";
+
+document.getElementById("expire").value =
+a.expire || "";
+
 }
 
 window.onload = renderAnnouncements;
 
 </script>
+
 
 </body>
 </html>

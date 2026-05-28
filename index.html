@@ -3355,105 +3355,190 @@ window.addEventListener("load", () => {
 const loader = document.getElementById("loader-screen");
 
 
-
-
 <script>
 
 window.addEventListener("load", () => {
 
-const loader = document.getElementById("loader-screen");
+const loader =
+document.getElementById("loader-screen");
 
 if(loader){
+
 setTimeout(() => {
+
 loader.classList.add("hide");
-}, 1800);
+
+},1200);
+
 }
 
-const typing = document.getElementById("typing-line");
+/* announcement */
+
+fetch("https://novaris-api.onrender.com/api/announcement")
+.then(res => res.json())
+.then(data => {
+
+const bar =
+document.getElementById("announcement-bar");
+
+if(!bar) return;
+
+if(data.enabled){
+
+bar.innerHTML =
+'<div class="announcement">' +
+'<div class="announcement-content">' +
+'📢 ' + data.title + ' — ' + data.text +
+'</div>' +
+'</div>';
+
+}else{
+
+bar.innerHTML = '';
+
+}
+
+})
+.catch(err => console.log(err));
+
+});
+
+/* scroll progress */
+
+window.addEventListener("scroll",()=>{
+
+const scrollTop =
+window.scrollY;
+
+const height =
+document.body.scrollHeight -
+window.innerHeight;
+
+const progress =
+(scrollTop / height) * 100;
+
+const progressBar =
+document.getElementById("scroll-progress");
+
+if(progressBar){
+
+progressBar.style.width =
+progress + "%";
+
+}
+
+});
+
+/* fake terminal */
+
+const typing =
+document.getElementById("typing-line");
 
 if(typing){
 
 typing.innerHTML = `
-> Novaris Sistemleri Başlatılıyor...<br>
-> Discord API Bağlantısı Kuruldu<br>
-> Premium Sistemler Yüklendi<br>
-> Booster Sistemi Aktif<br>
-> Kayıt Sistemi Hazır<br>
+
+> Novaris Sistemleri Başlatılıyor...
+<br>
+> Discord API Bağlantısı Kuruldu
+<br>
+> Premium Sistemler Yüklendi
+<br>
+> Booster Sistemi Aktif
+<br>
+> Kayıt Sistemi Hazır
+<br>
 > Tüm Sistemler Çalışıyor
+
 `;
 
 }
 
-});
+/* reveal */
 
-window.addEventListener("scroll", () => {
-
-const progress = document.getElementById("scroll-progress");
-
-if(progress){
-
-const scrollTop = window.scrollY;
-const docHeight = document.body.scrollHeight - window.innerHeight;
-const width = (scrollTop / docHeight) * 100;
-
-progress.style.width = width + "%";
-
-}
-
-});
-
-const revealElements = document.querySelectorAll(".reveal");
+const reveals =
+document.querySelectorAll(".reveal");
 
 function revealScroll(){
 
-revealElements.forEach(el => {
+reveals.forEach(el=>{
 
-const top = el.getBoundingClientRect().top;
+const top =
+el.getBoundingClientRect().top;
 
 if(top < window.innerHeight - 100){
+
 el.classList.add("active");
+
 }
 
 });
 
 }
 
-window.addEventListener("scroll", revealScroll);
+window.addEventListener(
+"scroll",
+revealScroll
+);
+
 revealScroll();
 
-const cursor = document.getElementById("cursor-core");
-const ring = document.getElementById("mouse-ring");
+/* cursor */
 
-document.addEventListener("mousemove", (e) => {
+const cursor =
+document.getElementById("cursor-core");
+
+const ring =
+document.getElementById("mouse-ring");
+
+document.addEventListener(
+"mousemove",
+(e)=>{
 
 if(cursor){
-cursor.style.left = e.clientX + "px";
-cursor.style.top = e.clientY + "px";
+
+cursor.style.left =
+e.clientX + "px";
+
+cursor.style.top =
+e.clientY + "px";
+
 }
 
 if(ring){
-ring.style.left = e.clientX + "px";
-ring.style.top = e.clientY + "px";
+
+ring.style.left =
+e.clientX + "px";
+
+ring.style.top =
+e.clientY + "px";
+
 }
 
 });
 
-const scrollBtn = document.getElementById("scroll-top");
+/* scroll top */
+
+const scrollBtn =
+document.getElementById("scroll-top");
 
 if(scrollBtn){
 
-scrollBtn.addEventListener("click", () => {
+scrollBtn.onclick = () => {
 
 window.scrollTo({
 top:0,
 behavior:"smooth"
 });
 
-});
+};
 
 }
+
+});
 
 </script>
 
 </body>
 </html>
+

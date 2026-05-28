@@ -275,7 +275,17 @@ document
 }
 
 }
+const access =
+localStorage.getItem(
+"admin_access"
+);
 
+if(access !== "true"){
+
+window.location.href =
+"/admin";
+
+}
 </script>
 
 </body>

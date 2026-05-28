@@ -350,6 +350,22 @@ grid-template-columns:1fr;
 }
 }
 
+
+.custom-modal-box{
+animation:modalPop .35s ease;
+}
+
+@keyframes modalPop{
+0%{
+transform:scale(.7) translateY(30px);
+opacity:0;
+}
+100%{
+transform:scale(1) translateY(0);
+opacity:1;
+}
+}
+
 </style>
 </head>
 
@@ -370,7 +386,7 @@ grid-template-columns:1fr;
 </button>
 
 <button class="tab-btn" onclick="showSection('announcements',this)">
-? Duyurular
+? Duyurular
 </button>
 
 <button class="tab-btn" onclick="showSection('bots',this)">
@@ -378,7 +394,7 @@ grid-template-columns:1fr;
 </button>
 
 <button class="tab-btn" onclick="showSection('settings',this)">
-?? Ayarlar
+?? Ayarlar
 </button>
 
 </div>
@@ -387,7 +403,7 @@ grid-template-columns:1fr;
 
 <div class="profile">
 <h2 id="username">Kerem</h2>
-<p>? OWNER ACCESS</p>
+<p>? OWNER ACCESS</p>
 </div>
 
 </div>
@@ -402,7 +418,7 @@ Kontrol Merkezi
 
 <div class="top-right">
 <div class="box" id="clock">00:00:00</div>
-<div class="box">? API ONLINE</div>
+<div class="box">? API ONLINE</div>
 </div>
 
 </div>
@@ -458,7 +474,7 @@ Bot Restart
 <div id="activityFeed">
 
 <div class="activity-item">
-? Yeni duyuru yay覺nland覺
+? Yeni duyuru yay覺nland覺
 </div>
 
 <div class="activity-item">
@@ -474,11 +490,11 @@ Bot Restart
 <div>
 
 <div class="card">
-<h3>? Sistem Durumu</h3>
+<h3>? Sistem Durumu</h3>
 
-<div class="status-item">? API ONLINE</div>
-<div class="status-item">? DATABASE CONNECTED</div>
-<div class="status-item">? BOT ACTIVE</div>
+<div class="status-item">? API ONLINE</div>
+<div class="status-item">? DATABASE CONNECTED</div>
+<div class="status-item">? BOT ACTIVE</div>
 
 </div>
 
@@ -497,7 +513,7 @@ Bot Restart
 
 <div class="card">
 
-<h3>? Duyuru Y繹netimi</h3>
+<h3>? Duyuru Y繹netimi</h3>
 
 <input class="input" id="announcementTitle" placeholder="Duyuru Ba?l覺?覺">
 
@@ -529,7 +545,7 @@ Duyuruyu Sil
 
 <input class="input" id="botURL" placeholder="Bot URL">
 
-<input class="input" id="botLogo" placeholder="Emoji Logo (? ?儭???)">
+<input class="input" id="botLogo" placeholder="Emoji Logo (? ????)">
 
 <input class="input" id="botTags" placeholder="Tagler (Virg羹lle ay覺r)">
 
@@ -557,7 +573,7 @@ Botu Kaydet
 
 <div class="card">
 
-<h3>? Tema Ayarlar覺</h3>
+<h3>? Tema Ayarlar覺</h3>
 
 <div class="theme-grid">
 
@@ -579,7 +595,7 @@ Ye?il Tema
 
 <div class="card">
 
-<h3>?? Di?er Ayarlar</h3>
+<h3>?? Di?er Ayarlar</h3>
 
 <button class="btn" onclick="showModal('Ayarlar','Ayarlar kaydedildi!')">
 Ayarlar覺 Kaydet
@@ -673,7 +689,7 @@ showModal(
 "Duyuru ba?ar覺yla yay覺nland覺!"
 );
 
-addActivity("? Yeni duyuru yay覺nland覺");
+addActivity("? Yeni duyuru yay覺nland覺");
 
 }
 
@@ -749,7 +765,7 @@ card.innerHTML = `
 <div class="bot-top">
 
 <div class="bot-logo">
-${logo || '?儭?}
+${logo || '??}
 </div>
 
 <div class="bot-status">
@@ -780,9 +796,23 @@ ${buttonText || 'Sunucuya Ekle'}
 
 `;
 
-document
-.getElementById("bot-list")
-.prepend(card);
+
+document.getElementById("bot-list").prepend(card);
+
+const existingBots = JSON.parse(localStorage.getItem("novaris_bots") || "[]");
+
+existingBots.unshift({
+name:name,
+description:description,
+url:url,
+logo:logo,
+tags:tags,
+button:buttonText,
+status:statusText
+});
+
+localStorage.setItem("novaris_bots", JSON.stringify(existingBots));
+
 
 showModal(
 "Bot Eklendi",

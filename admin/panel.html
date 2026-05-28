@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Novaris Kontrol Merkezi</title>
+
+<link rel="icon" href="/assets/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:'Inter',sans-serif;
+background:#07070a;
+color:white;
+height:100vh;
+overflow:hidden;
+display:flex;
+}
+
+body::before{
+content:'';
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at top left,#5865f240,transparent 35%),
+radial-gradient(circle at bottom right,#7c3aed40,transparent 35%);
+z-index:-2;
+}
+
+.sidebar{
+width:290px;
+background:rgba(255,255,255,.04);
+border-right:1px solid rgba(255,255,255,.08);
+backdrop-filter:blur(20px);
+padding:24px;
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+}
+
+.brand{
+display:flex;
+align-items:center;
+gap:14px;
+margin-bottom:40px;
+}
+
+.brand h1{
+font-size:30px;
+font-weight:800;
+}
+
+.menu{
+display:flex;
+flex-direction:column;
+gap:12px;
+}
+
+.menu button{
+background:rgba(255,255,255,.03);
+border:1px solid rgba(255,255,255,.06);
+border-radius:18px;
+padding:16px;
+color:white;
+font-weight:700;
+cursor:pointer;
+transition:.25s;
+text-align:left;
+}
+
+.menu button:hover,
+.menu button.active{
+background:linear-gradient(90deg,rgba(88,101,242,.25),transparent);
+border-left:4px solid #5865f2;
+transform:translateX(6px);
+}
+
+.profile{
+padding:20px;
+border-radius:24px;
+background:rgba(255,255,255,.03);
+border:1px solid rgba(255,255,255,.08);
+text-align:center;
+}
+
+.main{
+flex:1;
+overflow-y:auto;
+padding:30px;
+}
+
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:28px;
+}
+
+.title{
+font-size:42px;
+font-weight:800;
+}
+
+.box{
+background:rgba(255,255,255,.04);
+border:1px solid rgba(255,255,255,.08);
+padding:14px 18px;
+border-radius:18px;
+}
+
+.top-right{
+display:flex;
+gap:12px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:18px;
+margin-bottom:24px;
+}
+
+.stat{
+background:rgba(255,255,255,.04);
+border:1px solid rgba(255,255,255,.08);
+border-radius:28px;
+padding:24px;
+}
+
+.stat h2{
+font-size:38px;
+background:linear-gradient(135deg,#5865f2,#7c3aed);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.card{
+background:rgba(255,255,255,.04);
+border:1px solid rgba(255,255,255,.08);
+border-radius:30px;
+padding:26px;
+margin-bottom:22px;
+}
+
+.card h3{
+font-size:24px;
+margin-bottom:20px;
+}
+
+.input,
+textarea,
+select{
+width:100%;
+padding:16px;
+background:rgba(255,255,255,.03);
+border:1px solid rgba(255,255,255,.08);
+border-radius:16px;
+outline:none;
+color:white;
+margin-bottom:14px;
+font-family:inherit;
+}
+
+textarea{
+min-height:120px;
+resize:none;
+}
+
+.btn{
+width:100%;
+padding:16px;
+border:none;
+border-radius:16px;
+background:linear-gradient(135deg,#5865f2,#7c3aed);
+color:white;
+font-weight:700;
+cursor:pointer;
+transition:.25s;
+}
+
+.btn:hover{
+transform:translateY(-4px);
+}
+
+.section{
+display:none;
+}
+
+.section.active{
+display:block;
+}
+
+.layout{
+display:grid;
+grid-template-columns:2fr 1fr;
+gap:22px;
+}
+
+.activity-item,
+.status-item{
+padding:16px;
+border-radius:16px;
+background:rgba(255,255,255,.03);
+border:1px solid rgba(255,255,255,.06);
+margin-bottom:12px;
+}
+
+.custom-modal{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.7);
+display:flex;
+justify-content:center;
+align-items:center;
+opacity:0;
+pointer-events:none;
+transition:.3s;
+z-index:9999;
+backdrop-filter:blur(10px);
+}
+
+.custom-modal.active{
+opacity:1;
+pointer-events:auto;
+}
+
+.custom-modal-box{
+width:420px;
+padding:40px;
+border-radius:30px;
+background:#121216;
+border:1px solid rgba(255,255,255,.08);
+text-align:center;
+}
+
+.modal-icon{
+width:90px;
+height:90px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+margin:auto;
+margin-bottom:20px;
+font-size:42px;
+background:linear-gradient(135deg,#5865f2,#7c3aed);
+}
+
+.bot-card{
+padding:28px;
+border-radius:30px;
+background:linear-gradient(145deg,rgba(255,255,255,.05),rgba(255,255,255,.02));
+border:1px solid rgba(255,255,255,.08);
+margin-bottom:20px;
+}
+
+.bot-top{
+display:flex;
+justify-content:space-between;
+align-items:flex-start;
+margin-bottom:24px;
+}
+
+.bot-logo{
+width:80px;
+height:80px;
+border-radius:24px;
+background:linear-gradient(135deg,#5865f2,#7c3aed);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:42px;
+}
+
+.bot-status{
+padding:12px 18px;
+border-radius:999px;
+font-weight:700;
+background:rgba(0,255,136,.12);
+color:#00ff88;
+}
+
+.bot-tags{
+display:flex;
+gap:12px;
+flex-wrap:wrap;
+margin:20px 0;
+}
+
+.bot-tag{
+padding:12px 18px;
+border-radius:999px;
+background:rgba(88,101,242,.12);
+border:1px solid rgba(88,101,242,.25);
+font-size:14px;
+font-weight:700;
+}
+
+.bot-btn{
+padding:18px 28px;
+border-radius:22px;
+border:none;
+background:linear-gradient(135deg,#7c3aed,#60a5fa);
+color:white;
+font-size:16px;
+font-weight:800;
+cursor:pointer;
+}
+
+.theme-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:18px;
+}
+
+.theme-card{
+padding:24px;
+border-radius:24px;
+cursor:pointer;
+border:1px solid rgba(255,255,255,.08);
+}
+
+.theme-purple{
+background:linear-gradient(135deg,#5865f2,#7c3aed);
+}
+
+.theme-red{
+background:linear-gradient(135deg,#ff3b5c,#ff7b54);
+}
+
+.theme-green{
+background:linear-gradient(135deg,#00c896,#00ff88);
+}
+
+@media(max-width:1000px){
+.grid{
+grid-template-columns:1fr 1fr;
+}
+.layout{
+grid-template-columns:1fr;
+}
+}
+
+</style>
+
+<style>
+body{
+-webkit-font-smoothing:antialiased;
+-moz-osx-font-smoothing:grayscale;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+<div>
+
+<div class="brand">
+<h1>Novaris</h1>
+</div>
+
+<div class="menu">
+
+<button class="tab-btn active" onclick="showSection('overview',this)">
+⚡ Genel Bakış
+</button>
+
+<button class="tab-btn" onclick="showSection('announcements',this)">
+📢 Duyurular
+</button>
+
+<button class="tab-btn" onclick="showSection('bots',this)">
+⚡ Bot Yönetimi
+</button>
+
+<button class="tab-btn" onclick="showSection('settings',this)">
+⚡ Ayarlar
+</button>
+
+</div>
+
+</div>
+
+<div class="profile">
+<h2 id="username">Kerem</h2>
+<p>👑 OWNER ACCESS</p>
+</div>
+
+</div>
+
+<div class="main">
+
+<div class="topbar">
+
+<div class="title">
+Kontrol Merkezi
+</div>
+
+<div class="top-right">
+<div class="box" id="clock">00:00:00</div>
+<div class="box">🟢 API ONLINE</div>
+</div>
+
+</div>
+
+<div id="overview" class="section active">
+
+<div class="grid">
+
+<div class="stat">
+<h2>1240</h2>
+<p>Toplam Kullanıcı</p>
+</div>
+
+<div class="stat">
+<h2>346</h2>
+<p>Aktif Sunucu</p>
+</div>
+
+<div class="stat">
+<h2>99%</h2>
+<p>Sistem Uptime</p>
+</div>
+
+<div class="stat">
+<h2>12</h2>
+<p>Premium Kullanıcı</p>
+</div>
+
+</div>
+
+<div class="layout">
+
+<div>
+
+<div class="card">
+<h3>⚡ Hızlı İşlemler</h3>
+
+<button class="btn" onclick="showModal('Bakım Modu','Bakım modu aktif edildi!')">
+Bakım Modu
+</button>
+
+<br><br>
+
+<button class="btn" onclick="showModal('Restart','Botlar yeniden başlatıldı!')">
+Bot Restart
+</button>
+
+</div>
+
+<div class="card">
+<h3>⚡Son Aktiviteler</h3>
+
+<div id="activityFeed">
+
+<div class="activity-item">
+📢 Yeni duyuru yayınlandı
+</div>
+
+<div class="activity-item">
+⚡ Yeni bot eklendi
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div>
+
+<div class="card">
+<h3>🟢 Sistem Durumu</h3>
+
+<div class="status-item">🟢 API ONLINE</div>
+<div class="status-item">🟢 DATABASE CONNECTED</div>
+<div class="status-item">🟢 BOT ACTIVE</div>
+
+</div>
+
+<div class="card">
+<h3>⚡ Analizler</h3>
+<canvas id="chart"></canvas>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div id="announcements" class="section">
+
+<div class="card">
+
+<h3>📢 Duyuru Yönetimi</h3>
+
+<input class="input" id="announcementTitle" placeholder="Duyuru Ba?lı?ı">
+
+<textarea id="announcementText" placeholder="Duyuru Mesajı"></textarea>
+
+<button class="btn" onclick="saveAnnouncement()">
+Duyuruyu Yayınla
+</button>
+
+<br><br>
+
+<button class="btn" onclick="deleteAnnouncement()" style="background:linear-gradient(135deg,#ff3b5c,#ff7b54);">
+Duyuruyu Sil
+</button>
+
+</div>
+
+</div>
+
+<div id="bots" class="section">
+
+<div class="card">
+
+<h3>⚡ Bot Ekle</h3>
+
+<input class="input" id="botName" placeholder="Bot Adı">
+
+<textarea id="botDescription" placeholder="Bot Açıklaması"></textarea>
+
+<input class="input" id="botURL" placeholder="Bot URL">
+
+<input class="input" id="botLogo" placeholder="Emoji Logo (🤖 ⚡ 🔒)">
+
+<input class="input" id="botTags" placeholder="Tagler (Virgülle ayır)">
+
+<input class="input" id="botButtonText" placeholder="Buton Yazısı">
+
+<input class="input" id="botStatusText" placeholder="Durum Yazısı">
+
+<button class="btn" onclick="addBot()">
+Botu Kaydet
+</button>
+
+</div>
+
+<div class="card">
+
+<h3>⚡ Botlar</h3>
+
+<div id="bot-list"></div>
+
+</div>
+
+</div>
+
+<div id="settings" class="section">
+
+<div class="card">
+
+<h3>🎨 Tema Ayarları</h3>
+
+<div class="theme-grid">
+
+<div class="theme-card theme-purple" onclick="setTheme('#5865f2','#7c3aed')">
+Mor Tema
+</div>
+
+<div class="theme-card theme-red" onclick="setTheme('#ff3b5c','#ff7b54')">
+Kırmızı Tema
+</div>
+
+<div class="theme-card theme-green" onclick="setTheme('#00c896','#00ff88')">
+Yeşil Tema
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>⚙️ Diğer Ayarlar</h3>
+
+<button class="btn" onclick="showModal('Ayarlar','Ayarlar kaydedildi!')">
+Ayarları Kaydet
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="custom-modal" id="custom-modal">
+
+<div class="custom-modal-box">
+
+<div class="modal-icon">
+⚡</div>
+
+<h2 id="modal-title">
+Başarılı
+</h2>
+
+<p id="modal-text">
+İşlem tamamlandı.
+</p>
+
+<br>
+
+<button class="btn" onclick="closeModal()">
+Tamam
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+function showSection(id,btn){
+
+document.querySelectorAll(".section")
+.forEach(sec=>{
+sec.classList.remove("active");
+});
+
+document.getElementById(id)
+.classList.add("active");
+
+document.querySelectorAll(".tab-btn")
+.forEach(b=>{
+b.classList.remove("active");
+});
+
+btn.classList.add("active");
+
+}
+
+setInterval(()=>{
+
+document.getElementById("clock")
+.innerText =
+new Date().toLocaleTimeString();
+
+},1000);
+
+async function saveAnnouncement(){
+
+const title =
+document.getElementById("announcementTitle").value;
+
+const text =
+document.getElementById("announcementText").value;
+
+await fetch(
+"https://novaris-api.onrender.com/api/announcement",
+{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+enabled:true,
+title,
+text
+})
+}
+);
+
+showModal(
+"Duyuru Yayınlandı",
+"Duyuru başarıyla yayınlandı!"
+);
+
+addActivity("📢 Yeni duyuru yayınlandı");
+
+}
+
+async function deleteAnnouncement(){
+
+await fetch(
+"https://novaris-api.onrender.com/api/announcement",
+{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+enabled:false,
+title:"",
+text:""
+})
+}
+);
+
+showModal(
+"Duyuru Silindi",
+"Duyuru kaldırıldı!"
+);
+
+}
+
+function addBot(){
+
+const name =
+document.getElementById("botName").value;
+
+const description =
+document.getElementById("botDescription").value;
+
+const url =
+document.getElementById("botURL").value;
+
+const logo =
+document.getElementById("botLogo").value;
+
+const tags =
+document.getElementById("botTags")
+.value
+.split(",");
+
+const buttonText =
+document.getElementById("botButtonText").value;
+
+const statusText =
+document.getElementById("botStatusText").value;
+
+let tagsHTML = "";
+
+tags.forEach(tag=>{
+
+tagsHTML += `
+<div class="bot-tag">
+${tag}
+</div>
+`;
+
+});
+
+const card =
+document.createElement("div");
+
+card.className =
+"bot-card";
+
+card.innerHTML = `
+
+<div class="bot-top">
+
+<div class="bot-logo">
+${logo || '⚡'}
+</div>
+
+<div class="bot-status">
+${statusText || 'AKTİF'}
+</div>
+
+</div>
+
+<h1 style="margin-bottom:18px;">
+${name}
+</h1>
+
+<p style="opacity:.75;line-height:1.8;">
+${description}
+</p>
+
+<div class="bot-tags">
+${tagsHTML}
+</div>
+
+<button
+class="bot-btn"
+onclick="window.open('${url}','_blank')">
+
+${buttonText || 'Sunucuya Ekle'}
+
+</button>
+
+`;
+
+document
+.getElementById("bot-list")
+.prepend(card);
+
+showModal(
+"Bot Eklendi",
+name + " başarıyla eklendi!"
+);
+
+addActivity("⚡ " + name + " sisteme eklendi");
+
+const existingBots = JSON.parse(localStorage.getItem("novaris_bots") || "[]");
+
+existingBots.unshift({
+name,
+description,
+url,
+logo,
+tags,
+buttonText,
+statusText
+});
+
+localStorage.setItem("novaris_bots", JSON.stringify(existingBots));
+
+}
+
+function addActivity(text){
+
+const item =
+document.createElement("div");
+
+item.className =
+"activity-item";
+
+item.innerText =
+text;
+
+document
+.getElementById("activityFeed")
+.prepend(item);
+
+}
+
+function showModal(title,text){
+
+document
+.getElementById("modal-title")
+.innerText = title;
+
+document
+.getElementById("modal-text")
+.innerText = text;
+
+document
+.getElementById("custom-modal")
+.classList.add("active");
+
+}
+
+function closeModal(){
+
+document
+.getElementById("custom-modal")
+.classList.remove("active");
+
+}
+
+function setTheme(a,b){
+
+document.body.style.background =
+`linear-gradient(135deg,${a}15,#07070a)`;
+
+showModal(
+'Tema Değişti',
+'Yeni tema başarıyla uygulandı!'
+);
+
+}
+
+
+// LOCAL STORAGE SAVE
+const savedBots = JSON.parse(localStorage.getItem("novaris_bots") || "[]");
+
+savedBots.forEach(bot=>{
+const tagsHTML = (bot.tags || []).map(tag=>`
+<div class="bot-tag">${tag}</div>
+`).join("");
+
+const card = document.createElement("div");
+card.className = "bot-card";
+
+card.innerHTML = `
+<div class="bot-top">
+<div class="bot-logo">${bot.logo || '⚡'}</div>
+<div class="bot-status">${bot.statusText || 'AKTİF'}</div>
+</div>
+
+<h1 style="margin-bottom:18px;">
+${bot.name}
+</h1>
+
+<p style="opacity:.75;line-height:1.8;">
+${bot.description}
+</p>
+
+<div class="bot-tags">
+${tagsHTML}
+</div>
+
+<button class="bot-btn" onclick="window.open('${bot.url}','_blank')">
+${bot.buttonText || 'Sunucuya Ekle'}
+</button>
+`;
+
+document.getElementById("bot-list").appendChild(card);
+});
+
+new Chart(
+document.getElementById('chart'),
+{
+type:'line',
+data:{
+labels:['Pzt','Sal','Çar','Per','Cum','Cmt','Paz'],
+datasets:[{
+label:'Kullanıcı Artışı',
+data:[12,19,25,22,31,40,44],
+borderWidth:3,
+tension:.4
+}]
+}
+}
+);
+
+</script>
+
+</body>
+</html>

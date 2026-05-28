@@ -58,6 +58,26 @@ id="expire"
 class="input"
 placeholder="Zamanlayıcı (Örn: 24 Saat / 1 Hafta / Süresiz)">
 
+
+<input
+type="text"
+id="promoCode"
+class="input"
+placeholder="Kampanya Kodu (Örn: BAYRAM50)">
+
+<input
+type="text"
+id="promoTimer"
+class="input"
+placeholder="Sayaç (Örn: 01:07:26)">
+
+<input
+type="text"
+id="promoButton"
+class="input"
+placeholder="Buton Yazısı (Örn: Premium Ol)">
+
+
 <button class="btn" onclick="publishAnnouncement()">
 Duyuruyu Yayınla
 </button>
@@ -73,6 +93,7 @@ Duyuruyu Yayınla
 </div>
 
 </div>
+
 
 
 <script>
@@ -91,6 +112,15 @@ document.getElementById("text").value;
 const expire =
 document.getElementById("expire").value;
 
+const promoCode =
+document.getElementById("promoCode").value;
+
+const promoTimer =
+document.getElementById("promoTimer").value;
+
+const promoButton =
+document.getElementById("promoButton").value;
+
 if(!title || !text) return;
 
 await fetch(API_URL,{
@@ -106,6 +136,9 @@ enabled:true,
 title:title,
 text:text,
 expire:expire,
+promoCode:promoCode,
+promoTimer:promoTimer,
+promoButton:promoButton,
 date:new Date().toLocaleString("tr-TR")
 })
 
@@ -114,6 +147,9 @@ date:new Date().toLocaleString("tr-TR")
 document.getElementById("title").value="";
 document.getElementById("text").value="";
 document.getElementById("expire").value="";
+document.getElementById("promoCode").value="";
+document.getElementById("promoTimer").value="";
+document.getElementById("promoButton").value="";
 
 renderAnnouncements();
 
@@ -148,6 +184,16 @@ list.innerHTML += `
 <div style="
 display:flex;
 justify-content:space-between;
+align-items:flex-start;
+gap:20px;
+flex-wrap:wrap;
+">
+
+<div style="flex:1;">
+
+<div style="
+display:flex;
+justify-content:space-between;
 align-items:center;
 margin-bottom:14px;
 gap:10px;
@@ -173,10 +219,64 @@ margin-bottom:14px;
 ${a.text || ''}
 </p>
 
+</div>
+
+<div style="
+display:flex;
+gap:10px;
+align-items:center;
+flex-wrap:wrap;
+">
+
+${a.promoCode ? `
+<div style="
+padding:12px 18px;
+border-radius:14px;
+background:#5d6b46;
+border:1px dashed #c3d49c;
+font-weight:700;
+font-size:14px;
+">
+${a.promoCode}
+</div>
+` : ''}
+
+${a.promoTimer ? `
+<div style="
+padding:12px 18px;
+border-radius:14px;
+background:#4f5c47;
+border:1px solid #727f65;
+font-weight:700;
+font-size:14px;
+">
+⏱ ${a.promoTimer}
+</div>
+` : ''}
+
+${a.promoButton ? `
+<button style="
+padding:12px 20px;
+border:none;
+border-radius:14px;
+background:#f5ebc7;
+color:#1a1a1a;
+font-weight:800;
+cursor:pointer;
+">
+${a.promoButton}
+</button>
+` : ''}
+
+</div>
+
+</div>
+
 <div style="
 display:flex;
 justify-content:space-between;
 align-items:center;
+margin-top:18px;
 gap:15px;
 flex-wrap:wrap;
 ">
@@ -228,25 +328,7 @@ list.innerHTML = `
 
 async function deleteAnnouncement(index){
 
-const res =
-await fetch(API_URL);
-
-const data =
-await res.json();
-
-const announcements =
-Array.isArray(data)
-? data
-: [data];
-
-announcements.splice(index,1);
-
-localStorage.setItem(
-"novaris_announcements_backup",
-JSON.stringify(announcements)
-);
-
-renderAnnouncements();
+alert("API sistemi olduğu için backend silme endpointi gerekiyor.");
 
 }
 
@@ -274,11 +356,21 @@ a.text || "";
 document.getElementById("expire").value =
 a.expire || "";
 
+document.getElementById("promoCode").value =
+a.promoCode || "";
+
+document.getElementById("promoTimer").value =
+a.promoTimer || "";
+
+document.getElementById("promoButton").value =
+a.promoButton || "";
+
 }
 
 window.onload = renderAnnouncements;
 
 </script>
+
 
 
 </body>

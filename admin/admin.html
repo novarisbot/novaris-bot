@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Novaris Admin Panel</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:'Inter',sans-serif;
+background:#050505;
+color:white;
+padding:40px;
+}
+
+h1{
+font-size:42px;
+margin-bottom:30px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+gap:24px;
+}
+
+.card{
+background:rgba(255,255,255,.05);
+border:1px solid rgba(255,255,255,.08);
+padding:28px;
+border-radius:24px;
+}
+
+.card h2{
+margin-bottom:18px;
+}
+
+input,textarea{
+width:100%;
+padding:14px;
+margin-bottom:14px;
+border-radius:14px;
+border:none;
+outline:none;
+background:#111;
+color:white;
+}
+
+button{
+width:100%;
+padding:16px;
+border:none;
+border-radius:14px;
+background:linear-gradient(135deg,#5865F2,#7c3aed);
+color:white;
+font-weight:700;
+cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Novaris Admin Panel</h1>
+
+<div class="grid">
+
+<div class="card">
+
+<h2>Duyuru Yönet</h2>
+
+<input id="title" placeholder="Duyuru Başlığı">
+
+<textarea id="text" placeholder="Duyuru Mesajı"></textarea>
+
+<button onclick="saveAnnouncement()">
+Duyuruyu Kaydet
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>Bot Ekle</h2>
+
+<input id="botName" placeholder="Bot Adı">
+
+<input id="botDesc" placeholder="Bot Açıklaması">
+
+<input id="botIcon" placeholder="Bot Logo URL">
+
+<input id="botUrl" placeholder="Bot URL">
+
+<button onclick="addBot()">
+Bot Ekle
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+function saveAnnouncement(){
+
+alert(
+"Backend bağlanınca duyuru sistemi aktif olacak."
+);
+
+}
+
+function addBot(){
+
+alert(
+"Backend bağlanınca bot sistemi aktif olacak."
+);
+
+}
+
+</script>
+
+</body>
+</html>

@@ -6,9 +6,7 @@
 <title>Novaris Kontrol Merkezi</title>
 
 <link rel="icon" href="/assets/logo.png">
-
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
@@ -95,7 +93,6 @@ transition:.25s;
 text-align:left;
 }
 
-.menu button.active,
 .menu button:hover{
 background:linear-gradient(90deg,rgba(88,101,242,.25),transparent);
 border-left:4px solid #5865f2;
@@ -206,8 +203,7 @@ margin-bottom:20px;
 }
 
 .input,
-textarea,
-select{
+textarea{
 width:100%;
 padding:16px;
 background:rgba(255,255,255,.03);
@@ -254,48 +250,75 @@ background:rgba(255,255,255,.03);
 border:1px solid rgba(255,255,255,.06);
 }
 
-.status-list{
-display:flex;
-flex-direction:column;
-gap:12px;
-}
-
 .status-item{
 padding:14px;
 border-radius:16px;
 background:rgba(255,255,255,.03);
 border:1px solid rgba(255,255,255,.06);
+margin-bottom:10px;
 }
 
-.theme-switch{
+.custom-modal{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.7);
+backdrop-filter:blur(10px);
 display:flex;
-gap:10px;
+justify-content:center;
+align-items:center;
+opacity:0;
+pointer-events:none;
+transition:.3s;
+z-index:9999;
 }
 
-.theme-btn{
-flex:1;
-padding:12px;
-border-radius:14px;
+.custom-modal.active{
+opacity:1;
+pointer-events:auto;
+}
+
+.custom-modal-box{
+width:420px;
+padding:40px;
+border-radius:30px;
+background:#121216;
+border:1px solid rgba(255,255,255,.08);
+text-align:center;
+animation:pop .35s ease;
+}
+
+@keyframes pop{
+0%{transform:scale(.7);opacity:0;}
+100%{transform:scale(1);opacity:1;}
+}
+
+.modal-icon{
+width:90px;
+height:90px;
+margin:auto;
+margin-bottom:20px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:42px;
+font-weight:900;
+background:linear-gradient(135deg,#5865f2,#7c3aed);
+}
+
+.custom-modal button{
+margin-top:18px;
+width:100%;
+padding:16px;
 border:none;
-cursor:pointer;
-font-weight:700;
-}
-
-.theme-purple{
-background:#5865f2;
+border-radius:16px;
+background:linear-gradient(135deg,#5865f2,#7c3aed);
 color:white;
+font-weight:700;
+cursor:pointer;
 }
 
-.theme-cyber{
-background:#00ffaa;
-color:black;
-}
-
-.hidden{
-display:none;
-}
-
-@media(max-width:1200px){
+@media(max-width:1100px){
 .grid{
 grid-template-columns:repeat(2,1fr);
 }
@@ -337,28 +360,19 @@ grid-template-columns:1fr;
 </div>
 
 <div class="menu">
-
-<button class="active">🏠 Genel Bakış</button>
+<button>🏠 Genel Bakış</button>
 <button>📢 Duyurular</button>
 <button>🤖 Bot Yönetimi</button>
 <button>💎 Premium</button>
 <button>⚙️ Ayarlar</button>
-
 </div>
 
 </div>
 
 <div class="profile">
-
 <img id="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png">
-
 <h2 id="username">Kerem</h2>
-
-<p style="opacity:.7;margin-top:8px;">
-<span class="online"></span>
-OWNER ACCESS
-</p>
-
+<p><span class="online"></span> OWNER ACCESS</p>
 </div>
 
 </div>
@@ -372,19 +386,9 @@ Kontrol Merkezi
 </div>
 
 <div class="top-right">
-
-<div class="box" id="clock">
-00:00:00
-</div>
-
-<div class="box">
-🟢 12ms
-</div>
-
-<div class="box">
-🔔 3
-</div>
-
+<div class="box" id="clock">00:00:00</div>
+<div class="box">🟢 API ONLINE</div>
+<div class="box">🔔 3</div>
 </div>
 
 </div>
@@ -392,22 +396,22 @@ Kontrol Merkezi
 <div class="grid">
 
 <div class="stat">
-<h2 id="users">1240</h2>
+<h2>1240</h2>
 <p>Toplam Kullanıcı</p>
 </div>
 
 <div class="stat">
-<h2 id="guilds">346</h2>
+<h2>346</h2>
 <p>Aktif Sunucu</p>
 </div>
 
 <div class="stat">
-<h2 id="uptime">99%</h2>
+<h2>99%</h2>
 <p>Sistem Uptime</p>
 </div>
 
 <div class="stat">
-<h2 id="premium">12</h2>
+<h2>12</h2>
 <p>Premium Kullanıcı</p>
 </div>
 
@@ -422,32 +426,17 @@ Kontrol Merkezi
 <h3>📢 Duyuru Yönetimi</h3>
 
 <input class="input" id="announcementTitle" placeholder="Duyuru Başlığı">
-
 <textarea id="announcementText" placeholder="Duyuru Mesajı"></textarea>
 
 <button class="btn" onclick="saveAnnouncement()">
 Duyuruyu Yayınla
-  
 </button>
-
 
 <br><br>
 
-<button class="btn"
-onclick="deleteAnnouncement()"
-style="
-background:
-linear-gradient(
-90deg,
-#ff3b5c,
-#ff6b81
-);
-">
-
+<button class="btn" onclick="deleteAnnouncement()" style="background:linear-gradient(90deg,#ff3b5c,#ff6b81);">
 Duyuruyu Sil
-
 </button>
-
 
 </div>
 
@@ -456,9 +445,7 @@ Duyuruyu Sil
 <h3>🤖 Bot Yönetimi</h3>
 
 <input class="input" id="botName" placeholder="Bot Adı">
-
 <input class="input" id="botDescription" placeholder="Bot Açıklaması">
-
 <input class="input" id="botURL" placeholder="Bot URL">
 
 <button class="btn" onclick="addBot()">
@@ -483,19 +470,19 @@ Botu Kaydet
 
 <h3>⚡ Hızlı İşlemler</h3>
 
-<button class="btn" onclick="notify('Bakım modu aktif edildi!')">
+<button class="btn" onclick="showModal('Bakım Modu','Bakım modu aktif edildi!')">
 Bakım Modu
 </button>
 
 <br><br>
 
-<button class="btn" onclick="notify('Tüm botlar yeniden başlatıldı!')">
+<button class="btn" onclick="showModal('Bot Restart','Tüm botlar yeniden başlatıldı!')">
 Bot Restart
 </button>
 
 <br><br>
 
-<button class="btn" onclick="notify('Premium başarıyla verildi!')">
+<button class="btn" onclick="showModal('Premium Verildi','Premium başarıyla verildi!')">
 Premium Ver
 </button>
 
@@ -505,21 +492,9 @@ Premium Ver
 
 <h3>🟢 Sistem Durumu</h3>
 
-<div class="status-list">
-
-<div class="status-item">
-🟢 API ONLINE
-</div>
-
-<div class="status-item">
-🟢 DATABASE CONNECTED
-</div>
-
-<div class="status-item">
-🟢 BOT ACTIVE
-</div>
-
-</div>
+<div class="status-item">🟢 API ONLINE</div>
+<div class="status-item">🟢 DATABASE CONNECTED</div>
+<div class="status-item">🟢 BOT ACTIVE</div>
 
 </div>
 
@@ -545,25 +520,27 @@ Premium Ver
 
 </div>
 
-<div class="card">
+</div>
 
-<h3>🎨 Tema Sistemi</h3>
+</div>
 
-<div class="theme-switch">
+</div>
 
-<button class="theme-btn theme-purple" onclick="setTheme('purple')">
-Purple
+<div class="custom-modal" id="custom-modal">
+
+<div class="custom-modal-box">
+
+<div class="modal-icon">
+✓
+</div>
+
+<h2 id="modal-title">Başarılı</h2>
+
+<p id="modal-text">İşlem tamamlandı.</p>
+
+<button onclick="closeModal()">
+Tamam
 </button>
-
-<button class="theme-btn theme-cyber" onclick="setTheme('cyber')">
-Cyber
-</button>
-
-</div>
-
-</div>
-
-</div>
 
 </div>
 
@@ -571,35 +548,23 @@ Cyber
 
 <script>
 
-/* LOGIN */
-
-const access =
-localStorage.getItem("admin_access");
+const access = localStorage.getItem("admin_access");
 
 if(access !== "true"){
 window.location.href = "/admin";
 }
 
-/* CLOCK */
-
 setInterval(()=>{
 
 const now = new Date();
 
-document.getElementById(
-"clock"
-).innerText =
+document.getElementById("clock").innerText =
 now.toLocaleTimeString();
 
 },1000);
 
-/* PROFILE */
-
-const avatar =
-localStorage.getItem("discord_avatar");
-
-const username =
-localStorage.getItem("discord_username");
+const avatar = localStorage.getItem("discord_avatar");
+const username = localStorage.getItem("discord_username");
 
 if(avatar){
 document.getElementById("avatar").src = avatar;
@@ -609,179 +574,114 @@ if(username){
 document.getElementById("username").innerText = username;
 }
 
-/* ANNOUNCEMENT */
-
-
 async function saveAnnouncement(){
 
-  
+const title =
+document.getElementById("announcementTitle").value;
+
+const text =
+document.getElementById("announcementText").value;
+
+await fetch(
+"https://novaris-api.onrender.com/api/announcement",
+{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+enabled:true,
+title,
+text
+})
+}
+);
+
+addActivity("📢 Yeni duyuru yayınlandı");
+
+showModal(
+"Duyuru Yayınlandı",
+"Duyuru başarıyla yayınlandı!"
+);
+
+}
+
 async function deleteAnnouncement(){
 
 await fetch(
 "https://novaris-api.onrender.com/api/announcement",
 {
 method:"POST",
-
 headers:{
-"Content-Type":
-"application/json"
+"Content-Type":"application/json"
 },
-
 body:JSON.stringify({
-
 enabled:false,
 title:"",
 text:""
-
 })
-
-});
-
-addActivity(
-"🗑️ Duyuru silindi"
+}
 );
 
-notify(
+addActivity("🗑️ Duyuru silindi");
+
+showModal(
+"Duyuru Silindi",
 "Duyuru kaldırıldı!"
 );
 
 }
 
-
-
-const title =
-document.getElementById(
-"announcementTitle"
-).value;
-
-const text =
-document.getElementById(
-"announcementText"
-).value;
-
-await fetch(
-"https://novaris-api.onrender.com/api/announcement",
-{
-method:"POST",
-
-headers:{
-"Content-Type":
-"application/json"
-},
-
-body:JSON.stringify({
-
-enabled:true,
-title,
-text
-
-})
-
-});
-
-addActivity(
-"📢 Yeni duyuru yayınlandı"
-);
-
-notify(
-"Duyuru başarıyla yayınlandı!"
-);
-
-}
-
-
-
-/* BOT */
-
 function addBot(){
 
 const bot =
-document.getElementById(
-"botName"
-).value;
+document.getElementById("botName").value;
 
 if(!bot) return;
 
-addActivity(
-"🤖 " + bot + " sisteme eklendi"
+addActivity("🤖 " + bot + " sisteme eklendi");
+
+showModal(
+"Bot Kaydedildi",
+"Bot başarıyla kaydedildi!"
 );
 
-notify("Bot başarıyla kaydedildi!");
-
 }
-
-/* ACTIVITY */
 
 function addActivity(text){
 
-const item =
-document.createElement("div");
+const item = document.createElement("div");
 
-item.className =
-"activity-item";
+item.className = "activity-item";
 
 item.innerText = text;
 
-document.getElementById(
-"activityFeed"
-).prepend(item);
+document.getElementById("activityFeed").prepend(item);
 
 }
 
-/* ALERT */
+function showModal(title,text){
 
-function notify(text){
-alert(text);
-}
+document.getElementById("modal-title").innerText = title;
 
-/* THEME */
+document.getElementById("modal-text").innerText = text;
 
-function setTheme(theme){
-
-if(theme === "cyber"){
-
-document.body.style.background =
-"#020b08";
-
-}else{
-
-document.body.style.background =
-"#07070a";
+document.getElementById("custom-modal").classList.add("active");
 
 }
 
-localStorage.setItem(
-"panel_theme",
-theme
-);
+function closeModal(){
+
+document.getElementById("custom-modal").classList.remove("active");
 
 }
-
-const savedTheme =
-localStorage.getItem(
-"panel_theme"
-);
-
-if(savedTheme){
-setTheme(savedTheme);
-}
-
-/* CHART */
 
 new Chart(
 document.getElementById('chart'),
 {
 type:'line',
 data:{
-labels:[
-'Pzt',
-'Sal',
-'Çar',
-'Per',
-'Cum',
-'Cmt',
-'Paz'
-],
+labels:['Pzt','Sal','Çar','Per','Cum','Cmt','Paz'],
 datasets:[{
 label:'Kullanıcı Artışı',
 data:[12,19,25,22,31,40,44],
@@ -803,7 +703,8 @@ x:{
 ticks:{
 color:'white'
 }
-},
+}
+,
 y:{
 ticks:{
 color:'white'
@@ -811,7 +712,8 @@ color:'white'
 }
 }
 }
-});
+}
+);
 
 </script>
 

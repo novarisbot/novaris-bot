@@ -3349,25 +3349,29 @@ Premium Discord Systems © 2026
 
 <script>
 
-
-
-<script>
-
 window.addEventListener("load", () => {
 
-const loader = document.getElementById("loader-screen");
+const loader =
+document.getElementById("loader-screen");
 
 if(loader){
+
 setTimeout(() => {
+
 loader.classList.add("hide");
-}, 1200);
+
+},1200);
+
 }
+
+/* announcement */
 
 fetch("https://novaris-api.onrender.com/api/announcement")
 .then(res => res.json())
 .then(data => {
 
-const bar = document.getElementById("announcement-bar");
+const bar =
+document.getElementById("announcement-bar");
 
 if(!bar) return;
 
@@ -3389,12 +3393,17 @@ bar.innerHTML = '';
 })
 .catch(err => console.log(err));
 
+});
+
+/* scroll progress */
+
 window.addEventListener("scroll",()=>{
 
 const scrollTop = window.scrollY;
 
 const height =
-document.body.scrollHeight - window.innerHeight;
+document.body.scrollHeight -
+window.innerHeight;
 
 const progress =
 (scrollTop / height) * 100;
@@ -3403,29 +3412,50 @@ const progressBar =
 document.getElementById("scroll-progress");
 
 if(progressBar){
-progressBar.style.width = progress + "%";
+
+progressBar.style.width =
+progress + "%";
+
 }
 
 });
 
-const cursor = document.getElementById("cursor-core");
-const ring = document.getElementById("mouse-ring");
+/* cursor */
+
+const cursor =
+document.getElementById("cursor-core");
+
+const ring =
+document.getElementById("mouse-ring");
 
 document.addEventListener("mousemove",(e)=>{
 
 if(cursor){
-cursor.style.left = e.clientX + "px";
-cursor.style.top = e.clientY + "px";
+
+cursor.style.left =
+e.clientX + "px";
+
+cursor.style.top =
+e.clientY + "px";
+
 }
 
 if(ring){
-ring.style.left = e.clientX + "px";
-ring.style.top = e.clientY + "px";
+
+ring.style.left =
+e.clientX + "px";
+
+ring.style.top =
+e.clientY + "px";
+
 }
 
 });
 
-const scrollBtn = document.getElementById("scroll-top");
+/* scroll top */
+
+const scrollBtn =
+document.getElementById("scroll-top");
 
 if(scrollBtn){
 
@@ -3440,9 +3470,10 @@ behavior:"smooth"
 
 }
 
-});
-
 </script>
+
+</body>
+</html>
 
 </body>
 </html>

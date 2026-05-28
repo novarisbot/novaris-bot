@@ -36,16 +36,6 @@ radial-gradient(circle at bottom right,#7c3aed40,transparent 35%);
 z-index:-2;
 }
 
-body::after{
-content:'';
-position:fixed;
-inset:0;
-background-image:url('https://grainy-gradients.vercel.app/noise.svg');
-opacity:.04;
-pointer-events:none;
-z-index:-1;
-}
-
 .sidebar{
 width:290px;
 background:rgba(255,255,255,.04);
@@ -64,14 +54,8 @@ gap:14px;
 margin-bottom:40px;
 }
 
-.brand img{
-width:54px;
-height:54px;
-border-radius:50%;
-}
-
 .brand h1{
-font-size:28px;
+font-size:30px;
 font-weight:800;
 }
 
@@ -87,13 +71,14 @@ border:1px solid rgba(255,255,255,.06);
 border-radius:18px;
 padding:16px;
 color:white;
-font-weight:600;
+font-weight:700;
 cursor:pointer;
 transition:.25s;
 text-align:left;
 }
 
-.menu button:hover{
+.menu button:hover,
+.menu button.active{
 background:linear-gradient(90deg,rgba(88,101,242,.25),transparent);
 border-left:4px solid #5865f2;
 transform:translateX(6px);
@@ -105,23 +90,6 @@ border-radius:24px;
 background:rgba(255,255,255,.03);
 border:1px solid rgba(255,255,255,.08);
 text-align:center;
-}
-
-.profile img{
-width:80px;
-height:80px;
-border-radius:50%;
-margin-bottom:12px;
-}
-
-.online{
-width:14px;
-height:14px;
-background:#00ff88;
-border-radius:50%;
-display:inline-block;
-box-shadow:0 0 16px #00ff88;
-margin-right:6px;
 }
 
 .main{
@@ -142,17 +110,16 @@ font-size:42px;
 font-weight:800;
 }
 
-.top-right{
-display:flex;
-align-items:center;
-gap:14px;
-}
-
 .box{
 background:rgba(255,255,255,.04);
 border:1px solid rgba(255,255,255,.08);
 padding:14px 18px;
 border-radius:18px;
+}
+
+.top-right{
+display:flex;
+gap:12px;
 }
 
 .grid{
@@ -167,26 +134,13 @@ background:rgba(255,255,255,.04);
 border:1px solid rgba(255,255,255,.08);
 border-radius:28px;
 padding:24px;
-transition:.25s;
-}
-
-.stat:hover{
-transform:translateY(-6px);
-box-shadow:0 0 40px rgba(88,101,242,.18);
 }
 
 .stat h2{
 font-size:38px;
-margin-bottom:8px;
 background:linear-gradient(135deg,#5865f2,#7c3aed);
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
-}
-
-.layout{
-display:grid;
-grid-template-columns:2fr 1fr;
-gap:22px;
 }
 
 .card{
@@ -203,7 +157,8 @@ margin-bottom:20px;
 }
 
 .input,
-textarea{
+textarea,
+select{
 width:100%;
 padding:16px;
 background:rgba(255,255,255,.03);
@@ -234,35 +189,35 @@ transition:.25s;
 
 .btn:hover{
 transform:translateY(-4px);
-box-shadow:0 0 30px rgba(88,101,242,.25);
 }
 
-.activity{
-display:flex;
-flex-direction:column;
-gap:12px;
+.section{
+display:none;
 }
 
-.activity-item{
+.section.active{
+display:block;
+}
+
+.layout{
+display:grid;
+grid-template-columns:2fr 1fr;
+gap:22px;
+}
+
+.activity-item,
+.status-item{
 padding:16px;
 border-radius:16px;
 background:rgba(255,255,255,.03);
 border:1px solid rgba(255,255,255,.06);
-}
-
-.status-item{
-padding:14px;
-border-radius:16px;
-background:rgba(255,255,255,.03);
-border:1px solid rgba(255,255,255,.06);
-margin-bottom:10px;
+margin-bottom:12px;
 }
 
 .custom-modal{
 position:fixed;
 inset:0;
 background:rgba(0,0,0,.7);
-backdrop-filter:blur(10px);
 display:flex;
 justify-content:center;
 align-items:center;
@@ -270,6 +225,7 @@ opacity:0;
 pointer-events:none;
 transition:.3s;
 z-index:9999;
+backdrop-filter:blur(10px);
 }
 
 .custom-modal.active{
@@ -284,41 +240,20 @@ border-radius:30px;
 background:#121216;
 border:1px solid rgba(255,255,255,.08);
 text-align:center;
-animation:pop .35s ease;
-}
-
-@keyframes pop{
-0%{transform:scale(.7);opacity:0;}
-100%{transform:scale(1);opacity:1;}
 }
 
 .modal-icon{
 width:90px;
 height:90px;
-margin:auto;
-margin-bottom:20px;
 border-radius:50%;
 display:flex;
 align-items:center;
 justify-content:center;
+margin:auto;
+margin-bottom:20px;
 font-size:42px;
-font-weight:900;
 background:linear-gradient(135deg,#5865f2,#7c3aed);
 }
-
-.custom-modal button{
-margin-top:18px;
-width:100%;
-padding:16px;
-border:none;
-border-radius:16px;
-background:linear-gradient(135deg,#5865f2,#7c3aed);
-color:white;
-font-weight:700;
-cursor:pointer;
-}
-
-
 
 .bot-card{
 padding:28px;
@@ -326,12 +261,6 @@ border-radius:30px;
 background:linear-gradient(145deg,rgba(255,255,255,.05),rgba(255,255,255,.02));
 border:1px solid rgba(255,255,255,.08);
 margin-bottom:20px;
-transition:.3s;
-}
-
-.bot-card:hover{
-transform:translateY(-8px);
-box-shadow:0 0 40px rgba(88,101,242,.18);
 }
 
 .bot-top{
@@ -345,35 +274,26 @@ margin-bottom:24px;
 width:80px;
 height:80px;
 border-radius:24px;
-object-fit:cover;
 background:linear-gradient(135deg,#5865f2,#7c3aed);
-padding:6px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:42px;
 }
 
 .bot-status{
 padding:12px 18px;
 border-radius:999px;
 font-weight:700;
-font-size:14px;
-}
-
-.status-online{
 background:rgba(0,255,136,.12);
 color:#00ff88;
-box-shadow:0 0 20px rgba(0,255,136,.25);
-}
-
-.status-offline{
-background:rgba(255,59,92,.12);
-color:#ff4d6d;
-box-shadow:0 0 20px rgba(255,59,92,.25);
 }
 
 .bot-tags{
 display:flex;
 gap:12px;
 flex-wrap:wrap;
-margin-bottom:28px;
+margin:20px 0;
 }
 
 .bot-tag{
@@ -394,47 +314,40 @@ color:white;
 font-size:16px;
 font-weight:800;
 cursor:pointer;
-transition:.25s;
 }
 
-.bot-btn.soon{
+.theme-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:18px;
+}
+
+.theme-card{
+padding:24px;
+border-radius:24px;
+cursor:pointer;
+border:1px solid rgba(255,255,255,.08);
+}
+
+.theme-purple{
+background:linear-gradient(135deg,#5865f2,#7c3aed);
+}
+
+.theme-red{
 background:linear-gradient(135deg,#ff3b5c,#ff7b54);
 }
 
-
-
-.emoji-logo{
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:42px;
+.theme-green{
+background:linear-gradient(135deg,#00c896,#00ff88);
 }
 
-@media(max-width:1100px){
+@media(max-width:1000px){
 .grid{
-grid-template-columns:repeat(2,1fr);
+grid-template-columns:1fr 1fr;
 }
-
 .layout{
 grid-template-columns:1fr;
 }
-}
-
-@media(max-width:800px){
-
-body{
-flex-direction:column;
-overflow:auto;
-}
-
-.sidebar{
-width:100%;
-}
-
-.grid{
-grid-template-columns:1fr;
-}
-
 }
 
 </style>
@@ -447,24 +360,34 @@ grid-template-columns:1fr;
 <div>
 
 <div class="brand">
-<img src="/assets/logo.png">
 <h1>Novaris</h1>
 </div>
 
 <div class="menu">
-<button>🏠 Genel Bakış</button>
-<button>📢 Duyurular</button>
-<button>🤖 Bot Yönetimi</button>
-<button>💎 Premium</button>
-<button>⚙️ Ayarlar</button>
+
+<button class="tab-btn active" onclick="showSection('overview',this)">
+🏠 Genel Bakış
+</button>
+
+<button class="tab-btn" onclick="showSection('announcements',this)">
+📢 Duyurular
+</button>
+
+<button class="tab-btn" onclick="showSection('bots',this)">
+🤖 Bot Yönetimi
+</button>
+
+<button class="tab-btn" onclick="showSection('settings',this)">
+⚙️ Ayarlar
+</button>
+
 </div>
 
 </div>
 
 <div class="profile">
-<img id="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png">
 <h2 id="username">Kerem</h2>
-<p><span class="online"></span> OWNER ACCESS</p>
+<p>🟢 OWNER ACCESS</p>
 </div>
 
 </div>
@@ -477,15 +400,14 @@ grid-template-columns:1fr;
 Kontrol Merkezi
 </div>
 
-
-  
 <div class="top-right">
 <div class="box" id="clock">00:00:00</div>
 <div class="box">🟢 API ONLINE</div>
-<div class="box">🔔 3</div>
 </div>
 
 </div>
+
+<div id="overview" class="section active">
 
 <div class="grid">
 
@@ -516,92 +438,6 @@ Kontrol Merkezi
 <div>
 
 <div class="card">
-
-<h3>📢 Duyuru Yönetimi</h3>
-
-<input class="input" id="announcementTitle" placeholder="Duyuru Başlığı">
-<textarea id="announcementText" placeholder="Duyuru Mesajı"></textarea>
-
-<button class="btn" onclick="saveAnnouncement()">
-Duyuruyu Yayınla
-</button>
-
-<br><br>
-
-<button class="btn" onclick="deleteAnnouncement()" style="background:linear-gradient(90deg,#ff3b5c,#ff6b81);">
-Duyuruyu Sil
-</button>
-
-</div>
-
-<div class="card">
-
-<h3>🤖 Bot Yönetimi</h3>
-
-<input class="input" id="botName" placeholder="Bot Adı">
-<input class="input" id="botDescription" placeholder="Bot Açıklaması">
-<input class="input" id="botURL" placeholder="Bot URL">
-  
-
-
-
-
-
-
-<input
-class="input"
-id="botLogo"
-placeholder="Bot Logo URL">
-
-<input
-class="input"
-id="botTags"
-placeholder="Tagler (Virgülle ayır)">
-
-<input
-class="input"
-id="botButtonText"
-placeholder="Buton Yazısı">
-
-<input
-class="input"
-id="botStatusText"
-placeholder="Durum Yazısı (AKTİF / OFFLINE)">
-
-
-
-<button class="btn" onclick="addBot()">
-Botu Kaydet
-</button>
-
-</div>
-
-<div class="card">
-
-<h3>
-🤖 Botlar
-</h3>
-
-<div id="bot-list">
-
-</div>
-
-</div>
-
-<div class="card">
-
-<h3>📊 Analizler</h3>
-
-<canvas id="chart"></canvas>
-
-</div>
-
-</div>
-
-<div>
-
-<div class="card">
-
 <h3>⚡ Hızlı İşlemler</h3>
 
 <button class="btn" onclick="showModal('Bakım Modu','Bakım modu aktif edildi!')">
@@ -610,20 +446,34 @@ Bakım Modu
 
 <br><br>
 
-<button class="btn" onclick="showModal('Bot Restart','Tüm botlar yeniden başlatıldı!')">
+<button class="btn" onclick="showModal('Restart','Botlar yeniden başlatıldı!')">
 Bot Restart
-</button>
-
-<br><br>
-
-<button class="btn" onclick="showModal('Premium Verildi','Premium başarıyla verildi!')">
-Premium Ver
 </button>
 
 </div>
 
 <div class="card">
+<h3>⚡ Son Aktiviteler</h3>
 
+<div id="activityFeed">
+
+<div class="activity-item">
+🔥 Yeni duyuru yayınlandı
+</div>
+
+<div class="activity-item">
+🤖 Yeni bot eklendi
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div>
+
+<div class="card">
 <h3>🟢 Sistem Durumu</h3>
 
 <div class="status-item">🟢 API ONLINE</div>
@@ -633,26 +483,107 @@ Premium Ver
 </div>
 
 <div class="card">
-
-<h3>⚡ Son Aktiviteler</h3>
-
-<div class="activity" id="activityFeed">
-
-<div class="activity-item">
-🔥 Kerem yeni duyuru yayınladı
-</div>
-
-<div class="activity-item">
-💎 Yeni premium satın alındı
-</div>
-
-<div class="activity-item">
-🤖 Yeni bot sisteme eklendi
+<h3>📊 Analizler</h3>
+<canvas id="chart"></canvas>
 </div>
 
 </div>
 
 </div>
+
+</div>
+
+<div id="announcements" class="section">
+
+<div class="card">
+
+<h3>📢 Duyuru Yönetimi</h3>
+
+<input class="input" id="announcementTitle" placeholder="Duyuru Başlığı">
+
+<textarea id="announcementText" placeholder="Duyuru Mesajı"></textarea>
+
+<button class="btn" onclick="saveAnnouncement()">
+Duyuruyu Yayınla
+</button>
+
+<br><br>
+
+<button class="btn" onclick="deleteAnnouncement()" style="background:linear-gradient(135deg,#ff3b5c,#ff7b54);">
+Duyuruyu Sil
+</button>
+
+</div>
+
+</div>
+
+<div id="bots" class="section">
+
+<div class="card">
+
+<h3>🤖 Bot Ekle</h3>
+
+<input class="input" id="botName" placeholder="Bot Adı">
+
+<textarea id="botDescription" placeholder="Bot Açıklaması"></textarea>
+
+<input class="input" id="botURL" placeholder="Bot URL">
+
+<input class="input" id="botLogo" placeholder="Emoji Logo (🎵 🛡️ 💎)">
+
+<input class="input" id="botTags" placeholder="Tagler (Virgülle ayır)">
+
+<input class="input" id="botButtonText" placeholder="Buton Yazısı">
+
+<input class="input" id="botStatusText" placeholder="Durum Yazısı">
+
+<button class="btn" onclick="addBot()">
+Botu Kaydet
+</button>
+
+</div>
+
+<div class="card">
+
+<h3>🤖 Botlar</h3>
+
+<div id="bot-list"></div>
+
+</div>
+
+</div>
+
+<div id="settings" class="section">
+
+<div class="card">
+
+<h3>🎨 Tema Ayarları</h3>
+
+<div class="theme-grid">
+
+<div class="theme-card theme-purple" onclick="setTheme('#5865f2','#7c3aed')">
+Mor Tema
+</div>
+
+<div class="theme-card theme-red" onclick="setTheme('#ff3b5c','#ff7b54')">
+Kırmızı Tema
+</div>
+
+<div class="theme-card theme-green" onclick="setTheme('#00c896','#00ff88')">
+Yeşil Tema
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>⚙️ Diğer Ayarlar</h3>
+
+<button class="btn" onclick="showModal('Ayarlar','Ayarlar kaydedildi!')">
+Ayarları Kaydet
+</button>
 
 </div>
 
@@ -668,11 +599,17 @@ Premium Ver
 ✓
 </div>
 
-<h2 id="modal-title">Başarılı</h2>
+<h2 id="modal-title">
+Başarılı
+</h2>
 
-<p id="modal-text">İşlem tamamlandı.</p>
+<p id="modal-text">
+İşlem tamamlandı.
+</p>
 
-<button onclick="closeModal()">
+<br>
+
+<button class="btn" onclick="closeModal()">
 Tamam
 </button>
 
@@ -682,31 +619,32 @@ Tamam
 
 <script>
 
-const access = localStorage.getItem("admin_access");
+function showSection(id,btn){
 
-if(access !== "true"){
-window.location.href = "/admin";
+document.querySelectorAll(".section")
+.forEach(sec=>{
+sec.classList.remove("active");
+});
+
+document.getElementById(id)
+.classList.add("active");
+
+document.querySelectorAll(".tab-btn")
+.forEach(b=>{
+b.classList.remove("active");
+});
+
+btn.classList.add("active");
+
 }
 
 setInterval(()=>{
 
-const now = new Date();
-
-document.getElementById("clock").innerText =
-now.toLocaleTimeString();
+document.getElementById("clock")
+.innerText =
+new Date().toLocaleTimeString();
 
 },1000);
-
-const avatar = localStorage.getItem("discord_avatar");
-const username = localStorage.getItem("discord_username");
-
-if(avatar){
-document.getElementById("avatar").src = avatar;
-}
-
-if(username){
-document.getElementById("username").innerText = username;
-}
 
 async function saveAnnouncement(){
 
@@ -731,12 +669,12 @@ text
 }
 );
 
-addActivity("📢 Yeni duyuru yayınlandı");
-
 showModal(
 "Duyuru Yayınlandı",
 "Duyuru başarıyla yayınlandı!"
 );
+
+addActivity("📢 Yeni duyuru yayınlandı");
 
 }
 
@@ -756,8 +694,6 @@ text:""
 })
 }
 );
-
-addActivity("🗑️ Duyuru silindi");
 
 showModal(
 "Duyuru Silindi",
@@ -791,50 +727,48 @@ document.getElementById("botButtonText").value;
 const statusText =
 document.getElementById("botStatusText").value;
 
+let tagsHTML = "";
+
+tags.forEach(tag=>{
+
+tagsHTML += `
+<div class="bot-tag">
+${tag}
+</div>
+`;
+
+});
+
 const card =
 document.createElement("div");
 
 card.className =
 "bot-card";
 
-let tagsHTML = "";
-
-tags.forEach(tag=>{
-
-tagsHTML += `
-
-<div class="bot-tag">
-${tag}
-</div>
-
-`;
-
-});
-
 card.innerHTML = `
 
 <div class="bot-top">
 
-<div class="bot-logo emoji-logo">
+<div class="bot-logo">
 ${logo || '🛡️'}
 </div>
 
-<div class="bot-status status-online">
-
+<div class="bot-status">
 ${statusText || 'AKTİF'}
-
 </div>
 
 </div>
 
-<h2>${name}</h2>
+<h1 style="margin-bottom:18px;">
+${name}
+</h1>
 
-<p>${description}</p>
+<p style="opacity:.75;line-height:1.8;">
+${description}
+</p>
 
 <div class="bot-tags">
-
 ${tagsHTML}
-
 </div>
 
 <button
@@ -851,40 +785,65 @@ document
 .getElementById("bot-list")
 .prepend(card);
 
-addActivity("🤖 " + name + " sisteme eklendi");
-
 showModal(
 "Bot Eklendi",
 name + " başarıyla eklendi!"
 );
 
+addActivity("🤖 " + name + " sisteme eklendi");
+
 }
 
 function addActivity(text){
 
-const item = document.createElement("div");
+const item =
+document.createElement("div");
 
-item.className = "activity-item";
+item.className =
+"activity-item";
 
-item.innerText = text;
+item.innerText =
+text;
 
-document.getElementById("activityFeed").prepend(item);
+document
+.getElementById("activityFeed")
+.prepend(item);
 
 }
 
 function showModal(title,text){
 
-document.getElementById("modal-title").innerText = title;
+document
+.getElementById("modal-title")
+.innerText = title;
 
-document.getElementById("modal-text").innerText = text;
+document
+.getElementById("modal-text")
+.innerText = text;
 
-document.getElementById("custom-modal").classList.add("active");
+document
+.getElementById("custom-modal")
+.classList.add("active");
 
 }
 
 function closeModal(){
 
-document.getElementById("custom-modal").classList.remove("active");
+document
+.getElementById("custom-modal")
+.classList.remove("active");
+
+}
+
+function setTheme(a,b){
+
+document.body.style.background =
+`linear-gradient(135deg,${a}15,#07070a)`;
+
+showModal(
+'Tema Değişti',
+'Yeni tema başarıyla uygulandı!'
+);
 
 }
 
@@ -900,29 +859,6 @@ data:[12,19,25,22,31,40,44],
 borderWidth:3,
 tension:.4
 }]
-},
-options:{
-responsive:true,
-plugins:{
-legend:{
-labels:{
-color:'white'
-}
-}
-},
-scales:{
-x:{
-ticks:{
-color:'white'
-}
-}
-,
-y:{
-ticks:{
-color:'white'
-}
-}
-}
 }
 }
 );

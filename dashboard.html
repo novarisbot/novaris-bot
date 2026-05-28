@@ -554,7 +554,7 @@ placeholder="Sunucu ara...">
 <div class="stats">
 
 <div class="stat-card">
-<h2>12</h2>
+<h2 id="guildCount">0</h2>
 <p>Aktif Sunucu</p>
 </div>
 
@@ -585,93 +585,9 @@ Sunucular
 
 </div>
 
-<div class="servers">
+<div class="servers" id="servers">
 
-<div class="server-card">
-
-<div class="server-glow"></div>
-
-<div class="server-top">
-
-<div class="server-icon">
-N
-</div>
-
-<div>
-<h3>Nevizade</h3>
-<p>Premium Community</p>
-</div>
-
-</div>
-
-<p>
-Kayıt sistemi, booster sistemi ve özel oda sistemi aktif.
-</p>
-
-<a href="#"
-class="manage-btn">
-Yönet
-</a>
-
-</div>
-
-<div class="server-card">
-
-<div class="server-glow"></div>
-
-<div class="server-top">
-
-<div class="server-icon">
-B
-</div>
-
-<div>
-<h3>Booster Hub</h3>
-<p>Booster Management</p>
-</div>
-
-</div>
-
-<p>
-Gelişmiş booster sistemi ve premium ayarlar aktif.
-</p>
-
-<a href="#"
-class="manage-btn">
-Yönet
-</a>
-
-</div>
-
-<div class="server-card">
-
-<div class="server-glow"></div>
-
-<div class="server-top">
-
-<div class="server-icon">
-R
-</div>
-
-<div>
-<h3>Room System</h3>
-<p>Private Rooms</p>
-</div>
-
-</div>
-
-<p>
-Özel oda sistemi ve gelişmiş yetki yönetimi aktif.
-</p>
-
-<a href="#"
-class="manage-btn">
-Yönet
-</a>
-
-</div>
-
-</div>
+</div></div>
 
 </div>
 
@@ -727,6 +643,93 @@ document
 });
 
 }
+
+
+
+/* Discord Guilds */
+
+if(savedToken){
+
+fetch(
+"https://discord.com/api/users/@me/guilds",
+{
+headers:{
+authorization:
+`Bearer ${savedToken}`
+}
+})
+.then(res=>res.json())
+.then(guilds=>{
+
+document
+.getElementById("guildCount")
+.innerText =
+guilds.length;
+
+const servers =
+document.getElementById("servers");
+
+servers.innerHTML = "";
+
+guilds.forEach(guild=>{
+
+const hasAdmin =
+(guild.permissions & 0x8) === 0x8;
+
+if(!hasAdmin) return;
+
+const card =
+document.createElement("div");
+
+card.className =
+"server-card";
+
+const icon =
+guild.icon
+? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`
+: "https://cdn.discordapp.com/embed/avatars/0.png";
+
+card.innerHTML = `
+
+<div class="server-glow"></div>
+
+<div class="server-top">
+
+<img
+src="${icon}"
+style="
+width:72px;
+height:72px;
+border-radius:24px;
+object-fit:cover;
+">
+
+<div>
+<h3>${guild.name}</h3>
+<p>Discord Sunucusu</p>
+</div>
+
+</div>
+
+<p>
+Sunucu yönetim paneline erişebilirsin.
+</p>
+
+<a href="#"
+class="manage-btn">
+Yönet
+</a>
+
+`;
+
+servers.appendChild(card);
+
+});
+
+});
+
+}
+
 
 /* Tilt Effect */
 

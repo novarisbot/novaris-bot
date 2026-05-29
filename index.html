@@ -2789,6 +2789,46 @@ nav:hover{transform:translateX(-50%) translateY(-2px);box-shadow:0 10px 40px rgb
 .bot-card,.why-card,.stat-card{position:relative}
 .bot-card::marker{content:''}
 
+
+/* ===== NOVARIS V2 OVERRIDES (API SAFE) ===== */
+.hero h1{
+font-size:clamp(64px,9vw,120px)!important;
+letter-spacing:-4px!important;
+}
+.hero p{
+max-width:760px!important;
+font-size:20px!important;
+}
+nav{
+background:rgba(10,10,10,.55)!important;
+border:1px solid rgba(255,255,255,.08)!important;
+box-shadow:0 10px 40px rgba(0,0,0,.25);
+}
+.bot-card{
+transform-style:preserve-3d;
+}
+.bot-card:hover{
+transform:translateY(-10px)!important;
+}
+.bot-card::after{
+opacity:0;
+transition:.25s;
+}
+.bot-card:hover::after{
+opacity:1;
+}
+.primary-btn,.secondary-btn,.discord-login{
+transition:all .25s ease!important;
+}
+.primary-btn:hover,.secondary-btn:hover,.discord-login:hover{
+filter:brightness(1.08);
+}
+@media(max-width:900px){
+.hero h1{font-size:56px!important;}
+.hero p{font-size:17px!important;}
+nav{width:95%;overflow:auto;}
+}
+
 </style>
 </head>
 

@@ -2829,6 +2829,74 @@ filter:brightness(1.08);
 nav{width:95%;overflow:auto;}
 }
 
+
+/* ===== NOVARIS REBORN ===== */
+:root{
+--glass:rgba(255,255,255,.06);
+--border:rgba(255,255,255,.12);
+}
+.hero{
+perspective:1200px;
+}
+.hero-content{
+animation:novarisIntro 1.4s ease!important;
+}
+@keyframes novarisIntro{
+from{opacity:0;transform:translateY(80px) scale(.95)}
+to{opacity:1;transform:none}
+}
+.hero h1{
+font-size:clamp(72px,10vw,150px)!important;
+background:linear-gradient(90deg,#fff,#c084fc,#60a5fa,#fff)!important;
+background-size:300% auto!important;
+-webkit-background-clip:text!important;
+-webkit-text-fill-color:transparent!important;
+animation:heroGradient 8s linear infinite!important;
+text-shadow:none!important;
+}
+@keyframes heroGradient{
+to{background-position:300% center}
+}
+nav{
+background:rgba(5,5,5,.82)!important;
+border:1px solid var(--border)!important;
+backdrop-filter:blur(30px)!important;
+box-shadow:0 25px 80px rgba(124,58,237,.22)!important;
+}
+nav a:hover{
+transform:translateY(-2px);
+}
+.bot-card,.why-card,.stat-card,.dashboard-card{
+background:rgba(255,255,255,.045)!important;
+border:1px solid var(--border)!important;
+backdrop-filter:blur(30px)!important;
+}
+.bot-card:hover{
+transform:translateY(-18px) rotateX(4deg) rotateY(-4deg)!important;
+box-shadow:0 35px 120px rgba(124,58,237,.25)!important;
+}
+.primary-btn,.secondary-btn{
+position:relative;
+overflow:hidden;
+}
+.primary-btn:hover,.secondary-btn:hover{
+transform:translateY(-8px) scale(1.05)!important;
+box-shadow:0 25px 70px rgba(124,58,237,.35)!important;
+}
+.primary-btn::before,.secondary-btn::before{
+content:'';
+position:absolute;
+inset:-100%;
+background:linear-gradient(120deg,transparent,rgba(255,255,255,.35),transparent);
+animation:shine 4s infinite;
+}
+@keyframes shine{
+100%{transform:translateX(250%)}
+}
+.section-title h2{
+font-size:clamp(42px,5vw,72px)!important;
+}
+
 </style>
 </head>
 
@@ -3867,6 +3935,65 @@ document.querySelectorAll('.primary-btn,.secondary-btn').forEach(btn=>{
  btn.style.setProperty('--mx',(e.clientX-r.left)+'px');
  btn.style.setProperty('--my',(e.clientY-r.top)+'px');
  });
+});
+</script>
+
+
+<style id="novaris-ultra-pack">
+/* ULTRA PACK - API SAFE */
+.hero-content,.bot-card,.why-card,.stat-card,.dashboard-card{
+transform-style:preserve-3d;
+will-change:transform;
+}
+.hero{
+perspective:1800px;
+}
+nav{
+backdrop-filter:blur(40px)!important;
+box-shadow:0 20px 100px rgba(124,58,237,.25)!important;
+}
+.bot-card:hover{
+box-shadow:0 40px 140px rgba(124,58,237,.30)!important;
+}
+.primary-btn,.secondary-btn{
+transform-style:preserve-3d;
+}
+</style>
+<script>
+document.addEventListener("DOMContentLoaded",()=>{
+
+const cards=document.querySelectorAll('.bot-card,.why-card,.stat-card,.dashboard-card');
+cards.forEach(card=>{
+card.addEventListener('mousemove',e=>{
+const r=card.getBoundingClientRect();
+const x=e.clientX-r.left;
+const y=e.clientY-r.top;
+const rx=((y-r.height/2)/r.height)*-12;
+const ry=((x-r.width/2)/r.width)*12;
+card.style.transform=`perspective(1200px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-12px)`;
+card.style.setProperty('--x',x+'px');
+card.style.setProperty('--y',y+'px');
+});
+card.addEventListener('mouseleave',()=>{
+card.style.transform='';
+});
+});
+
+document.querySelectorAll('.primary-btn,.secondary-btn').forEach(btn=>{
+btn.addEventListener('mousemove',e=>{
+const r=btn.getBoundingClientRect();
+btn.style.setProperty('--mx',(e.clientX-r.left)+'px');
+btn.style.setProperty('--my',(e.clientY-r.top)+'px');
+});
+});
+
+const hero=document.querySelector('.hero-content');
+document.addEventListener('mousemove',e=>{
+if(!hero) return;
+const x=(e.clientX/window.innerWidth-.5)*16;
+const y=(e.clientY/window.innerHeight-.5)*10;
+hero.style.transform=`rotateY(${x}deg) rotateX(${-y}deg)`;
+});
 });
 </script>
 

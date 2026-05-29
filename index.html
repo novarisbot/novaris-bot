@@ -2780,6 +2780,15 @@ display:flex;
 
 }
 
+
+/* NOVARIS UPGRADE */
+nav{transition:all .35s ease}
+nav:hover{transform:translateX(-50%) translateY(-2px);box-shadow:0 10px 40px rgba(124,58,237,.2)}
+.hero-content{animation:heroEntrance 1.2s ease}
+@keyframes heroEntrance{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
+.bot-card,.why-card,.stat-card{position:relative}
+.bot-card::marker{content:''}
+
 </style>
 </head>
 
@@ -3799,6 +3808,26 @@ dynamicBotsContainer.appendChild(card);
 
 }
 
+</script>
+
+
+<script>
+document.querySelectorAll('.bot-card,.why-card,.stat-card').forEach(card=>{
+ card.addEventListener('mousemove',e=>{
+ const r=card.getBoundingClientRect();
+ const x=(e.clientX-r.left-r.width/2)/18;
+ const y=(e.clientY-r.top-r.height/2)/18;
+ card.style.transform=`rotateX(${-y}deg) rotateY(${x}deg) translateY(-10px)`;
+ });
+ card.addEventListener('mouseleave',()=>card.style.transform='');
+});
+document.querySelectorAll('.primary-btn,.secondary-btn').forEach(btn=>{
+ btn.addEventListener('mousemove',e=>{
+ const r=btn.getBoundingClientRect();
+ btn.style.setProperty('--mx',(e.clientX-r.left)+'px');
+ btn.style.setProperty('--my',(e.clientY-r.top)+'px');
+ });
+});
 </script>
 
 </body>

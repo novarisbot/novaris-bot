@@ -3199,8 +3199,13 @@ el.innerHTML =
 });
 
 }
+document.addEventListener("DOMContentLoaded",()=>{
 
-window.addEventListener("load",loadAnnouncement);
+loadAnnouncement();
+
+setInterval(loadAnnouncement,30000);
+
+});
 
 </script>
 

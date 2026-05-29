@@ -1,45 +1,40 @@
 <!DOCTYPE html>
+
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Novaris Dashboard - Bakımda</title>
 
-<title>Novaris Dashboard</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
+font-family:'Inter',sans-serif;
 }
 
 body{
-font-family:'Inter',sans-serif;
-background:#050505;
-color:white;
+background:#05070d;
 height:100vh;
+overflow:hidden;
 display:flex;
-overflow:hidden;
+justify-content:center;
+align-items:center;
+color:white;
+position:relative;
 }
 
-/* Background */
-
-.bg{
-position:fixed;
-inset:0;
-overflow:hidden;
-z-index:-10;
-}
+/* Aurora */
 
 .orb{
 position:absolute;
 border-radius:50%;
-filter:blur(140px);
-opacity:.25;
-animation:float 10s infinite ease-in-out;
+filter:blur(120px);
+opacity:.35;
+animation:float 12s infinite ease-in-out;
 }
 
 .orb1{
@@ -51,11 +46,11 @@ left:-150px;
 }
 
 .orb2{
-width:400px;
-height:400px;
+width:450px;
+height:450px;
 background:#7c3aed;
-bottom:-150px;
 right:-150px;
+bottom:-150px;
 animation-delay:2s;
 }
 
@@ -63,8 +58,9 @@ animation-delay:2s;
 width:300px;
 height:300px;
 background:#00d4ff;
-top:40%;
-left:40%;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
 animation-delay:4s;
 }
 
@@ -73,462 +69,173 @@ animation-delay:4s;
 transform:translateY(0px);
 }
 50%{
-transform:translateY(-30px);
+transform:translateY(-40px);
 }
 }
 
-/* Sidebar */
+/* Card */
 
-.sidebar{
-width:290px;
-height:100vh;
-background:rgba(255,255,255,.04);
-border-right:1px solid rgba(255,255,255,.08);
-backdrop-filter:blur(30px);
-padding:30px;
-display:flex;
-flex-direction:column;
-justify-content:space-between;
+.container{
+width:90%;
+max-width:900px;
+padding:60px;
+border-radius:35px;
+background:rgba(255,255,255,.05);
+backdrop-filter:blur(25px);
+border:1px solid rgba(255,255,255,.08);
+text-align:center;
+position:relative;
+z-index:5;
 }
 
 .logo{
-display:flex;
-align-items:center;
-gap:14px;
-margin-bottom:45px;
+font-size:70px;
+margin-bottom:20px;
+animation:rotate 6s linear infinite;
 }
 
-.logo img{
-width:52px;
-height:52px;
-border-radius:50%;
-object-fit:cover;
+@keyframes rotate{
+from{
+transform:rotate(0deg);
+}
+to{
+transform:rotate(360deg);
+}
 }
 
-.logo h2{
-font-size:26px;
+h1{
+font-size:58px;
 font-weight:800;
-}
-
-.nav{
-display:flex;
-flex-direction:column;
-gap:14px;
-}
-
-.nav a{
-display:flex;
-align-items:center;
-gap:14px;
-padding:18px 20px;
-border-radius:18px;
-text-decoration:none;
-color:white;
-font-weight:600;
-background:rgba(255,255,255,.03);
-border:1px solid rgba(255,255,255,.05);
-transition:.25s;
-}
-
-.nav a:hover{
-transform:translateX(6px);
-background:rgba(88,101,242,.14);
-}
-
-/* User Card */
-
-.user-card{
-padding:20px;
-border-radius:24px;
-background:rgba(255,255,255,.04);
-border:1px solid rgba(255,255,255,.08);
-text-align:center;
-}
-
-.user-card img{
-width:85px;
-height:85px;
-border-radius:50%;
-object-fit:cover;
-margin-bottom:16px;
-border:3px solid rgba(255,255,255,.08);
-}
-
-.user-card h3{
-font-size:22px;
-margin-bottom:8px;
-}
-
-.badge{
-display:inline-flex;
-align-items:center;
-gap:8px;
-padding:8px 14px;
-border-radius:999px;
-background:rgba(88,101,242,.14);
-border:1px solid rgba(88,101,242,.25);
-font-size:13px;
-font-weight:700;
-margin-top:14px;
-}
-
-/* Main */
-
-.main{
-flex:1;
-padding:35px;
-overflow-y:auto;
-}
-
-.topbar{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:35px;
-}
-
-.topbar h1{
-font-size:48px;
-font-weight:800;
-}
-
-.search{
-width:320px;
-padding:16px 20px;
-border-radius:18px;
-background:rgba(255,255,255,.04);
-border:1px solid rgba(255,255,255,.08);
-outline:none;
-color:white;
-}
-
-/* Stats */
-
-.stats{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:24px;
-margin-bottom:35px;
-}
-
-.stat-card{
-padding:28px;
-border-radius:28px;
-background:rgba(255,255,255,.04);
-border:1px solid rgba(255,255,255,.08);
-transition:.25s;
-}
-
-.stat-card h2{
-font-size:42px;
-margin-bottom:12px;
-background:linear-gradient(135deg,#5865F2,#7c3aed);
+margin-bottom:15px;
+background:linear-gradient(135deg,#5865F2,#7c3aed,#00d4ff);
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
 }
 
-.stat-card p{
-opacity:.7;
+p{
+font-size:18px;
+opacity:.8;
+line-height:1.8;
+max-width:700px;
+margin:auto;
 }
 
-/* Servers */
-
-.section-title{
-margin-bottom:25px;
-}
-
-.section-title h2{
-font-size:32px;
-}
-
-.servers{
-display:grid;
-grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
-gap:24px;
-}
-
-.server-card{
-padding:28px;
-border-radius:30px;
-background:rgba(255,255,255,.04);
-border:1px solid rgba(255,255,255,.08);
-transition:.25s;
-}
-
-.server-card:hover{
-transform:translateY(-10px);
-}
-
-.server-top{
-display:flex;
+.status{
+display:inline-flex;
 align-items:center;
-gap:18px;
-margin-bottom:20px;
+gap:10px;
+padding:14px 22px;
+border-radius:999px;
+margin-top:30px;
+background:rgba(88,101,242,.15);
+border:1px solid rgba(88,101,242,.25);
+font-weight:700;
 }
 
-.server-card h3{
-font-size:24px;
-margin-bottom:8px;
+.dot{
+width:12px;
+height:12px;
+background:#00ff88;
+border-radius:50%;
+animation:pulse 1.5s infinite;
 }
 
-.server-card p{
-opacity:.7;
-line-height:1.7;
-margin-bottom:22px;
+@keyframes pulse{
+0%{transform:scale(1)}
+50%{transform:scale(1.4)}
+100%{transform:scale(1)}
 }
 
-.manage-btn{
+.buttons{
 display:flex;
 justify-content:center;
-align-items:center;
-padding:16px;
+gap:15px;
+flex-wrap:wrap;
+margin-top:35px;
+}
+
+.btn{
+padding:16px 28px;
 border-radius:18px;
-background:linear-gradient(135deg,#5865F2,#7c3aed);
-color:white;
-font-weight:700;
 text-decoration:none;
+font-weight:700;
+color:white;
+transition:.3s;
 }
 
-@media(max-width:1200px){
-
-.stats{
-grid-template-columns:repeat(2,1fr);
+.primary{
+background:linear-gradient(135deg,#5865F2,#7c3aed);
 }
 
+.secondary{
+background:rgba(255,255,255,.08);
+border:1px solid rgba(255,255,255,.08);
 }
 
-@media(max-width:900px){
-
-body{
-flex-direction:column;
-overflow:auto;
+.btn:hover{
+transform:translateY(-5px);
 }
 
-.sidebar{
-width:100%;
-height:auto;
+.countdown{
+margin-top:40px;
+font-size:28px;
+font-weight:800;
+letter-spacing:3px;
 }
-
-.stats{
-grid-template-columns:1fr;
-}
-
-}
-
 </style>
-</head>
 
+</head>
 <body>
 
-<div class="bg">
 <div class="orb orb1"></div>
 <div class="orb orb2"></div>
 <div class="orb orb3"></div>
-</div>
 
-<div class="sidebar">
+<div class="container">
 
-<div>
+<div class="logo">🚧</div>
 
-<div class="logo">
-<img src="https://i.imgur.com/rycsHTs.png">
-<h2>Novaris</h2>
-</div>
+<h1>Dashboard Bakımda</h1>
 
-<div class="nav">
-<a href="#">🏠 Genel Bakış</a>
-<a href="#">🖥 Sunucular</a>
-<a href="#">🤖 Kayıt Botu</a>
-<a href="#">💎 Premium</a>
-<a href="#">⚙ Ayarlar</a>
-</div>
-
-</div>
-
-<div class="user-card">
-
-<img id="avatar"
-src="https://cdn.discordapp.com/embed/avatars/0.png">
-
-<h3 id="username">
-Kullanıcı
-</h3>
-
-<p style="opacity:.7;">
-Discord hesabı bağlı
+<p>
+Novaris Dashboard şu anda geliştirilmektedir.
+Daha hızlı, daha modern ve çok daha güçlü bir yönetim paneli üzerinde çalışıyoruz.
+Yakında tekrar hizmetinizde olacak.
 </p>
 
-<div class="badge">
-🟢 CONNECTED
+<div class="status">
+<div class="dot"></div>
+Geliştirme Devam Ediyor
 </div>
 
+<div class="buttons">
+<a href="../index.html" class="btn primary">
+Ana Sayfaya Dön
+</a>
+
+<a href="https://discord.gg/KdquMm7KxS" class="btn secondary">
+Discord Sunucusu
+</a>
 </div>
 
-</div>
-
-<div class="main">
-
-<div class="topbar">
-
-<h1>Dashboard</h1>
-
-<input
-class="search"
-placeholder="Sunucu ara...">
-
-</div>
-
-<div class="stats">
-
-<div class="stat-card">
-<h2 id="guildCount">0</h2>
-<p>Aktif Sunucu</p>
-</div>
-
-<div class="stat-card">
-<h2>1</h2>
-<p>Aktif Bot</p>
-</div>
-
-<div class="stat-card">
-<h2>99%</h2>
-<p>Uptime</p>
-</div>
-
-<div class="stat-card">
-<h2>Premium</h2>
-<p>Aktif Plan</p>
-</div>
-
-</div>
-
-<div class="section-title">
-<h2>Sunucular</h2>
-</div>
-
-<div class="servers" id="servers">
-
+<div class="countdown" id="countdown">
+COMING SOON
 </div>
 
 </div>
 
 <script>
+const countdown =
+document.getElementById("countdown");
 
-const savedToken =
-localStorage.getItem(
-"discord_token"
-);
+let dots = 0;
 
-if(!savedToken){
-
-window.location.href =
-"/";
-
-}
-
-/* User */
-
-fetch(
-"https://discord.com/api/users/@me",
-{
-headers:{
-authorization:
-`Bearer ${savedToken}`
-}
-})
-.then(res=>res.json())
-.then(user=>{
-
-document
-.getElementById("username")
-.innerText =
-user.global_name || user.username;
-
-document
-.getElementById("avatar")
-.src =
-`https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
-
-});
-
-/* Guilds */
-
-fetch(
-"https://discord.com/api/users/@me/guilds",
-{
-headers:{
-authorization:
-`Bearer ${savedToken}`
-}
-})
-.then(res=>res.json())
-.then(guilds=>{
-
-document
-.getElementById("guildCount")
-.innerText =
-guilds.length;
-
-const servers =
-document.getElementById("servers");
-
-servers.innerHTML = "";
-
-guilds.forEach(guild=>{
-
-const hasAdmin =
-(guild.permissions & 0x8) === 0x8;
-
-if(!hasAdmin) return;
-
-const card =
-document.createElement("div");
-
-card.className =
-"server-card";
-
-const icon =
-guild.icon
-? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`
-: "https://cdn.discordapp.com/embed/avatars/0.png";
-
-card.innerHTML = `
-
-<div class="server-top">
-
-<img
-src="${icon}"
-style="
-width:72px;
-height:72px;
-border-radius:24px;
-object-fit:cover;
-">
-
-<div>
-<h3>${guild.name}</h3>
-<p>Discord Sunucusu</p>
-</div>
-
-</div>
-
-<p>
-Sunucu yönetim paneline erişebilirsin.
-</p>
-
-<a href="guild.html?id=${guild.id}"
-class="manage-btn">
-Yönet
-</a>
-
-`;
-
-servers.appendChild(card);
-
-});
-
-});
-
+setInterval(()=>{
+dots++;
+if(dots > 3) dots = 0;
+countdown.innerText =
+"COMING SOON" + ".".repeat(dots);
+},500);
 </script>
 
 </body>

@@ -3098,7 +3098,9 @@ Array.isArray(data)
 ? data[data.length-1]
 : data;
 
-if(!a || !a.enabled) return;
+if(!a) return;
+
+if(a.enabled === false) return;
 
 bar.innerHTML = `
 
